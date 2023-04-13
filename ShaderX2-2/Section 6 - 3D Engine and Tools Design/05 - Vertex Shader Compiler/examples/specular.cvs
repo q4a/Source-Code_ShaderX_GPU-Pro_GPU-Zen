@@ -1,0 +1,33 @@
+////////////////////////////////////////////////////////////////////////////
+//
+// specular shader
+// Created 23.01.2003
+//
+//   {shader:specular}
+//
+////////////////////////////////////////////////////////////////////////////
+
+#include <standard.hvs>
+void vsmain()
+{  
+   vector pos,nor;
+   vstransform( pos , nor );
+   
+   // std output 
+   out.Pos=m4x4( pos , FinalMatrix.x );
+   
+   //
+   vector lightdir=normalize( SpecularLight.Pos - pos );
+   vector half    =normalize( normalize( CameraMatrix.Pos - pos ) + lightdir );
+   //
+   out.DColor.xyzw=SpecularLight.Color;
+
+   // color cube normal color
+   out.Tex0=bumpmapuv( half );
+   //
+   #ifdef inLightMapUV
+      out.Tex1=in.LightMapUV;
+   #else
+      out.Tex1=(0,0,0,0);
+   #endif
+}

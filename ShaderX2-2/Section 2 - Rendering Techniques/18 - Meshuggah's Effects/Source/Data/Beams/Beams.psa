@@ -1,0 +1,13 @@
+#include "..\..\Effects\Beams\BeamsShaderConstants.h"
+
+
+
+ps.1.1
+
+
+
+tex t0
+
+
+
+mul r0, t0, c[ CP_TRANSPARENCY_VALUE ]

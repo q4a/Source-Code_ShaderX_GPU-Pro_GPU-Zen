@@ -1,0 +1,127 @@
+ps_3_0
+
+; Samplers
+dcl_2d 		s0			; Input Textures MRT0 (x,y)
+dcl_2d 		s1			; Input Textures MRT1 (Z,Nx)
+
+; Input registers
+dcl_texcoord0   v0.xyzw	   		; Base Pos
+dcl_texcoord1   v1.xyzw     		; Neighbour Coord Set 1/8
+dcl_texcoord2   v2.xyzw    		; Neighbour Coord Set 2/8
+dcl_texcoord3   v3.xyzw    		; Neighbour Coord Set 3/8
+dcl_texcoord4   v4.xyzw    		; Neighbour Coord Set 4/8
+dcl_texcoord5   v5.xyzw    		; Neighbour Coord Set 5/8
+dcl_texcoord6   v6.xyzw    		; Neighbour Coord Set 6/8
+dcl_texcoord7   v7.xyzw    		; Neighbour Coord Set 7/8
+dcl_texcoord8   v8.xyzw    		; Neighbour Coord Set 8/8
+
+; Constants
+defi i0, 4   , 1   , 1   , 0		; Used for loop
+
+; Init Movement vector
+mov 	r0, c0				; Init movement vector with gravity
+
+; Sample Main Position
+texld	r1, v0.xy, s0		; Main Pos (x,y)
+texld   r2, v0.xy, s1		; Main Pos (z,Nx)
+mov	r1.z, r2.x
+mov	r1.w, r2.y		; Main Pos (x,y,z,Nx)
+
+; Main processing loop
+; Case A + C Loop : Length of "1.0" and "2.0" for undeformed springs (Axis Springs)
+; Case B + D Loop : Length of "1.4" and "2.8" for undeformed springs (Diagonal Springs)
+; Case E + F Loop : Length of "2.2" for undeformed springs (Filling in the gaps)
+
+loop	aL, i0				; for (aL=1; aL<5; aL+=1)
+
+	; Case A
+	texld r2, v[aL].xy, s0		; Sample Neighbour (X,Y)
+	texld r3, v[aL].xy, s1		; Sample Neighbour (Z)
+	mov   r2.z, r3.x		; r2 (X,Y,Z)
+	add r2, r2, -r1			; Spring Vector = Neighbour - Main
+	dp3 r3.x, r2, r2		; Sum of Squares
+	; Is it an edge pixel ? - if we clamp to the same value then don't do maths
+	if_ne r3.x, c0.x
+		rsq r4.x, r3.x			; Reciprocal Square Root of Sum of Squares = for Norm
+		rcp r5.x, r4.x			; Reciprocal of Reciprocal Square Root of Sum of Squares = Length = R5
+		mad r5.x, r5.x, c7.y, -c7.x	; Create Force scale using default lengths read from constants
+		mul r2, r2, r4.x		; Normalised Spring Vector
+		mul r2, r2, r5.x		; r2 is Force Vector
+		mad r0, r2, c1, r0		; Scaled Force Vector to avoid instability + add scaled force vector to final movement vector
+	endif
+		
+	; Case C
+	texld r2, v[aL].zw, s0		; Sample Neighbour (X,Y)
+	texld r3, v[aL].zw, s1		; Sample Neighbour (Z)
+	mov   r2.z, r3.x		; r2 (X,Y,Z)
+	add r2, r2, -r1			; Spring Vector = Neighbour - Main
+	dp3 r3.x, r2, r2		; Sum of Squares
+	; Is it an edge pixel ? - if we clamp to the same value then don't do maths
+	if_ne r3.x, c0.x
+		rsq r4.x, r3.x			; Reciprocal Square Root of Sum of Squares = for Norm
+		rcp r5.x, r4.x			; Reciprocal of Reciprocal Square Root of Sum of Squares = Length = R5
+		mad r5.x, r5.x, c9.y, -c9.x	; Create Force scale using default lengths read from constants
+		mul r2, r2, r4.x		; Normalised Spring Vector
+		mul r2, r2, r5.x		; r2 is Force Vector
+		mad r0, r2, c3, r0		; Scaled Force Vector to avoid instability + add scaled force vector to final movement vector
+	endif
+		
+	; Case B
+	texld r2, v[aL+4].xy, s0	; Sample Neighbour (X,Y)
+	texld r3, v[aL+4].xy, s1	; Sample Neighbour (Z)
+	mov   r2.z, r3.x		; r2 (X,Y,Z)
+
+	add r2, r2, -r1			; Spring Vector = Neighbour - Main
+	dp3 r3.x, r2, r2		; Sum of Squares
+	; Is it an edge pixel ? - if we clamp to the same value then don't do maths
+	if_ne r3.x, c0.x
+		rsq r4.x, r3.x			; Reciprocal Square Root of Sum of Squares = for Norm
+		rcp r5.x, r4.x			; Reciprocal of Reciprocal Square Root of Sum of Squares = Length = R5
+		mad r5.x, r5.x, c8.y, -c8.x	; Create Force scale using default lengths read from constants
+		mul r2, r2, r4.x		; Normalised Spring Vector
+		mul r2, r2, r5.x		; r2 is Force Vector
+		mad r0, r2, c2, r0		; Scaled Force Vector to avoid instability + add scaled force vector to final movement vector	
+	endif
+		
+	; Case D
+	texld r2, v[aL+4].zw, s0	; Sample Neighbour (X,Y)
+	texld r3, v[aL+4].zw, s1	; Sample Neighbour (Z)
+	mov   r2.z, r3.x		; r2 (X,Y,Z)
+				
+	add r2, r2, -r1			; Spring Vector = Neighbour - Main
+	dp3 r3.x, r2, r2		; Sum of Squares
+	; Is it an edge pixel ? - if we clamp to the same value then don't do maths
+	if_ne r3.x, c0.x
+		rsq r4.x, r3.x			; Reciprocal Square Root of Sum of Squares = for Norm
+		rcp r5.x, r4.x			; Reciprocal of Reciprocal Square Root of Sum of Squares = Length = R5
+		mad r5.x, r5.x, c10.y, -c10.x	; Create Force scale using default lengths read from constants
+		mul r2, r2, r4.x		; Normalised Spring Vector
+		mul r2, r2, r5.x		; r2 is Force Vector
+		mad r0, r2, c4, r0		; Scaled Force Vector to avoid instability + add scaled force vector to final movement vector	
+	endif
+
+	; Case E
+	
+	texld r2, v[aL+4].xw, s0	; Sample Neighbour (X,Y)
+	texld r3, v[aL+4].xw, s1	; Sample Neighbour (Z)
+	mov   r2.z, r3.x		; r2 (X,Y,Z)
+
+	add r2, r2, -r1			; Spring Vector = Neighbour - Main
+	dp3 r3.x, r2, r2		; Sum of Squares
+	; Is it an edge pixel ? - if we clamp to the same value then don't do maths
+	if_ne r3.x, c0.x
+		rsq r4.x, r3.x			; Reciprocal Square Root of Sum of Squares = for Norm
+		rcp r5.x, r4.x			; Reciprocal of Reciprocal Square Root of Sum of Squares = Length = R5
+		mad r5.x, r5.x,  c11.y, -c11.x	; Create Force scale using default lengths read from constants
+		mul r2, r2, r4.x		; Normalised Spring Vector
+		mul r2, r2, r5.x		; r2 is Force Vector
+		mad r0, r2, c5, r0		; Scaled Force Vector to avoid instability + add scaled force vector to final movement vector	
+	endif
+	
+endloop	
+	
+;Write Out Final Values
+add	r2, r1, r0
+mov	r3, r2.z
+mov	oC0, r2		; (X, Y)
+mov	oC1, r3		; (Z, X)

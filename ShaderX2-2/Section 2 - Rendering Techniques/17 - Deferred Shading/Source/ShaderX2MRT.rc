@@ -1,0 +1,176 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.K.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENG)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_UK
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+ICO_PVR                 ICON    DISCARDABLE     "PowerVR.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+MENU MENU DISCARDABLE 
+BEGIN
+    POPUP "&Options"
+    BEGIN
+        MENUITEM "Toggle &Info Text\tF3",       ID_OPTIONS_INFO
+        MENUITEM SEPARATOR
+        MENUITEM "Pause/Step\tSPACE",           ID_OPTIONS_PAUSESTEP
+        MENUITEM "Resume\tRETURN",              ID_OPTIONS_RESUME
+        MENUITEM SEPARATOR
+        MENUITEM "S&hadows\tH",                 ID_OPTIONS_SHADOWS
+        MENUITEM "Visualise Volumes\tV",        ID_OPTIONS_VISUALISEVOLUMES
+        MENUITEM SEPARATOR
+        MENUITEM "Toggle &Camera\tC",           ID_OPTIONS_TOGGLECAMERA
+        MENUITEM SEPARATOR
+        POPUP "Texture Format"
+        BEGIN
+            MENUITEM "32 Bits",                     ID_OPTIONS_TEXTUREFORMAT_32BITS
+
+            MENUITEM "16 Bits",                     ID_OPTIONS_TEXTUREFORMAT_16BITS
+
+            MENUITEM "DXT",                         ID_OPTIONS_TEXTUREFORMAT_DXT
+
+        END
+        POPUP "&Filtering"
+        BEGIN
+            MENUITEM "Point Sampling",              ID_OPTIONS_FILTERING_POINTSAMPLING
+
+            MENUITEM "Bilinear",                    ID_OPTIONS_FILTERING_BILINEAR
+
+            MENUITEM "Trilinear",                   ID_OPTIONS_FILTERING_TRILINEAR
+
+            MENUITEM "Anisotropic",                 ID_OPTIONS_FILTERING_ANISOTROPIC
+
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "Show Default View",           ID_OPTIONS_NORMAL
+        MENUITEM "Show Position MRT",           ID_OPTIONS_VIEWPOSITIONMRT
+        MENUITEM "Show Normal MRT",             ID_OPTIONS_VIEWNORMALMRT
+        MENUITEM "Show Diffuse MRT",            ID_OPTIONS_VIEWDIFFUSEMRT
+        MENUITEM SEPARATOR
+        MENUITEM "Show Tangent Space\tX",       ID_OPTIONS_VIEWTANGENTSPACE
+    END
+    POPUP "&Lights"
+    BEGIN
+        MENUITEM "Cycling lights\tY",           ID_LIGHTS_CYCLINGLIGHTS
+        MENUITEM "Enable all lights",           ID_LIGHTS_ENABLEALLLIGHTS
+        MENUITEM SEPARATOR
+        MENUITEM "Fullscreen light\t0",         ID_LIGHTS_FULLSCREENLIGHT
+        MENUITEM "Sphere Light #1\t1",          ID_LIGHTS_SPHERELIGHT1
+        MENUITEM "Sphere light #2\t2",          ID_LIGHTS_SPHERELIGHT2
+        MENUITEM "Cone light #1\t3",            ID_LIGHTS_CONELIGHT1
+        MENUITEM "Cone light #2\t4",            ID_LIGHTS_CONELIGHT2
+        MENUITEM "Cone light #3\t5",            ID_LIGHTS_CONELIGHT3
+        MENUITEM "Cone light #4\t6",            ID_LIGHTS_CONELIGHT4
+        MENUITEM "Cone light #5\t7",            ID_LIGHTS_CONELIGHT5
+        MENUITEM "Cone light #6\t8",            ID_LIGHTS_CONELIGHT6
+        MENUITEM SEPARATOR
+        MENUITEM "View Light Zones\tK",         ID_LIGHTS_VIEWLIGHTZONES
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+ACCEL ACCELERATORS DISCARDABLE 
+BEGIN
+    "0",            ID_LIGHTS_FULLSCREENLIGHT, VIRTKEY, NOINVERT
+    "1",            ID_LIGHTS_SPHERELIGHT1, VIRTKEY, NOINVERT
+    "2",            ID_LIGHTS_SPHERELIGHT2, VIRTKEY, NOINVERT
+    "3",            ID_LIGHTS_CONELIGHT1,   VIRTKEY, NOINVERT
+    "4",            ID_LIGHTS_CONELIGHT2,   VIRTKEY, NOINVERT
+    "5",            ID_LIGHTS_CONELIGHT3,   VIRTKEY, NOINVERT
+    "6",            ID_LIGHTS_CONELIGHT4,   VIRTKEY, NOINVERT
+    "7",            ID_LIGHTS_CONELIGHT5,   VIRTKEY, NOINVERT
+    "8",            ID_LIGHTS_CONELIGHT6,   VIRTKEY, NOINVERT
+    "C",            ID_OPTIONS_TOGGLECAMERA, VIRTKEY, NOINVERT
+    "H",            ID_OPTIONS_SHADOWS,     VIRTKEY, NOINVERT
+    "K",            ID_LIGHTS_VIEWLIGHTZONES, VIRTKEY, NOINVERT
+    "V",            ID_OPTIONS_VISUALISEVOLUMES, VIRTKEY, NOINVERT
+    VK_F3,          ID_OPTIONS_INFO,        VIRTKEY, NOINVERT
+    VK_NUMPAD0,     ID_LIGHTS_FULLSCREENLIGHT, VIRTKEY, NOINVERT
+    VK_NUMPAD1,     ID_LIGHTS_SPHERELIGHT1, VIRTKEY, NOINVERT
+    VK_NUMPAD2,     ID_LIGHTS_SPHERELIGHT2, VIRTKEY, NOINVERT
+    VK_NUMPAD3,     ID_LIGHTS_CONELIGHT1,   VIRTKEY, NOINVERT
+    VK_NUMPAD4,     ID_LIGHTS_CONELIGHT2,   VIRTKEY, NOINVERT
+    VK_NUMPAD5,     ID_LIGHTS_CONELIGHT3,   VIRTKEY, NOINVERT
+    VK_NUMPAD6,     ID_LIGHTS_CONELIGHT4,   VIRTKEY, NOINVERT
+    VK_NUMPAD7,     ID_LIGHTS_CONELIGHT5,   VIRTKEY, NOINVERT
+    VK_NUMPAD8,     ID_LIGHTS_CONELIGHT6,   VIRTKEY, NOINVERT
+    VK_RETURN,      ID_OPTIONS_RESUME,      VIRTKEY, NOINVERT
+    VK_SPACE,       ID_OPTIONS_PAUSESTEP,   VIRTKEY, NOINVERT
+    "X",            ID_OPTIONS_VIEWTANGENTSPACE, VIRTKEY, NOINVERT
+    "Y",            ID_LIGHTS_CYCLINGLIGHTS, VIRTKEY, NOINVERT
+END
+
+#endif    // English (U.K.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

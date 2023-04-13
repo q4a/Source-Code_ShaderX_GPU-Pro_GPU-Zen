@@ -1,0 +1,76 @@
+//*****************************************************************************
+//* This file is part of the Dimension3 renderer library                      *
+//* Copyright (C) 2003  Michal Valient (valient@host.sk)                      *
+//*                                                                           *
+//* Dimension3 renderer can be found at http://www.dimension3.host.sk         *
+//*                                                                           *
+//* This program is free software; you can redistribute it and/or modify      *
+//* it under the terms of the GNU General Public License as published by      *
+//* the Free Software Foundation; either version 2 of the License, or         *
+//* (at your option) any later version.                                       *
+//*                                                                           *
+//* This program is distributed in the hope that it will be useful,           *
+//* but WITHOUT ANY WARRANTY; without even the implied warranty of            *
+//* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the             *
+//* GNU General Public License for more details.                              *
+//*                                                                           *
+//* You should have received a copy of the GNU General Public License         *
+//* along with this program; if not, write to the Free Software               *
+//* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA * 
+//*****************************************************************************
+//hdr_utility_remove_tag
+
+
+;------------------------------
+; Per pixel specular - Pixel shader
+;
+; Desc :
+;   Renders specular part for one light per pixel
+;
+; Part of Dimension3 Renderer
+; (c)2002 Michal Valient
+; akka em / STV3 akka  R.A.Y / EastW00D
+;------------------------------
+;
+; Constant registers 
+; c0 - specular texture multiplier (premultiplied with light const)
+; c1 - additonal specular constant (premultiplied with light const)
+; c2 - shininess
+;
+; Used input registers
+; t0 - color / bump coordinates
+; t1 - light vector in tangent space
+; t2 - eye vector in tangent space
+;
+; Used input texture stages
+; stage0 - ambient texture
+; stage1 - normal texture
+; stage2 - specular light map
+;
+; Output
+; r0 - output color
+;------------------------------
+
+ps.1.4
+
+texld  r1, t0                   ;normal vector (n)
+texcrd r2.rgb, t1.xyz           ;Light vector (l)
+texcrd r3.rgb, t2.xyz           ;eye vector (v)
+
+dp3 r4, r1_bx2, r2              ;r4 = dot(normal, light)
+mad r4.rgb, r4_x2, r1_bx2, -r2  ;compute reflectance vector r4 = 2(n.l)n - l
+
+;----------------------
+;compute power lookup coordinates - x = (r.v) y = shininess
+;----------------------
+dp3 r4, r4, r3                  ;dot(reflect, eye)
+mov r4.y, c2                    ;y = shininess
+
+phase
+texld r0, t0                    ;load specular texture (gloss map is in alpha channel)
+texld r2, r4                    ;specular light map
+
+mad r0.rgb, r0, c0, c1          ;compute specular color contribution
+mul r0.rgb, r0, r0.a            ;modulate with gloss map.
+mul r0.rgb, r0, r2.a            ;modulate with (r.v)^shi
+

@@ -1,0 +1,1 @@
+fxc /Tps_2_0 /Fc%1.psh %1.psh.fx

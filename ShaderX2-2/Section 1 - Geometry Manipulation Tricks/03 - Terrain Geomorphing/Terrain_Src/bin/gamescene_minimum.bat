@@ -1,0 +1,1 @@
+start bin/Terrain.exe maps/gamescene/minimum.cfg

@@ -1,0 +1,19 @@
+// plugins.cvs
+input vertexshader {
+   vector         Pos;
+};
+
+output vertexshader {
+   vector         Pos;
+   vector         DColor;
+};
+
+radical plugin FinalMatrix(vector x, vector y, vector z, vector w );
+
+plugin Light(vector Color, vector Direction, float Range );
+
+void vsmain(float a)
+{
+   out.Pos=m4x4( in.Pos * a , FinalMatrix.x );
+   out.DColor=Light.Color;
+}

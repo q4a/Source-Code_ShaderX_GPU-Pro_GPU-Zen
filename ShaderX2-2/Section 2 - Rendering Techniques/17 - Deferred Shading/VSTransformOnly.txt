@@ -1,0 +1,17 @@
+;------------------------------------------------------------------------------
+; Constants specified by the app
+;    c0-c3   = Global transformation matrix (World*View*Projection)
+;
+; Vertex components (as specified in the vertex DECL)
+;    v0   = Position
+;
+;------------------------------------------------------------------------------
+vs_2_0
+
+dcl_position0 v0
+
+;------------------------------------------------------------------------------
+; Vertex transformation
+;------------------------------------------------------------------------------
+m4x4 oPos, v0, c0			// Transform vertices by view/projection/world matrix
+

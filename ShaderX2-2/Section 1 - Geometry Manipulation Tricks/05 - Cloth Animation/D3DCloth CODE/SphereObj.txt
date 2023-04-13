@@ -1,0 +1,14 @@
+Object: 1
+Nodes in Grid: 64
+Cloth Size: 0.53
+Gravity: -0.0005
+Small Value A: 0.0015, 0.0015, 0.0015, 0.0015
+Small Value B: 0.00025, 0.00025, 0.00025, 0.00025
+Small Value C: 0.0015, 0.0015, 0.0015, 0.0015
+Small Value D: 0.00025, 0.00025, 0.00025, 0.00025
+Small Value E: 0.00025, 0.00025, 0.00025, 0.00025
+Small Value F: 0.00025, 0.00025, 0.00025, 0.00025
+Constraint Range: 0.01
+Neighbors: 24
+Iterations per Frame: 10
+

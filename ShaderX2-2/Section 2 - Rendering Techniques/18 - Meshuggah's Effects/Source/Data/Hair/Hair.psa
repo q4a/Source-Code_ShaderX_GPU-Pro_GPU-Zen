@@ -1,0 +1,18 @@
+#include "..\..\Effects\Hair\HairShaderConstants.h"
+
+
+
+ps.1.1
+
+
+
+tex t0              // get texel from anisotropic texture
+tex t1              // get texel from 1D hair streaks texture
+
+
+
+mul r1, c[ CP_SPECULAR_COLOR ], t0.a   // r1 = specular intensity * specular color
+mul r1, r1, t1                         // r1 *= hair streak
+
+mul r0, t0, t1                         // r0 = diffuse intensity * hair streak
+mad r0, r0, c[ CP_DIFFUSE_COLOR ], r1  // r0 = r0 * diffuse color + specular term in r1

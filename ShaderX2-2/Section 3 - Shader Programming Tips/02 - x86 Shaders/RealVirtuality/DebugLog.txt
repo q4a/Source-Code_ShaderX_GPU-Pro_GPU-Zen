@@ -1,0 +1,19 @@
+==== Debug Log File ==== 
+
+Wed Apr 09 11:32:41 2003
+
+
+Unable to open file: C:\Documents and Settings\Nicolas Capens\Bureaublad\Real Virtuality\Quake 3\.jpg
+Unable to open file: C:\Documents and Settings\Nicolas Capens\Bureaublad\Real Virtuality\Quake 3\textures\common\mirror1.jpg
+Unable to open file: C:\Documents and Settings\Nicolas Capens\Bureaublad\Real Virtuality\Quake 3\.jpg
+Unable to open file: C:\Documents and Settings\Nicolas Capens\Bureaublad\Real Virtuality\Quake 3\textures\common\mirror1.jpg
+Unable to open file: C:\Documents and Settings\Nicolas Capens\Bureaublad\Real Virtuality\Quake 3\proto_addition 11\08\99.jpg
+Unable to open file: C:\Documents and Settings\Nicolas Capens\Bureaublad\Real Virtuality\Quake 3\.jpg
+Unable to open file: C:\Documents and Settings\Nicolas Capens\Bureaublad\Real Virtuality\Quake 3\.jpg
+Unable to open file: C:\Documents and Settings\Nicolas Capens\Bureaublad\Real Virtuality\Quake 3\.jpg
+Unable to open file: C:\Documents and Settings\Nicolas Capens\Bureaublad\Real Virtuality\Quake 3\textures\common\invisible.jpg
+Unable to open file: C:\Documents and Settings\Nicolas Capens\Bureaublad\Real Virtuality\Quake 3\.jpg
+Unable to open file: C:\Documents and Settings\Nicolas Capens\Bureaublad\Real Virtuality\Quake 3\proto_addition 11\08\99.jpg
+Unable to open file: C:\Documents and Settings\Nicolas Capens\Bureaublad\Real Virtuality\Quake 3\textures\common\mirror1.jpg
+Unable to open file: C:\Documents and Settings\Nicolas Capens\Bureaublad\Real Virtuality\Quake 3\.jpg
+Unable to open file: C:\Documents and Settings\Nicolas Capens\Bureaublad\Real Virtuality\Quake 3\textures\common\mirror1.jpg

@@ -1,0 +1,17 @@
+vs_3_0
+
+; Input registers
+dcl_position0 v0    ;Position in NORMALIZED SCREEN COORDINATES (x,y,z)
+dcl_texcoord0 v4    ;Texture coordinates
+
+; Output registers
+dcl_position0 o0.xyzw    ;Vertex position
+dcl_texcoord0 o1.xy      ;Texcoord	 
+
+mov r0, v0
+mov r0.w, c21.w
+mov o0, r0             ;position
+mov o1.xy, v4          ;texture coord
+
+
+

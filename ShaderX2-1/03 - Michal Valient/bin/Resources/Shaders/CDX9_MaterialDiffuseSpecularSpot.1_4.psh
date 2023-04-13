@@ -1,0 +1,93 @@
+//*****************************************************************************
+//* This file is part of the Dimension3 renderer library                      *
+//* Copyright (C) 2003  Michal Valient (valient@host.sk)                      *
+//*                                                                           *
+//* Dimension3 renderer can be found at http://www.dimension3.host.sk         *
+//*                                                                           *
+//* This program is free software; you can redistribute it and/or modify      *
+//* it under the terms of the GNU General Public License as published by      *
+//* the Free Software Foundation; either version 2 of the License, or         *
+//* (at your option) any later version.                                       *
+//*                                                                           *
+//* This program is distributed in the hope that it will be useful,           *
+//* but WITHOUT ANY WARRANTY; without even the implied warranty of            *
+//* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the             *
+//* GNU General Public License for more details.                              *
+//*                                                                           *
+//* You should have received a copy of the GNU General Public License         *
+//* along with this program; if not, write to the Free Software               *
+//* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA * 
+//*****************************************************************************
+//hdr_utility_remove_tag
+
+
+//------------------------------
+// Per pixel diffuse and specular - Pixel shader
+//
+// Desc :
+//   Renders diffuse and specular part for one light per pixel using Phong's equation
+//
+// Part of Dimension3 Renderer
+// (c)2002 Michal Valient
+// akka em / STV3 akka  R.A.Y / EastW00D
+//------------------------------
+
+ps_1_4
+
+//------------------------------
+// Constant registers 
+//------------------------------
+//
+// c0 - diffuse texture multiplier (premultiplied with light color)
+// c1 - specular texture multiplier (premultiplied with light const)
+
+//------------------------------
+// Used input registers
+//------------------------------
+//
+// t0 - color / bump coordinates
+// t1 - light vector in tangent space
+// t2 - eye vector in tangent space
+// t3 - projector coordinates
+
+//------------------------------
+// Used input texture stages
+//------------------------------
+// 
+// stage0 - ambient texture
+// stage1 - normal texture
+// stage2 - specular light map
+// stage3 - projector texture
+
+//------------------------------
+// Output
+//------------------------------
+//
+// r0 - output color
+
+
+//#########################################################################
+//##   CODE    ############################################################
+//#########################################################################
+//
+texld r1, t0                    //normal vector (n)
+texcrd r2.rgb, t1.xyz           //Light vector (l)
+texcrd r3.rgb, t2.xyz           //eye vector (v)
+
+dp3 r5.rgb, r1_bx2, r2          //r5 = dot(normal, light)
+mad r2.rgb, r5_x2, r1_bx2, -r2  //compute reflectance vector r2 = 2(n.l)n - l
+
+//compute power look up coordinates
+dp3 r5.x, r2, r3                //r5.x = dot(reflect, eye)
+
+phase
+texld r0, t0                    //load specular texture (gloss map is in alpha channel)
+texld r2, r5                    //specular light map (r and g components are "copied" from source register, b and a are filled with dot product)
+texld r3, t3_dw.xyw             //projector map
+
+mul r5.rgb, r0, r5.g            //modulate with diffuse dot product
+mul r5.rgb, r5, c0              //modulate diffuse with constant multiplier
+
+mul r2.rgb, r0.a, r2.a          //modulate gloss map with (r.v)^shi
+mad r0.rgb, r2, c1, r5          //modulate specular term with spec. const and add specular
+mul r0.rgb, r0, r3              //modulate with spotlight texture

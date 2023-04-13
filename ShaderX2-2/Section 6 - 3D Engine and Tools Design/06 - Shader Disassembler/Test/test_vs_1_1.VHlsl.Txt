@@ -1,0 +1,48 @@
+#ifndef DBoneCount
+#define DBoneCount	16
+#endif
+
+struct VS_INPUT
+{
+    float4	Position	: POSITION;
+#if DBoneCount>0
+#ifdef DDeclType_UBYTE4
+    int	  	iBone	: BLENDINDICES;	// May not be supported
+#else
+	float4	iBoneIn01	: BLENDINDICES;	// fallback when no UBYTE4 (GF3&4)
+#endif
+#endif
+	float4	Color	: COLOR0;
+    float2	TexCoord	: TEXCOORD0;
+};
+
+struct VS_OUTPUT
+{
+    float4 Position : POSITION;
+	float4 Color	: COLOR0;
+    float2 TexCoord : TEXCOORD0;
+};
+
+vs_1_1 VS_OUTPUT main(const VS_INPUT v,
+	uniform float4x4		VisualPrCamera
+#if DBoneCount>0
+	,uniform float4			BoneTransInVisuals[DBoneCount]
+#endif
+	)
+{
+	VS_OUTPUT 	Output = (VS_OUTPUT) 0;
+	float		Weight = 1; //v.Color.w;
+	float4		PositionTrans = v.Position;
+#if DBoneCount>0
+#ifdef DDeclType_UBYTE4
+	int			iBone = v.iBone;
+#else
+	int			iBone = D3DCOLORtoUBYTE4(v.iBoneIn01);
+#endif
+	PositionTrans += Weight*BoneTransInVisuals[iBone];
+#endif
+	Output.Position	= mul(PositionTrans, VisualPrCamera);
+	Output.Color	= v.Color;
+	Output.TexCoord	= v.TexCoord;
+    return Output;    
+}

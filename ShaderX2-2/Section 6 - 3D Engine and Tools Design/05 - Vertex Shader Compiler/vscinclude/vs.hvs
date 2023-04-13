@@ -1,0 +1,83 @@
+////////////////////////////////////////////////////////////////
+//
+// Vertex Shader system library
+// Created 21.07.2002
+// Copyright by gp
+//
+////////////////////////////////////////////////////////////////
+
+#ifndef OUTPUT_VERTEX 
+#define OUTPUT_VERTEX
+
+output vertexshader {
+   vector      Pos;              // vertex position
+   vector      DColor;           // diffuse color
+   vector      SColor;           // specular color
+   float       PointSize;        // sprite point size
+   float       Fog;              // fog value
+   vector      Tex0;             // texture 0..7 coordinates
+   vector      Tex1;
+   vector      Tex2;
+   vector      Tex3;
+   vector      Tex4;
+   vector      Tex5;
+   vector      Tex6;
+   vector      Tex7;
+};
+
+#endif
+
+float sqrt( float a )
+{
+   return a * rsq( a );
+}
+
+float length( vector v )
+{
+   //float    s=float( v % v ).x;
+   //return   s * rsq( s ).x;
+   float    a=v.xyz % v.xyz;
+   return   a * rsq( a ).x;
+}
+
+vector normalize( vector v )
+{
+   float    a=v.xyz % v.xyz;
+   return   v.xyz * rsq( a ).xyz;
+}
+
+vector cross( vector a , vector b )
+{
+   // + - (for mad optimization :)
+   vector c=a.yzxw * b.zxyw + -a.zxyw * b.yzxw;
+}
+
+float cos(float x)
+{
+   // cos(x)=1-x^2/2!+x^4/4!-x^6/6!
+   vector   vcos;
+   //
+   vcos.x=1;
+   vcos.y=x*x;             // a^2
+   vcos.z=vcos.y*vcos.y;   // a^4
+   vcos.w=vcos.y*vcos.z;   // a^6
+   //
+   return dp4( vcos * (1,-2,24,-720) , 1 );
+}
+
+float sin(float x)
+{
+   // sin(x)=x-x^3/3!+x^5/5!-x^7/7!
+   vector   vsin;
+   float    x2=x*x;
+   //
+   vsin.x=x;
+   vsin.y=x2*x;            // a^3
+   vsin.z=x2*vsin.y;       // a^5
+   vsin.w=x2*vsin.z;       // a^7
+   //
+   return dp4( vsin * (1,-6,120,-5040) , 1 );
+}
+
+
+

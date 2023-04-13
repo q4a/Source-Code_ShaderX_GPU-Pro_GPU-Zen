@@ -1,0 +1,32 @@
+////////////////////////////////////////////////////////////////////////////
+//
+// default light shader
+// Created 24.02.2003
+//
+// Shaders
+//   {shader:bump_light}       
+//
+////////////////////////////////////////////////////////////////////////////
+
+
+[pixelshader] bump_light_ps
+{
+   program=$$
+      ps.1.1
+      //
+      tex      t0					                     // normal map
+      tex      t1					                     // cube normalization map
+      tex      t2					         	         // attenuation lookup table
+      tex      t3					                     // attenuation lookup table
+      //
+      dp3_sat  r1       , t0_bx2 , t1_bx2          // bump
+      //
+      add_sat  r0.rgb   , 1-t2   , -t3             // attenuation per-pixel calculation
+      mul      r0.rgb   , r0     , v1              // light color
+      //
+      mul_sat  r0.rgb   , r0     , r1              // light attenuation * bump
+      //
+      +mov     r0.a     , fade 
+   $$
+}
+

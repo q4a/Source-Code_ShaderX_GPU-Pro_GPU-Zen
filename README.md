@@ -40,8 +40,8 @@ ___
 
 [**ShaderX3**] — [***buy the book***](https://amzn.to/2EV0Zjy), 630 pages, *November 29, 2004*, **ISBN-13:** 978-1584503576
 
-[**ShaderX2-2**] — [***buy the book***](https://amzn.to/2QToUm0), 400 pages, *October 25, 2003*, **ISBN-13:** 978-1556229886
+[**ShaderX2-2**](ShaderX2-2) — [***buy the book***](https://amzn.to/2QToUm0), 400 pages, *October 25, 2003*, **ISBN-13:** 978-1556229886
 
-[**ShaderX2-1**] — [***buy the book***](https://amzn.to/2Z722Ux), 500 pages, *August 25, 2003*, **ISBN-13:** 978-1556229022
+[**ShaderX2-1**](ShaderX2-1) — [***buy the book***](https://amzn.to/2Z722Ux), 500 pages, *August 25, 2003*, **ISBN-13:** 978-1556229022
 
-[**ShaderX1**] — [***buy the book***](https://amzn.to/35aomjE), 500 pages, *June 25, 1996 / June 30, 2002*, **ISBN-13:** 978-1556220418
+[**ShaderX1**](ShaderX1) — [***buy the book***](https://amzn.to/35aomjE), 500 pages, *June 25, 1996 / June 30, 2002*, **ISBN-13:** 978-1556220418

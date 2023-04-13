@@ -1,0 +1,26 @@
+#include "..\..\Effects\OceanScene\ShaderConstants.h"
+#include "..\..\Effects\OceanScene\OceanShaderConstants.h"
+
+
+
+ps.1.1
+
+
+
+tex          t0         // get normal form bump map
+texm3x3pad   t1, t0     // transform normal.x into world space
+texm3x3pad   t2, t0     // transform normal.y into world space
+texm3x3vspec t3, t0     // transform normal.z into world space
+                        // and get color for reflected view vector
+
+
+
+// apply high dynamic range Fresnel term to env map
+mul_x4 r0, t3, v1.a
+mad    r0, t3, v0.a, r0
+
+// calculate ocean color
+lrp r1, v0, c[ CP_OCEAN_COLOR_DARK ], c[ CP_OCEAN_COLOR_LIGHT ]
+
+// combine ocean and env color
+add r0, r0, r1

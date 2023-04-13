@@ -1,0 +1,85 @@
+; PSInitialPass.txt
+;
+; Constants
+; c0-c3: World matrix for model (used to transform normals from model to world space)
+
+ps_2_0
+
+; Samplers
+dcl_2d s0	; Diffuse map (power level in alpha)
+dcl_2d s1	; Normal map
+
+; Texture coordinates
+dcl t0.xy	; Texture coordinates
+dcl t1.xyzw	; World-space position
+dcl t2.xyz	; Binormal		(Inverse tangent space vectors)
+dcl t3.xyz	; Tangent		(Inverse tangent space vectors)
+dcl t4.xyz	; Normal		(Inverse tangent space vectors)
+
+; Constants
+def c30, 1.0, 2.0, 0.0, 100.0
+def c31, 0.2, 0.5, 1.0, 1.0
+
+
+;------------------------------------------------------------------------------
+; Texture sampling
+;------------------------------------------------------------------------------
+texld r3, t0, s0				// r3 = Color from diffuse map (r3.a = power level)
+texld r2, t0, s1				// r2 = Normal vector from normal map
+
+
+;------------------------------------------------------------------------------
+; Store world-space coordinate in MRTs
+;------------------------------------------------------------------------------
+mov r0, t1						// Store position XYZ in r0
+mov r1, r0.b					// Store position Z in r1
+mov oC0, r0						// MRT#0 = XY (Z not stored as render target doesn't have blue channel)
+mov oC1, r1						// MRT#1 = Z
+
+
+;------------------------------------------------------------------------------
+; Store world space normals
+;------------------------------------------------------------------------------
+mad r2, r2, c30.g, -c30.r		// r2 = 2*(r2 - 0.5) (convert normal to signed vector)
+
+
+; Re-normalize iterated normals
+nrm r6, r2
+
+
+; If model has no world rotation matrix associated to it
+
+; Transform tangent space normal vector to local space using inverse tangent space vectors
+dp3 r1.x, r6, t2
+dp3 r1.y, r6, t3
+dp3 r1.z, r6, t4
+
+
+
+; If model has a world rotation matrix associated to it
+
+; Transform tangent space normal vector to local space using inverse tangent space vectors
+;dp3 r4.x, r6, t2
+;dp3 r4.y, r6, t3
+;dp3 r4.z, r6, t4
+
+; Transform local space normal vector to world space using world matrix (rotation part only)
+; This step is not required for static models if their original model space orientation 
+; matches their orientation in world space. This would save 3 instructions.
+;dp3 r1.x, r4, c0
+;dp3 r1.y, r4, c1
+;dp3 r1.z, r4, c2
+
+mad r1, r1, c31.g, c31.g		// Convert world-space normal vector to fixed point
+
+; Store world-space normal into MRT#2
+mov oC2, r1						// MRT#2 = normal vector
+
+
+;------------------------------------------------------------------------------
+; Store diffuse color and power level in MRT
+;------------------------------------------------------------------------------
+mov oC3, r3						// MRT#3 = Diffuse color + power level
+
+
+

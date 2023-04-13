@@ -1,0 +1,23 @@
+ps_3_0
+
+; Samplers
+dcl_2d s0   ; MRT0 (X ,Y )
+dcl_2d s1   ; MRT1 (Z ,NX)
+;dcl_2d s2   ; MRT2 (NY,NZ)
+
+; Inputs
+dcl_texcoord0   v0.xy	; Texture Coordinate
+
+def c19, 0.0, 0.0, 0.0, 0.0
+
+texld r0, v0, s0    ;Sample MRT0
+texld r1, v0, s1    ;Sample MRT1
+;texld r2, v0, s2    ;Sample MRT2
+
+; geometry texture view
+mov r4, c19		; Init
+mov r4.rg, r0		; Grab (X ,Y ) to display
+mov r4.b, r1.x		; Grab (Z, X ) to display
+mov oC0, r4		; Display
+
+

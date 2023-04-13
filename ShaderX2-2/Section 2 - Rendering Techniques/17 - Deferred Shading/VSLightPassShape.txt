@@ -1,0 +1,30 @@
+;------------------------------------------------------------------------------
+; Constants specified by the app
+;    c0-c3   = Global transformation matrix (World*View*Projection)
+;	 c9		 = 1/(2*width), 1/(2*height)
+;
+; Vertex components (as specified in the vertex DECL)
+;    v0   = Position
+;------------------------------------------------------------------------------
+vs_2_0
+
+dcl_position0 v0	; Position
+
+def c8, 0.5, -0.5, 0.0, 0.0
+
+
+;------------------------------------------------------------------------------
+; Vertex transformation
+;------------------------------------------------------------------------------
+m4x4 r0, v0, c0				// Transform vertices by view/projection/world matrix
+mov oPos, r0				// Output position into position register
+
+;------------------------------------------------------------------------------
+; Compute texture coordinates
+;------------------------------------------------------------------------------
+mul r0.xy, r0, c8			// x/2, -y/2
+mad r0.xy, r0.w, c8.x, r0	// x/2 + w/2, -y/2 + w/2
+mad r0.xy, r0.w, c9, r0		// (x/2 + w/2)+(w/2*Width), (-y/2 + w/2)+(w/2*Height)
+
+mov oT0, r0					// Send 4D position into texture coordinates 0
+

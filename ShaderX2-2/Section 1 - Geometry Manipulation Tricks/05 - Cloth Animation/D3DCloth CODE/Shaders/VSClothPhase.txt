@@ -1,0 +1,57 @@
+vs_3_0
+
+	; Input registers
+	dcl_position0	v0
+	dcl_texcoord0	v4
+
+	; Output registers
+	dcl_position0   o0.xyzw		; Vertex position
+	dcl_texcoord0   o1.xyzw		; center texcoord	 
+	dcl_texcoord1   o2.xyzw    	; 1 of 8 neighbours
+	dcl_texcoord2   o3.xyzw    	; 2 of 8 neighbours
+	dcl_texcoord3   o4.xyzw    	; 3 of 8 neighbours    
+	dcl_texcoord4   o5.xyzw        	; 4 of 8 neighbours
+	dcl_texcoord5   o6.xyzw        	; 5 of 8 neighbours
+	dcl_texcoord6   o7.xyzw        	; 6 of 8 neighbours
+	dcl_texcoord7   o8.xyzw        	; 7 of 8 neighbours
+	dcl_texcoord8   o9.xyzw    	; 8 of 8 neighbours
+
+	; VERTEX POSITION
+	; ---------------
+
+	mov r0, v0
+	mov r0.w, c21.w
+	mov o0, r0
+
+
+	; MODEL TEXTURE COORDINATES
+	; -------------------------
+	; c10-c17 contains the delta for each neighbour position - set in code
+
+	mov	o1.xy, v4		; center position
+	mov	r1, v4.xyxy		; copy base XY into both sections to generate two 2D coords per vector
+
+	add	r0, r1, c10
+	mov	o2.xyzw, r0		; 1 out of 8 neighbours
+
+	add	r0, r1, c11
+	mov	o3.xyzw, r0		; 2 out of 8 neighbours
+
+	add	r0, r1, c12
+	mov	o4.xyzw, r0		; 3 out of 8 neighbours
+
+	add	r0, r1, c13
+	mov	o5.xyzw, r0		; 4 out of 8 neighbours
+
+	add	r0, r1, c14
+	mov	o6.xyzw, r0		; 5 out of 8 neighbours
+
+	add	r0, r1, c15
+	mov	o7.xyzw, r0		; 6 out of 8 neighbours
+
+	add	r0, r1, c16
+	mov	o8.xyzw, r0		; 7 out of 8 neighbours
+
+	add	r0, r1, c17
+	mov	o9.xyzw, r0		; 8 out of 8 neighbours
+

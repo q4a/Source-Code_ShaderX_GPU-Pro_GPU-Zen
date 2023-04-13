@@ -1,0 +1,17 @@
+#include "..\..\Effects\SoftObjects\SoftObjectsShaderConstants.h"
+
+
+
+ps.1.1
+
+
+
+tex t0  // get reflected color
+tex t1  // get refracted color
+
+
+
+// blend between refracted color and reflected color
+// using Fresnel term
+lrp r0, v0, t0, t1
+

@@ -1,0 +1,167 @@
+//*****************************************************************************
+//* This file is part of the Dimension3 renderer library                      *
+//* Copyright (C) 2003  Michal Valient (valient@host.sk)                      *
+//*                                                                           *
+//* Dimension3 renderer can be found at http://www.dimension3.host.sk         *
+//*                                                                           *
+//* This program is free software; you can redistribute it and/or modify      *
+//* it under the terms of the GNU General Public License as published by      *
+//* the Free Software Foundation; either version 2 of the License, or         *
+//* (at your option) any later version.                                       *
+//*                                                                           *
+//* This program is distributed in the hope that it will be useful,           *
+//* but WITHOUT ANY WARRANTY; without even the implied warranty of            *
+//* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the             *
+//* GNU General Public License for more details.                              *
+//*                                                                           *
+//* You should have received a copy of the GNU General Public License         *
+//* along with this program; if not, write to the Free Software               *
+//* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA * 
+//*****************************************************************************
+//hdr_utility_remove_tag
+
+
+//------------------------------
+// Per pixel diffuse and specular - Pixel shader
+//
+// Desc :
+//   On top - Renders diffuse and specular part for one light per pixel using Phong's equation
+//   This one is prepared if Constant relative addressing will be available in PS!!!
+//
+// Part of Dimension3 Renderer
+// (c)2003 Michal Valient
+// akka em / STV3 akka  R.A.Y / EastW00D
+//------------------------------
+//
+// Constant registers 
+// c0 - diffuse texture multiplier
+// c1 - specular texture multiplier
+// c2 - specular shininess (shi, shi, shi, 1.0f)
+// c3 - special constants - see below
+// Starting at C4 - light data
+// cIndex+0 - Light's world position
+// cIndex+1 - Projector's matrix 4x4
+// cIndex+5 - Light's color
+//
+// Used input registers
+// v0 - color / bump texture coordinates
+// v1 - light vector in tangent space
+// v2 - eye vector in tangent space
+// v3 - projector texture coordinates
+//
+// Used input texture stages
+// stage0 - ambient texture
+// stage1 - normal texture
+// stage3 - projector texture
+//
+// Output
+// r0 - output color
+//------------------------------
+
+//*
+//This is shader using Phong specular equation
+ps_3_0
+
+def c3, 2.0f, 1.0f, 0.0f, 0.0f
+
+//--[Shader input setup]-----------------------
+dcl_texcoord0 v0.xy                 //texture coordinates
+dcl_position1 v1                    //pixel's world coordinates
+dcl_position2 v2.xyz                //eye vector
+dcl_position3 v3                    //Tangent_To_World matrix 1
+dcl_position4 v4                    //Tangent_To_World matrix 2
+dcl_position5 v5                    //Tangent_To_World matrix 1
+
+dcl_2d      s0                      //diffuse texture (gloss in alpha)
+dcl_2d      s1                      //normal texture
+dcl_2d      s3                      //spotlight texture
+
+//--[Vector setup]-----------------------------
+texld       r0, v0, s1              //load normal
+
+mad         r1, r0, c3.r, -c3.g     //bias normal to range -1,1
+m3x3        r2.xyz, r1, v3          //Transform normal from Tangent to World
+nrm         r11, r2                 //r11 = normalized normal
+
+mov         r1.xyz, v2
+nrm         r9, r1                  //r9 = normalized eye vector
+
+loop aL, i0
+    //This is the light loop
+    sub         r1.xyz, c[aL], v1       //build light vector (Light_Pos - Pixel_Pos)
+    nrm         r10, r1                 //r10 = normalized light vector
+
+    //--[The math]---------------------------------
+    dp3         r0, r11, r10            //r0 = (n.l)
+
+    if_gt       r0.r, c3.b
+        //only do lighting if light faces to point (n.l)>0 <=> angle(n,l)< Pi / 2
+        mul         r1, r0, c3.r            //r1.g = 2*(n.l)
+        mad         r1, r1, r11, -r10       //compute reflectance vector - r1 = 2(n.l)n - l
+        dp3_sat     r1, r1, r9              //r1 = (r.v)
+        pow         r0.g, r1.r, c2.r        //r1 = (r.v)^shi
+
+        texld       r1, v0, s0              //load diffuse and specular texture
+
+        mul         r2, r1.a, r0.g          //specular * gloss
+        mul         r2, r2, c1              //multiply with specular color
+        mul         r2, r2, c[aL+5]         //multiply with light color
+        mul         r3, r1, r0.r            //diffuse * texture
+        mul         r3, r3, c0              //multiply with diffuse color
+        mul         r3, r3, c[aL+5]         //multiply with light color
+        add         r0, r2, r3              //combine it together
+
+        m4x4        r3.xyzw, v1, c[aL+1]    //vertex transform to texture coordinates
+        texldp      r1, r3, s3              //load projector texture (perspective correct)
+        mul         r0, r0, r1              //modulate with spotlight
+
+        mov         oC0, r0                 //color output
+    else
+        //else write blank pixel
+        mov         r0, c3.b
+        mov         oC0, r0                 //color output
+    endif
+endloop
+//*/
+
+/*
+//--[Vector setup]-----------------------------
+texld       r0, v0, s1              //load normal
+
+mad         r1, r0, c3.r, -c3.g   //bias normal to range -1,1
+nrm         r11, r1                 //r11 = normalized normal
+mov         r1.xyz, v1
+nrm         r10, r1                 //r10 = normalized light vector
+mov         r1.xyz, v2
+nrm         r9, r1                  //r9 = normalized eye vector
+
+//--[The math]---------------------------------
+dp3         r0, r11, r10            //r0 = (n.l)
+
+if_gt       r0.r, c3.b
+    //only do lighting if light faces to point (n.l)>0 <=> angle(n,l)< Pi / 2
+    mul         r1, r0, c3.r           //r1.g = 2*(n.l)
+    mad         r1, r1, r11, -r10       //compute reflectance vector - r1 = 2(n.l)n - l
+    dp3_sat     r1, r1, r9              //r1 = (r.v)
+    pow         r0.g, r1.r, c2.r        //r1 = (r.v)^shi
+
+    cmp         r0, r0.r, r0, c3.b     //if (n.l)<0 do not lit anything
+
+    texld       r1, v0, s0              //load diffuse and specular texture
+
+    mul         r2, r1.a, r0.g          //specular * gloss
+    mul         r2, r2, c1              //multiply with specular color and light
+    mul         r3, r1, r0.r            //diffuse * texture
+    mul         r3, r3, c0              //multiply with diffuse color and light
+    add         r0, r2, r3              //combine it together
+
+    texldp      r1, v3, s3              //load projector texture (perspective correct)
+    mul         r0, r0, r1              //modulate with spotlight
+
+    mov         oC0, r0                 //color output
+else
+    //else write blank pixel
+    mov         r0, c3.b
+    mov         oC0, r0                 //color output
+endif
+//*/

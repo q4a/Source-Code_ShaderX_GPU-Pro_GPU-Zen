@@ -1,0 +1,41 @@
+
+
+struct PS_INPUT
+{
+    float4 Position : POSITION;
+	float3 Diffuse	: COLOR0;
+	float3 FogVal	: COLOR1;
+	float2 Tex0  	: TEXCOORD0;
+};
+
+struct PS_OUTPUT
+{
+    float4 Color: COLOR;
+};
+
+float4 colorFog : register(c5);
+
+
+PS_OUTPUT main(const PS_INPUT Input, 
+			   uniform sampler2D	baseTexture
+				)
+{
+
+	// Init output
+    PS_OUTPUT	Out = (PS_OUTPUT) 0; 
+
+	// Retrieve base texture
+	float4 colorBase	= tex2D(baseTexture, Input.Tex0);
+
+	float	f	= Input.FogVal.x;
+
+	// Fog blending
+	Out.Color	= lerp(colorFog, colorBase*2.0f*Input.Diffuse.xyzz, f);
+
+	return Out;
+}
+
+
+
+
+

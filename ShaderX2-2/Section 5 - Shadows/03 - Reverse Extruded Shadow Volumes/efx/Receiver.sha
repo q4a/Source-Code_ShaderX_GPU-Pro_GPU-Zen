@@ -1,0 +1,73 @@
+
+// light position in object (!) space
+vector vLT0;
+
+// transposed world*view*projection transform
+matrix mwvp;
+
+
+// simple point light - no attenuation, etc.
+// c0	-	transposed world*view*proj matrix
+// c4	-	light position in object (!) space
+// c5	-	material*light diffuse color
+
+vertexshader vs = 
+decl
+{
+	stream 0;
+	float v0[3];				// position
+	float v3[3];				// normal
+}
+asm
+{
+	vs.1.1
+
+	// compute point->light vector
+	add	r0.xyz, c4.xyz, -v0.xyz		// r0: LP (point->light vector)
+	dp3	r0.w, r0.xyz, r0.xyz		// r0.w: |LP|^2
+	rsq	r0.w, r0.w					// r0.w: 1/|LP|
+	mul	r0.xyz, r0.xyz, r0.www		// r0: normalized LP
+
+	// dot with normal
+	dp3	r0, r0.xyz, v3.xyz			// r0.w: LP dot N
+
+	// final diffuse
+	mul oD0, c5, r0
+
+	// to projection space
+	m4x4 oPos, v0, c0
+};
+
+
+technique t0
+{
+	pass pLit
+	{
+		vertexshader = <vs>;
+
+		VertexShaderConstant[0]	= <mwvp>;
+		VertexShaderConstant[4] = <vLT0>;
+		VertexShaderConstant[5] = (1.0f,0.5f,0.5f,1.0f);
+
+		AlphaBlendEnable = True;
+		SrcBlend = One;
+		DestBlend = One;
+
+		// shadows from stencil
+		StencilEnable = True;
+		StencilFunc = Equal;
+		StencilRef = 0x0000000;
+		StencilMask = 0xffffffff;
+		StencilWriteMask = 0xffffffff;
+		StencilZFail = Keep;
+		StencilFail = Keep;
+		StencilPass = Keep;
+
+		ZWriteEnable = False;
+		ZFunc = LessEqual;
+
+		ColorOp[0]   = SelectArg1;
+		ColorArg1[0] = Current;
+		ColorOp[1] = Disable;
+	}
+}

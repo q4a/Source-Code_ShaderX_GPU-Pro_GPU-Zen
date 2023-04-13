@@ -1,0 +1,14 @@
+ps_1_4
+def        c0      , 0, 0, 1, 1
+texld      r0      ,   t0          
+texcrd     r1.xyz  ,   t1          
+texcrd     r2.xyz  ,   t2          
+mov        r0.yz   ,   c0          
+dp3        r3.x    ,   r1          ,   r0          
+dp3        r3.yz   ,   r2          ,   r0          
+phase      
+texld      r2      ,   r3          
+texld      r3      ,   t3          
+texld      r4      ,   t4          
+mul_x2_sat r0      ,   r2          ,   r3          
+mul        r0      ,   r0          ,   r4          

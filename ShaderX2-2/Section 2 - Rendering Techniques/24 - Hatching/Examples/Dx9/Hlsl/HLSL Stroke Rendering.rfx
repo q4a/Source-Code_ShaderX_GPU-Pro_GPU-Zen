@@ -1,0 +1,1143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE RENDER_MONKEY [
+    <!ELEMENT RENDER_MONKEY         ( RmEffectWorkspace )?>
+
+    <!ELEMENT RmEffectWorkspace 
+    (
+        RmRegistryBranch?,
+        RmStringVariable*,
+        (
+            ( RmDirectXEffect, RmOpenGLEffect? ) |
+            ( RmOpenGLEffect, RmDirectXEffect? )
+        )?,
+        (
+            RmBooleanVariable |
+            RmFloatVariable |
+            RmVectorVariable |
+            RmMatrixVariable |
+            RmColorVariable |
+            Rm2DTextureVariable |
+            RmCubemapVariable |
+            Rm3DTextureVariable |
+            RmRenderableTexture |
+            RmStreamMap |
+            RmModelData |
+            RmEffectGroup
+        )*
+    )>
+
+    <!ELEMENT RmEffectGroup
+    ( 
+        (
+            RmStringVariable |
+            RmDirectXEffect |
+            RmOpenGLEffect |
+            RmBooleanVariable |
+            RmFloatVariable |
+            RmVectorVariable |
+            RmMatrixVariable |
+            RmColorVariable |
+            Rm2DTextureVariable |
+            RmCubemapVariable |
+            Rm3DTextureVariable |
+            RmRenderableTexture |
+            RmStreamMap |
+            RmModelData
+        )*
+    )>
+
+    <!ELEMENT RmDirectXEffect
+    ( 
+        (
+            RmStringVariable |
+            RmCamera |
+            RmBooleanVariable |
+            RmFloatVariable |
+            RmVectorVariable |
+            RmMatrixVariable |
+            RmColorVariable |
+            Rm2DTextureVariable |
+            RmCubemapVariable |
+            Rm3DTextureVariable |
+            RmRenderableTexture |
+            RmStreamMap |
+            RmModelData |
+            RmPass
+        )*
+    )>
+  
+    <!ELEMENT RmOpenGLEffect
+    (
+        (
+            RmStringVariable |
+            RmCamera |
+            RmBooleanVariable |
+            RmFloatVariable |
+            RmVectorVariable |
+            RmMatrixVariable |
+            RmColorVariable |
+            Rm2DTextureVariable |
+            RmCubemapVariable |
+            Rm3DTextureVariable |
+            RmRenderableTexture |
+            RmStreamMap |
+            RmModelData |
+            RmPass
+        )*
+    )>
+
+    <!ELEMENT RmPass
+    ( 
+        RmStringVariable*,
+        RmCameraReference?,
+        RmModelReference?,
+        RmRenderStateBlock?,
+        (
+            (
+                ( RmHLSLShader | RmShader ),
+                ( RmShader | RmHLSLShader )?
+            ) |
+            ( RmGLShader, RmGLShader? ) 
+        )?,
+        RmRenderTarget?,
+        RmStreamMapReference?,
+        (
+            RmBooleanVariable |
+            RmFloatVariable |
+            RmVectorVariable |
+            RmMatrixVariable |
+            RmColorVariable |
+            Rm2DTextureVariable |
+            RmCubemapVariable |
+            Rm3DTextureVariable |
+            RmTextureObject
+        )*
+    )>
+                                                                                                                               
+    <!ELEMENT RmShader
+    ( 
+        (
+            RmStringVariable |
+            RmShaderConstant |
+            RmSampler
+        )*
+    )>
+
+    <!ELEMENT RmHLSLShader
+    ( 
+        (
+            RmStringVariable |
+            RmShaderConstant |
+            RmSampler
+        )*
+    )>
+
+    <!ELEMENT RmGLShader
+    ( 
+        (
+            RmStringVariable |
+            RmShaderConstant |
+            RmSampler
+        )*
+    )>
+
+    <!ELEMENT RmTextureObject
+    (
+        RmStringVariable*,
+        RmTextureReference?,
+        RmState*
+    )>
+
+    <!ELEMENT RmRenderStateBlock
+    (
+        (
+            RmStringVariable |
+            RmState 
+        )*
+    )>
+
+    <!ELEMENT RmStreamMap
+    (
+        (
+            RmStringVariable |
+            RmStream 
+        )*
+    )>
+
+    <!ELEMENT RmStream              ( RmStreamChannel* )>
+
+    <!ELEMENT RmModelData           ( RmStringVariable* )>
+    <!ELEMENT RmTextureReference    ( RmStringVariable* )>
+    <!ELEMENT RmCameraReference     ( RmStringVariable* )>
+    <!ELEMENT RmModelReference      ( RmStringVariable* )>
+    <!ELEMENT RmStreamMapReference  ( RmStringVariable* )>
+    <!ELEMENT RmRenderableTexture   ( RmStringVariable* )>
+    <!ELEMENT RmRenderTarget        ( RmStringVariable* )>
+    <!ELEMENT RmBooleanVariable     ( RmStringVariable* )>
+    <!ELEMENT RmFloatVariable       ( RmStringVariable* )>
+    <!ELEMENT RmVectorVariable      ( RmStringVariable* )>
+    <!ELEMENT RmMatrixVariable      ( RmStringVariable* )>
+    <!ELEMENT RmColorVariable       ( RmStringVariable* )>
+    <!ELEMENT RmIntegerVariable     ( RmStringVariable* )>
+
+    <!ELEMENT Rm2DTextureVariable   ( RmStringVariable* )>
+    <!ELEMENT RmCubemapVariable     ( RmStringVariable* )>
+    <!ELEMENT Rm3DTextureVariable   ( RmStringVariable* )>
+    <!ELEMENT RmCamera              ( RmStringVariable* )>
+
+    <!ELEMENT RmRegistryBranch
+    ( 
+        RmRegistryBranch |
+        RmStringVariable |
+        RmIntegerVariable |
+        RmBooleanVariable |
+        RmFloatVariable 
+    )*>
+
+    <!ELEMENT RmStringVariable      EMPTY >
+    <!ELEMENT RmStreamChannel       EMPTY >
+    <!ELEMENT RmShaderConstant      EMPTY >
+    <!ELEMENT RmSampler             EMPTY >
+    <!ELEMENT RmState               EMPTY >
+    
+    <!ATTLIST RmEffectWorkspace 
+        NAME                        CDATA #REQUIRED
+        TYPE                        CDATA #REQUIRED
+        API                         CDATA #REQUIRED
+        HIDDEN                      CDATA #REQUIRED
+        GUID                        CDATA #REQUIRED
+        ACTIVE_EFFECT               CDATA #REQUIRED
+        VALIDATION_STRING           CDATA #REQUIRED
+        XML_VERSION                 CDATA #REQUIRED
+    >                               
+                                    
+    <!ATTLIST RmEffectGroup         
+        NAME                        CDATA #REQUIRED
+        TYPE                        CDATA #REQUIRED
+        API                         CDATA #REQUIRED
+        HIDDEN                      CDATA #REQUIRED
+        GUID                        CDATA #REQUIRED
+    >                               
+                                    
+    <!ATTLIST RmDirectXEffect              
+        NAME                        CDATA #REQUIRED
+        TYPE                        CDATA #REQUIRED
+        API                         CDATA #REQUIRED
+        HIDDEN                      CDATA #REQUIRED
+        GUID                        CDATA #REQUIRED
+        ACTIVE_CAMERA               CDATA #REQUIRED
+    >                               
+                                    
+    <!ATTLIST RmOpenGLEffect              
+        NAME                        CDATA #REQUIRED
+        TYPE                        CDATA #REQUIRED
+        API                         CDATA #REQUIRED
+        HIDDEN                      CDATA #REQUIRED
+        GUID                        CDATA #REQUIRED
+        ACTIVE_CAMERA               CDATA #REQUIRED
+    >                               
+                                    
+    <!ATTLIST RmPass                
+        NAME                        CDATA #REQUIRED
+        TYPE                        CDATA #REQUIRED
+        API                         CDATA #REQUIRED
+        HIDDEN                      CDATA #REQUIRED
+        GUID                        CDATA #REQUIRED
+        PASS_INDEX                  CDATA #REQUIRED
+        ENABLED                     CDATA #REQUIRED
+                                    
+    >                               
+                                    
+    <!ATTLIST RmShader        
+        NAME                        CDATA #REQUIRED
+        TYPE                        CDATA #REQUIRED
+        API                         CDATA #REQUIRED
+        HIDDEN                      CDATA #REQUIRED
+        GUID                        CDATA #REQUIRED
+        CODE                        CDATA #REQUIRED
+        PIXEL_SHADER                CDATA #REQUIRED
+    >                               
+                                    
+    <!ATTLIST RmHLSLShader        
+        NAME                        CDATA #REQUIRED
+        TYPE                        CDATA #REQUIRED
+        API                         CDATA #REQUIRED
+        HIDDEN                      CDATA #REQUIRED
+        GUID                        CDATA #REQUIRED
+        CODE                        CDATA #REQUIRED
+        PIXEL_SHADER                CDATA #REQUIRED
+        DECLARATION_BLOCK           CDATA #REQUIRED
+        TARGET                      CDATA #REQUIRED
+        ENTRY_POINT                 CDATA #REQUIRED
+    >  
+                                 
+    <!ATTLIST RmGLShader        
+        NAME                        CDATA #REQUIRED
+        TYPE                        CDATA #REQUIRED
+        API                         CDATA #REQUIRED
+        HIDDEN                      CDATA #REQUIRED
+        GUID                        CDATA #REQUIRED
+        CODE                        CDATA #REQUIRED
+        PIXEL_SHADER                CDATA #REQUIRED
+        DECLARATION_BLOCK           CDATA #REQUIRED
+    >  
+
+    <!ATTLIST RmShaderConstant
+        NAME                        CDATA #REQUIRED
+        TYPE                        CDATA #REQUIRED
+        API                         CDATA #REQUIRED
+        HIDDEN                      CDATA #REQUIRED
+        GUID                        CDATA #REQUIRED
+        REGISTER                    CDATA #REQUIRED
+    >                               
+                                    
+    <!ATTLIST RmSampler             
+        NAME                        CDATA #REQUIRED
+        TYPE                        CDATA #REQUIRED
+        API                         CDATA #REQUIRED
+        HIDDEN                      CDATA #REQUIRED
+        GUID                        CDATA #REQUIRED
+        REGISTER                    CDATA #REQUIRED
+    >
+
+    <!ATTLIST RmTextureObject
+        NAME                        CDATA #REQUIRED
+        TYPE                        CDATA #REQUIRED
+        API                         CDATA #REQUIRED
+        HIDDEN                      CDATA #REQUIRED
+        GUID                        CDATA #REQUIRED
+        STATE_INDEX                 CDATA #REQUIRED
+    >
+
+    <!ATTLIST RmRenderStateBlock
+        NAME                        CDATA #REQUIRED
+        TYPE                        CDATA #REQUIRED
+        API                         CDATA #REQUIRED
+        HIDDEN                      CDATA #REQUIRED
+        GUID                        CDATA #REQUIRED
+    >                               
+                                    
+    <!ATTLIST RmState               
+        NAME                        CDATA #REQUIRED
+        TYPE                        CDATA #REQUIRED
+        API                         CDATA #REQUIRED
+        HIDDEN                      CDATA #REQUIRED
+        GUID                        CDATA #REQUIRED
+        STATE                       CDATA #REQUIRED
+        VALUE                       CDATA #REQUIRED
+        USAGE                       CDATA #REQUIRED
+    >                               
+                                    
+    <!ATTLIST RmStreamMap           
+        NAME                        CDATA #REQUIRED
+        TYPE                        CDATA #REQUIRED
+        API                         CDATA #REQUIRED
+        HIDDEN                      CDATA #REQUIRED
+        GUID                        CDATA #REQUIRED
+    >                               
+                                    
+    <!ATTLIST RmStream              
+        NAME                        CDATA #REQUIRED
+        TYPE                        CDATA #REQUIRED
+        API                         CDATA #REQUIRED
+        HIDDEN                      CDATA #REQUIRED
+        GUID                        CDATA #REQUIRED
+        STRIDE                      CDATA #REQUIRED
+    >
+
+    <!ATTLIST RmStreamChannel
+        NAME                        CDATA #REQUIRED
+        TYPE                        CDATA #REQUIRED
+        API                         CDATA #REQUIRED
+        HIDDEN                      CDATA #REQUIRED
+        GUID                        CDATA #REQUIRED
+        DATA_SIZE                   CDATA #REQUIRED
+        DATA_TYPE                   CDATA #REQUIRED
+        REGISTER                    CDATA #REQUIRED
+        USAGE                       CDATA #REQUIRED
+        USAGE_INDEX                 CDATA #REQUIRED
+    >
+
+    <!ATTLIST RmModelData
+        NAME                        CDATA #REQUIRED
+        TYPE                        CDATA #REQUIRED
+        API                         CDATA #REQUIRED
+        HIDDEN                      CDATA #REQUIRED
+        GUID                        CDATA #REQUIRED
+        FILE_NAME                   CDATA #REQUIRED
+    >
+
+    <!ATTLIST RmTextureReference
+        NAME                        CDATA #REQUIRED
+        TYPE                        CDATA #REQUIRED
+        API                         CDATA #REQUIRED
+        HIDDEN                      CDATA #REQUIRED
+        GUID                        CDATA #REQUIRED
+    >
+
+    <!ATTLIST RmModelReference
+        NAME                        CDATA #REQUIRED
+        TYPE                        CDATA #REQUIRED
+        API                         CDATA #REQUIRED
+        HIDDEN                      CDATA #REQUIRED
+        GUID                        CDATA #REQUIRED
+    >
+
+    <!ATTLIST RmStreamMapReference
+        NAME                        CDATA #REQUIRED
+        TYPE                        CDATA #REQUIRED
+        API                         CDATA #REQUIRED
+        HIDDEN                      CDATA #REQUIRED
+        GUID                        CDATA #REQUIRED
+    >
+
+    <!ATTLIST RmRenderableTexture
+        NAME                        CDATA #REQUIRED
+        TYPE                        CDATA #REQUIRED
+        API                         CDATA #REQUIRED
+        HIDDEN                      CDATA #REQUIRED
+        GUID                        CDATA #REQUIRED
+        WIDTH                       CDATA #REQUIRED
+        HEIGHT                      CDATA #REQUIRED
+        FORMAT                      CDATA #REQUIRED
+        USE_VIEWPORT_DIMENSIONS     CDATA #REQUIRED
+        GENERATE_MIPMAPS            CDATA #REQUIRED
+    >
+
+    <!ATTLIST RmRenderTarget
+        NAME                        CDATA #REQUIRED
+        TYPE                        CDATA #REQUIRED
+        API                         CDATA #REQUIRED
+        HIDDEN                      CDATA #REQUIRED
+        GUID                        CDATA #REQUIRED
+        RENDER_TO_SCREEN            CDATA #REQUIRED
+        COLOR_CLEAR                 CDATA #REQUIRED
+        DEPTH_CLEAR                 CDATA #REQUIRED
+        CLEAR_COLOR_VALUE           CDATA #REQUIRED
+        DEPTH_CLEAR_VALUE           CDATA #REQUIRED
+    >
+
+    <!ATTLIST RmBooleanVariable
+        NAME                        CDATA #REQUIRED
+        TYPE                        CDATA #REQUIRED
+        API                         CDATA #REQUIRED
+        HIDDEN                      CDATA #REQUIRED
+        GUID                        CDATA #REQUIRED
+        ARTIST_EDITABLE             CDATA #REQUIRED
+        VALUE                       CDATA #REQUIRED
+    >
+
+    <!ATTLIST RmFloatVariable
+        NAME                        CDATA #REQUIRED
+        TYPE                        CDATA #REQUIRED
+        API                         CDATA #REQUIRED
+        HIDDEN                      CDATA #REQUIRED
+        GUID                        CDATA #REQUIRED
+        ARTIST_EDITABLE             CDATA #REQUIRED
+        VALUE                       CDATA #REQUIRED
+        MIN                         CDATA #REQUIRED
+        MAX                         CDATA #REQUIRED
+        CLAMP                       CDATA #REQUIRED
+    >
+
+    <!ATTLIST RmVectorVariable
+        NAME                        CDATA #REQUIRED
+        TYPE                        CDATA #REQUIRED
+        API                         CDATA #REQUIRED
+        HIDDEN                      CDATA #REQUIRED
+        GUID                        CDATA #REQUIRED
+        ARTIST_EDITABLE             CDATA #REQUIRED
+        VALUE_0                     CDATA #REQUIRED
+        VALUE_1                     CDATA #REQUIRED
+        VALUE_2                     CDATA #REQUIRED
+        VALUE_3                     CDATA #REQUIRED
+        MIN                         CDATA #REQUIRED
+        MAX                         CDATA #REQUIRED
+        CLAMP                       CDATA #REQUIRED
+        NORMALIZE                   CDATA #REQUIRED
+    >
+
+    <!ATTLIST RmMatrixVariable
+        NAME                        CDATA #REQUIRED
+        TYPE                        CDATA #REQUIRED
+        API                         CDATA #REQUIRED
+        HIDDEN                      CDATA #REQUIRED
+        GUID                        CDATA #REQUIRED
+        ARTIST_EDITABLE             CDATA #REQUIRED
+        VALUE_0                     CDATA #REQUIRED
+        VALUE_1                     CDATA #REQUIRED
+        VALUE_2                     CDATA #REQUIRED
+        VALUE_3                     CDATA #REQUIRED
+        VALUE_4                     CDATA #REQUIRED
+        VALUE_5                     CDATA #REQUIRED
+        VALUE_6                     CDATA #REQUIRED
+        VALUE_7                     CDATA #REQUIRED
+        VALUE_8                     CDATA #REQUIRED
+        VALUE_9                     CDATA #REQUIRED
+        VALUE_10                    CDATA #REQUIRED
+        VALUE_11                    CDATA #REQUIRED
+        VALUE_12                    CDATA #REQUIRED
+        VALUE_13                    CDATA #REQUIRED
+        VALUE_14                    CDATA #REQUIRED
+        VALUE_15                    CDATA #REQUIRED
+    >
+
+    <!ATTLIST RmColorVariable
+        NAME                        CDATA #REQUIRED
+        TYPE                        CDATA #REQUIRED
+        API                         CDATA #REQUIRED
+        HIDDEN                      CDATA #REQUIRED
+        GUID                        CDATA #REQUIRED
+        ARTIST_EDITABLE             CDATA #REQUIRED
+        VALUE_0                     CDATA #REQUIRED
+        VALUE_1                     CDATA #REQUIRED
+        VALUE_2                     CDATA #REQUIRED
+        VALUE_3                     CDATA #REQUIRED
+    >
+
+    <!ATTLIST RmIntegerVariable
+        NAME                        CDATA #REQUIRED
+        TYPE                        CDATA #REQUIRED
+        API                         CDATA #REQUIRED
+        HIDDEN                      CDATA #REQUIRED
+        GUID                        CDATA #REQUIRED
+        ARTIST_EDITABLE             CDATA #REQUIRED
+        VALUE                       CDATA #REQUIRED
+        MIN                         CDATA #REQUIRED
+        MAX                         CDATA #REQUIRED
+        CLAMP                       CDATA #REQUIRED
+    >
+
+    <!ATTLIST RmBooleanVariable
+        NAME                        CDATA #REQUIRED
+        TYPE                        CDATA #REQUIRED
+        API                         CDATA #REQUIRED
+        HIDDEN                      CDATA #REQUIRED
+        GUID                        CDATA #REQUIRED
+        ARTIST_EDITABLE             CDATA #REQUIRED
+        VALUE                       CDATA #REQUIRED
+    >
+
+    <!ATTLIST RmStringVariable
+        NAME                        CDATA #REQUIRED
+        TYPE                        CDATA #REQUIRED
+        API                         CDATA #REQUIRED
+        HIDDEN                      CDATA #REQUIRED
+        GUID                        CDATA #REQUIRED
+        ARTIST_EDITABLE             CDATA #REQUIRED
+        VALUE                       CDATA #REQUIRED
+    >
+
+    <!ATTLIST Rm2DTextureVariable
+        NAME                        CDATA #REQUIRED
+        TYPE                        CDATA #REQUIRED
+        API                         CDATA #REQUIRED
+        HIDDEN                      CDATA #REQUIRED
+        GUID                        CDATA #REQUIRED
+        ARTIST_EDITABLE             CDATA #REQUIRED
+        FILE_NAME                   CDATA #REQUIRED
+    >
+
+    <!ATTLIST RmCubemapVariable
+        NAME                        CDATA #REQUIRED
+        TYPE                        CDATA #REQUIRED
+        API                         CDATA #REQUIRED
+        HIDDEN                      CDATA #REQUIRED
+        GUID                        CDATA #REQUIRED
+        ARTIST_EDITABLE             CDATA #REQUIRED
+        FILE_NAME                   CDATA #REQUIRED
+    >
+
+    <!ATTLIST Rm3DTextureVariable
+        NAME                        CDATA #REQUIRED
+        TYPE                        CDATA #REQUIRED
+        API                         CDATA #REQUIRED
+        HIDDEN                      CDATA #REQUIRED
+        GUID                        CDATA #REQUIRED
+        ARTIST_EDITABLE             CDATA #REQUIRED
+        FILE_NAME                   CDATA #REQUIRED
+    >
+
+    <!ATTLIST RmRegistryBranch
+        NAME                        CDATA #REQUIRED
+        TYPE                        CDATA #REQUIRED
+        API                         CDATA #REQUIRED
+        HIDDEN                      CDATA #REQUIRED
+        GUID                        CDATA #REQUIRED
+    >
+
+    <!ATTLIST RmCamera              
+        NAME                        CDATA #REQUIRED
+        TYPE                        CDATA #REQUIRED
+        API                         CDATA #REQUIRED
+        HIDDEN                      CDATA #REQUIRED
+        GUID                        CDATA #REQUIRED
+        CAMERA_POSITION_X           CDATA #REQUIRED
+        CAMERA_POSITION_Y           CDATA #REQUIRED
+        CAMERA_POSITION_Z           CDATA #REQUIRED
+        LOOK_AT_VECTOR_X            CDATA #REQUIRED
+        LOOK_AT_VECTOR_Y            CDATA #REQUIRED
+        LOOK_AT_VECTOR_Z            CDATA #REQUIRED
+        UP_VECTOR_X                 CDATA #REQUIRED
+        UP_VECTOR_Y                 CDATA #REQUIRED
+        UP_VECTOR_Z                 CDATA #REQUIRED
+        FOV                         CDATA #REQUIRED
+        NEAR_CLIP_PLANE             CDATA #REQUIRED
+        FAR_CLIP_PLANE              CDATA #REQUIRED
+    >                               
+
+    <!ATTLIST RmCameraReference              
+        NAME                        CDATA #REQUIRED
+        TYPE                        CDATA #REQUIRED
+        API                         CDATA #REQUIRED
+        HIDDEN                      CDATA #REQUIRED
+        GUID                        CDATA #REQUIRED
+        USE_ACTIVE_CAMERA           CDATA #REQUIRED
+    >                               
+]>
+<RENDER_MONKEY>
+   <RmEffectWorkspace NAME="Stroke Rendering" TYPE="RmEffectWorkspace" API="None" HIDDEN="FALSE" GUID="7e85d0bb-7311-4a9c-9991-1b5067bdfdaf" ACTIVE_EFFECT="Pointillistic Butterfly HLSL" VALIDATION_STRING="" XML_VERSION="RenderMonkey 1.0">
+      <RmRegistryBranch NAME="RM_REGISTRY" TYPE="RmRegistryBranch" API="None" HIDDEN="TRUE" GUID="c888764c-1db6-40a5-817e-3d25b49f45f8">
+         <RmRegistryBranch NAME="RM_LOCAL" TYPE="RmRegistryBranch" API="None" HIDDEN="TRUE" GUID="80376d1f-d9c4-4287-bd28-e004311d703d">
+            <RmRegistryBranch NAME="WORKSPACE" TYPE="RmRegistryBranch" API="None" HIDDEN="TRUE" GUID="95c16e68-42ff-4def-8c7c-8c8f64438054">
+               <RmStringVariable NAME="LAST_SAVE" TYPE="RmStringVariable" API="None" HIDDEN="TRUE" GUID="0da84ef5-6de5-4669-b16e-18aba4866fa6" ARTIST_EDITABLE="FALSE" VALUE="13/10/2003 17:41:23"/>
+               <RmStringVariable NAME="VERSION" TYPE="RmStringVariable" API="None" HIDDEN="TRUE" GUID="cbe3d9ed-db31-4d66-abcc-17c996a26c6c" ARTIST_EDITABLE="FALSE" VALUE="RenderMonkey version 1.0 (build 39)"/>
+               <RmStringVariable NAME="XML_VERSION" TYPE="RmStringVariable" API="None" HIDDEN="TRUE" GUID="b1e49947-44aa-4dfd-90ab-591b1eb69dba" ARTIST_EDITABLE="FALSE" VALUE="RenderMonkey 1.0"/>
+               <RmStringVariable NAME="BASE_WORKSPACE_PATH" TYPE="RmStringVariable" API="None" HIDDEN="TRUE" GUID="0a6263c8-e2ba-430c-9dc0-74848caf7970" ARTIST_EDITABLE="FALSE" VALUE="C:\Programme\ATI Technologies\RenderMonkey\v1.0\Examples\Dx9\Hlsl\"/>
+            </RmRegistryBranch>
+         </RmRegistryBranch>
+      </RmRegistryBranch>
+      <RmEffectGroup NAME="Threshold Hatching Effect Group" TYPE="RmEffectGroup" API="None" HIDDEN="FALSE" GUID="d85c415f-537c-4589-b3ac-7be3eae7a290">
+         <RmDirectXEffect NAME="specular highlight lookup" TYPE="RmDirectXEffect" API="D3D" HIDDEN="FALSE" GUID="18bb88e7-0636-46c6-b711-8f03c599f54f" ACTIVE_CAMERA="">
+            <RmPass NAME="Pass 1" TYPE="RmPass" API="D3D" HIDDEN="FALSE" GUID="31ef33ea-8182-4ac5-acd5-f721757708a8" PASS_INDEX="0" ENABLED="TRUE">
+               <RmModelReference NAME="model" TYPE="RmModelReference" API="None" HIDDEN="FALSE" GUID="813e9957-c5cb-4a27-a934-a7f37cc6d585"/>
+               <RmHLSLShader NAME="vs" TYPE="RmHLSLShader" API="D3D" HIDDEN="FALSE" GUID="bba5c747-3375-4205-b0b1-91d6de566833" CODE="struct VS_OUTPUT&#xA;{&#xA;   float4 Pos    : POSITION;&#xA;   float2 Tex0   : TEXCOORD0;&#xA;   float2 Tex3   : TEXCOORD3;&#xA;   float3 Norm   : TEXCOORD5;&#xA;   float3 View   : TEXCOORD6;&#xA;   float3 Light  : TEXCOORD7;&#xA;};&#xA;VS_OUTPUT main( &#xA;   float4 inPos  : POSITION,&#xA;   float3 inNorm : NORMAL,&#xA;   float2 Tex  : TEXCOORD0 )&#xA;{&#xA;   VS_OUTPUT Out = (VS_OUTPUT) 0; &#xA;&#xA;   // Output transformed position:&#xA;   Out.Pos = mul( view_proj_matrix, inPos ); &#xA;   &#xA;   // Output light vector:&#xA;   Out.Light = -normalize(lightDir);&#xA;&#xA;   // Compute position in view space:&#xA;   float3 Pview = mul( view_matrix, inPos ); &#xA;&#xA;   // Transform the input normal to view space:&#xA;   Out.Norm = normalize( mul( view_matrix, inNorm ) );   &#xA; &#xA;   // Compute the view direction in view space:&#xA;   Out.View = - normalize( Pview );&#xA;&#xA;   // Propagate the texture coordinates for the object:&#xA;   Out.Tex0 = texture_scale.xx*float2(-Tex.x, Tex.y);&#xA;   Out.Tex3 = texture_scale.xx*float2(-Tex.y, -Tex.x) + offset1.xy;&#xA;&#xA;   return Out;&#xA;}&#xA;" PIXEL_SHADER="FALSE" DECLARATION_BLOCK="float4x4 view_proj_matrix;&#xA;float4x4 view_matrix;&#xA;float4 lightDir;&#xA;float4 offset0;&#xA;float4 offset1;&#xA;float texture_scale;&#xA;" TARGET="vs_1_1" ENTRY_POINT="main">
+                  <RmShaderConstant NAME="view_proj_matrix" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="8fe3d735-57fb-47e0-9b59-8e52b177a79b" REGISTER="-1"/>
+                  <RmShaderConstant NAME="view_matrix" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="0ef073ed-0e3b-474b-b31e-f5403e5a8667" REGISTER="-1"/>
+                  <RmShaderConstant NAME="lightDir" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="676a8eea-813a-4578-8f3a-7ccdd4597067" REGISTER="-1"/>
+                  <RmShaderConstant NAME="offset0" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="d4dbaa0b-74da-49f5-98a2-943f728add05" REGISTER="-1"/>
+                  <RmShaderConstant NAME="offset1" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="27aeeb75-9990-4465-ac26-175b9a8acc6d" REGISTER="-1"/>
+                  <RmShaderConstant NAME="texture_scale" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="348096b0-e494-421e-857a-b7f5e14cb01c" REGISTER="-1"/>
+               </RmHLSLShader>
+               <RmHLSLShader NAME="ps" TYPE="RmHLSLShader" API="D3D" HIDDEN="FALSE" GUID="b1a67e3e-1612-4c4a-9fe8-d6bc2fcc1844" CODE="float4 main( float4 Diff   : COLOR0,&#xA;   float2 Tex0   : TEXCOORD0,&#xA;   float2 Tex3   : TEXCOORD3,&#xA;   float3 Normal   : TEXCOORD5,&#xA;   float3 View   : TEXCOORD6,&#xA;   float3 Light  : TEXCOORD7 ) : COLOR&#xA;{&#xA;   // Compute lighting&#xA;   float3 vReflect = normalize( 2 * dot( Normal, Light) * Normal - Light );       &#xA;   float4 AmbientColor = ambient;&#xA;   float4 DiffuseColor = Kd * max( 0, dot( Normal, Light ));&#xA;   float4 SpecularColor = Ks * pow( max( 0, dot(vReflect, View)), n_specular );&#xA; &#xA;   // Compute Strokes&#xA;   float4 lookup = tex2D(threshold_lookup, Tex0);&#xA;   lookup.xy = (lookup.xy - 0.25)*2;&#xA;   float2 stroke = tex2D(index, Tex0);&#xA;   float4 stroke_color = tex2D(long_stroke, lookup.xy);&#xA;&#xA;   float fade_in = max(0, max(stroke.y - 0.95, 0.05 - stroke.y)*20);&#xA;  &#xA;   bool stroke_flag = (lookup.w &gt; 0.9)&amp;&amp;((lookup.z/6.0 &gt; DiffuseColor.x-0.2)||(lookup.z/6.0 &lt; SpecularColor.x - 0.1));&#xA;&#xA;   float4 drawing_color = (lookup.z/6.0 &lt; SpecularColor.x - 0.1) ? specular : diffuse; &#xA;&#xA;   float4 color = stroke_flag ? lerp(AmbientColor, drawing_color, fade_in*(1-stroke_color)) : AmbientColor;&#xA;&#xA;   lookup = tex2D(threshold_lookup, Tex3);&#xA;   lookup.xy = (lookup.xy - 0.25)*2;&#xA;   stroke = tex2D(index, Tex3);&#xA;   stroke_color = tex2D(long_stroke, lookup.xy);&#xA;   fade_in = max(0, max(stroke.y - 0.95, 0.05 - stroke.y)*20);&#xA;   stroke_flag = (lookup.w &gt; 0.9) &amp;&amp; (lookup.z/6.0 &gt; DiffuseColor.x);&#xA;   color = stroke_flag ?  lerp(color, diffuse, fade_in*(1-stroke_color)) : color;&#xA;&#xA;   return color;&#xA;}&#xA;&#xA;" PIXEL_SHADER="TRUE" DECLARATION_BLOCK="float4 specular;&#xA;float n_specular;&#xA;float Ks;&#xA;float Kd;&#xA;float Ka;&#xA;float4 diffuse;&#xA;float4 ambient;&#xA;sampler index;&#xA;sampler long_stroke;&#xA;sampler short_stroke;&#xA;sampler threshold_lookup;&#xA;" TARGET="ps_2_0" ENTRY_POINT="main">
+                  <RmSampler NAME="index" TYPE="RmSampler" API="None" HIDDEN="TRUE" GUID="0f65407f-4102-40f2-b3e7-432cc1341c3d" REGISTER="-1"/>
+                  <RmSampler NAME="long_stroke" TYPE="RmSampler" API="None" HIDDEN="TRUE" GUID="1986b10c-4bb5-4a4a-9266-9c34f8203c7f" REGISTER="-1"/>
+                  <RmSampler NAME="short_stroke" TYPE="RmSampler" API="None" HIDDEN="TRUE" GUID="8f4ba03e-03ec-4493-bf15-02fbba5f0a23" REGISTER="-1"/>
+                  <RmSampler NAME="threshold_lookup" TYPE="RmSampler" API="None" HIDDEN="TRUE" GUID="ed9abb4e-80a9-46f0-84d9-b24c98f4a0d8" REGISTER="-1"/>
+                  <RmShaderConstant NAME="specular" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="4e1cee4e-2873-49eb-bfb7-f8e0feecf2a8" REGISTER="-1"/>
+                  <RmShaderConstant NAME="n_specular" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="f0633f31-4c2d-42c5-b3f5-09ba0fcced7a" REGISTER="-1"/>
+                  <RmShaderConstant NAME="Ks" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="2f85975b-d041-4990-a8d1-19fab79de4a3" REGISTER="-1"/>
+                  <RmShaderConstant NAME="Kd" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="4487fd68-d0b3-44bb-a2e0-fbf072f46ab8" REGISTER="-1"/>
+                  <RmShaderConstant NAME="Ka" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="109434e2-7a4f-457a-9420-c890677b35cd" REGISTER="-1"/>
+                  <RmShaderConstant NAME="diffuse" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="75c4ff0d-4a34-46da-8044-e3f0cad9a39b" REGISTER="-1"/>
+                  <RmShaderConstant NAME="ambient" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="1d24bbfd-e635-4494-b8cf-c62592d66fde" REGISTER="-1"/>
+               </RmHLSLShader>
+               <RmStreamMapReference NAME="Stream Mapping" TYPE="RmStreamMapReference" API="None" HIDDEN="FALSE" GUID="234496c9-5638-4e29-951c-04aa64854b1a"/>
+               <RmTextureObject NAME="long_stroke" TYPE="RmTextureObject" API="D3D" HIDDEN="FALSE" GUID="7b12ff42-2a5c-4375-8810-8585c3f1b320" STATE_INDEX="1">
+                  <RmTextureReference NAME="long_stroke" TYPE="RmTextureReference" API="None" HIDDEN="FALSE" GUID="4a34f0ac-424f-4a90-aaa8-46e3c8fc169f"/>
+                  <RmState NAME="D3DSAMP_ADDRESSU" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="d5dd419e-ad35-4f99-8d0f-2e5d57ba6e54" STATE="1" VALUE="4" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_ADDRESSV" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="ab1dbc31-bb29-4419-8353-9e3a6c9ab04d" STATE="2" VALUE="4" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_BORDERCOLOR" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="3783b8fd-b076-4b93-bc32-bee4a1cc1077" STATE="4" VALUE="2147483647" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MAGFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="4cbe629c-f38a-4295-8b88-dbd9795c74c8" STATE="5" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MINFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="a75e7264-7f5e-4368-9be9-793e9df011e5" STATE="6" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MIPFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="354149b4-77b4-449c-9c0e-d931b4804779" STATE="7" VALUE="3" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MIPMAPLODBIAS" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="77719132-6226-4760-9c2a-28d29d07566a" STATE="8" VALUE="-1.000000" USAGE="SAMPLER_STATE"/>
+               </RmTextureObject>
+               <RmTextureObject NAME="short_stroke" TYPE="RmTextureObject" API="D3D" HIDDEN="FALSE" GUID="169c2443-3c9f-43ff-97aa-27e5db360f17" STATE_INDEX="2">
+                  <RmTextureReference NAME="short_stroke" TYPE="RmTextureReference" API="None" HIDDEN="FALSE" GUID="61906678-7d6b-467c-97b2-064d83901173"/>
+                  <RmState NAME="D3DSAMP_ADDRESSU" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="a2333e29-235c-403b-a9c6-226fd5a11180" STATE="1" VALUE="4" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_ADDRESSV" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="8d09a098-8387-4ac3-a27d-3e5e1d2d7939" STATE="2" VALUE="4" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_BORDERCOLOR" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="99b34381-0dd8-455d-9c56-3dec6e08b9b5" STATE="4" VALUE="2147483647" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MAGFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="6b5284a1-fe81-4aa2-a890-1350a519c701" STATE="5" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MINFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="b29a4e72-a0d9-48f0-826e-188fcd57d8af" STATE="6" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MIPFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="7f02020e-b072-472a-bdd4-905ff130b992" STATE="7" VALUE="3" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MIPMAPLODBIAS" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="95f4762b-a2f0-4eb1-91e7-accf04204c57" STATE="8" VALUE="-1.000000" USAGE="SAMPLER_STATE"/>
+               </RmTextureObject>
+               <RmTextureObject NAME="index" TYPE="RmTextureObject" API="D3D" HIDDEN="FALSE" GUID="b1e511fd-a67f-448c-9c75-4f98df3e945a" STATE_INDEX="3">
+                  <RmTextureReference NAME="index" TYPE="RmTextureReference" API="None" HIDDEN="FALSE" GUID="c503f2ed-6eb5-45a5-8d34-3c0b721c16e6"/>
+                  <RmState NAME="D3DSAMP_ADDRESSU" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="c82d43df-24d7-4c82-91b2-134ab3284365" STATE="1" VALUE="1" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_ADDRESSV" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="1018e6e3-9e01-427d-a4d9-354c5ae33a8c" STATE="2" VALUE="1" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_ADDRESSW" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="9e1dc141-ab84-464d-8fe1-7abd517b26d5" STATE="3" VALUE="3" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MAGFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="87cc0d4c-35fd-4fc4-bfe2-1e18f501b2e7" STATE="5" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MINFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="f8ec828f-1ef3-4dfa-aad3-604c68aa05d0" STATE="6" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MIPFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="8d41bfa9-4969-4d40-8444-d5e2d3e832ee" STATE="7" VALUE="3" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MIPMAPLODBIAS" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="997e6740-46cc-44c3-9e73-0382d5151979" STATE="8" VALUE="-1.000000" USAGE="SAMPLER_STATE"/>
+               </RmTextureObject>
+               <RmTextureObject NAME="threshold_lookup" TYPE="RmTextureObject" API="D3D" HIDDEN="FALSE" GUID="29a0230c-b2e0-42d9-8abe-e8d3c4595f11" STATE_INDEX="0">
+                  <RmTextureReference NAME="threshold_lookup" TYPE="RmTextureReference" API="None" HIDDEN="FALSE" GUID="64ff15ca-be8f-4d1b-ba19-31f361b44801"/>
+                  <RmState NAME="D3DSAMP_ADDRESSU" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="3f72a6b3-f251-44a9-a9b5-e6bb8b19675a" STATE="1" VALUE="1" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_ADDRESSV" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="07f23f83-7136-4d70-93f3-148826b216af" STATE="2" VALUE="1" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_ADDRESSW" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="d4c00da7-e7fd-4d30-bc54-75ec86d359dc" STATE="3" VALUE="3" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MAGFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="00c57c4c-e927-4739-beca-7003f7806334" STATE="5" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MINFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="a790d148-f222-4ed8-80a6-97191d23ae46" STATE="6" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MIPFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="e45d73ef-ecea-452c-bb94-b739ff4a50eb" STATE="7" VALUE="3" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MIPMAPLODBIAS" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="4232919a-7d30-4cbc-b02d-aa56be7ab732" STATE="8" VALUE="-1.000000" USAGE="SAMPLER_STATE"/>
+               </RmTextureObject>
+            </RmPass>
+         </RmDirectXEffect>
+         <RmDirectXEffect NAME="lookup hatching" TYPE="RmDirectXEffect" API="D3D" HIDDEN="FALSE" GUID="3de1c5dc-b31d-4e49-beec-9e78b560e263" ACTIVE_CAMERA="">
+            <RmPass NAME="Pass 1" TYPE="RmPass" API="D3D" HIDDEN="FALSE" GUID="ec1cea44-b0b6-48f2-8916-d8f341a72ece" PASS_INDEX="0" ENABLED="TRUE">
+               <RmModelReference NAME="model" TYPE="RmModelReference" API="None" HIDDEN="FALSE" GUID="4484b790-e39d-49a0-9f28-419dec2f0ef4"/>
+               <RmHLSLShader NAME="vs" TYPE="RmHLSLShader" API="D3D" HIDDEN="FALSE" GUID="b65bfa77-a954-40fa-ae37-d16a29f4ebb4" CODE="struct VS_OUTPUT&#xA;{&#xA;   float4 Pos  : POSITION;&#xA;   float4 Diff : COLOR0;&#xA;   float2 Tex0 : TEXCOORD0;&#xA;   float2 Tex1 : TEXCOORD1;&#xA;   float2 Tex3 : TEXCOORD3;&#xA;};&#xA;VS_OUTPUT main( &#xA;   float4 Pos: POSITION,&#xA;   float3 Norm : NORMAL,&#xA;   float2 Tex : TEXCOORD0 )&#xA;{&#xA;   VS_OUTPUT Out = (VS_OUTPUT) 0; &#xA;   float3 L = -normalize(lightDir);&#xA;&#xA;   float3 N = normalize(mul(view_matrix, Norm)); // normal (view space)&#xA;&#xA;   Out.Pos = mul(view_proj_matrix, Pos); &#xA;   Out.Diff = max(0, dot(N, L)); // diffuse&#xA;&#xA;   // Propagate the texture coordinates for the object:&#xA;   Out.Tex0 = texture_scale.xx*float2(-Tex.x, Tex.y);&#xA;   Out.Tex1 = texture_scale.xx*float2(-Tex.x, Tex.y) + offset0.xy;&#xA;   Out.Tex3 = texture_scale.xx*float2(-Tex.y, -Tex.x) + offset1.xy;&#xA;&#xA;   return Out;&#xA;}&#xA;" PIXEL_SHADER="FALSE" DECLARATION_BLOCK="float4x4 view_proj_matrix;&#xA;float4x4 view_matrix;&#xA;float texture_scale;&#xA;float4 offset0;&#xA;float4 offset1;&#xA;float4 lightDir;&#xA;" TARGET="vs_1_1" ENTRY_POINT="main">
+                  <RmShaderConstant NAME="view_proj_matrix" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="91dad25c-f43a-4c32-a64a-793cf16465fb" REGISTER="-1"/>
+                  <RmShaderConstant NAME="view_matrix" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="04e390b8-0098-4e5a-9cb1-2b4f80e27833" REGISTER="-1"/>
+                  <RmShaderConstant NAME="texture_scale" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="72108482-3bc9-4512-831d-b197820071b9" REGISTER="-1"/>
+                  <RmShaderConstant NAME="offset0" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="2d5e899c-6f87-4262-aaa2-dd2c43ec3dd4" REGISTER="-1"/>
+                  <RmShaderConstant NAME="offset1" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="b4de42ed-347c-41b6-a954-749235c4bb81" REGISTER="-1"/>
+                  <RmShaderConstant NAME="lightDir" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="7cd0c4e5-aa14-48a3-b926-eea2e6a486fd" REGISTER="-1"/>
+               </RmHLSLShader>
+               <RmHLSLShader NAME="ps" TYPE="RmHLSLShader" API="D3D" HIDDEN="FALSE" GUID="aa511144-2bca-4cdf-ab0b-a3d50e0149ca" CODE="float4 getStrokeColor(float2 texCoord, float threshold) {&#xA;   float4 lookup = tex2D(threshold_lookup, texCoord);&#xA;   lookup.xy = (lookup.xy - 0.25)*2;&#xA;&#xA;   float2 stroke = tex2D(index, texCoord);&#xA;   float4 stroke_color = (stroke.x &lt; 0.5) ? tex2D(short_stroke, lookup.xy) : tex2D(long_stroke, lookup.xy);&#xA;&#xA;   float fade_in = max(stroke.y - 0.95, 0.05 - stroke.y)*20;&#xA;   bool stroke_flag = (lookup.w &gt; 0.9) &amp;&amp; (lookup.z/6.0 &gt; threshold);&#xA;   stroke_color = stroke_flag ? lerp(float4(1.0, 1.0, 1.0, 1.0), stroke_color, fade_in) : float4(1.0, 1.0, 1.0, 1.0);&#xA; &#xA;   return  stroke_color;&#xA;}&#xA;&#xA;float4 main(    &#xA;   float2 Tex0  : TEXCOORD0,&#xA;   float2 Tex1  : TEXCOORD1,&#xA;   float2 Tex3  : TEXCOORD3,&#xA;   float4 Diff : COLOR0 ) : COLOR&#xA;{&#xA;   float4 color = getStrokeColor(Tex0, Diff.x - 0.65);&#xA;   color *= getStrokeColor(Tex1, Diff.x - 0.5);&#xA;   color *= getStrokeColor(Tex3, Diff.x - 0.3);&#xA;&#xA;   return color; &#xA;&#xA;}&#xA;&#xA;&#xA;" PIXEL_SHADER="TRUE" DECLARATION_BLOCK="sampler index;&#xA;sampler long_stroke;&#xA;sampler short_stroke;&#xA;sampler threshold_lookup;&#xA;" TARGET="ps_2_0" ENTRY_POINT="main">
+                  <RmSampler NAME="index" TYPE="RmSampler" API="None" HIDDEN="TRUE" GUID="36a52969-b7c5-48fa-a671-b06e1dc6c9cf" REGISTER="-1"/>
+                  <RmSampler NAME="long_stroke" TYPE="RmSampler" API="None" HIDDEN="TRUE" GUID="8bfe6826-1e4c-46b3-b5a7-cd4d420d2721" REGISTER="-1"/>
+                  <RmSampler NAME="short_stroke" TYPE="RmSampler" API="None" HIDDEN="TRUE" GUID="60aa5a3e-e408-4972-a349-57cc4cf4b4d2" REGISTER="-1"/>
+                  <RmSampler NAME="threshold_lookup" TYPE="RmSampler" API="None" HIDDEN="TRUE" GUID="16890cd9-820d-42df-8e04-0505dfbf664a" REGISTER="-1"/>
+               </RmHLSLShader>
+               <RmStreamMapReference NAME="Stream Mapping" TYPE="RmStreamMapReference" API="None" HIDDEN="FALSE" GUID="f30976d5-c835-4e8a-a29f-a66dabef60e8"/>
+               <RmTextureObject NAME="long_stroke" TYPE="RmTextureObject" API="D3D" HIDDEN="FALSE" GUID="2ca39f57-d79d-4630-8807-bd8e593a1cb2" STATE_INDEX="1">
+                  <RmTextureReference NAME="long_stroke" TYPE="RmTextureReference" API="None" HIDDEN="FALSE" GUID="e4ea5eae-dbb3-4466-91d7-d527ff7c8938"/>
+                  <RmState NAME="D3DSAMP_ADDRESSU" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="4f86b10f-2d3b-423f-8d62-815df3623e64" STATE="1" VALUE="4" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_ADDRESSV" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="b3151198-e73f-4e1b-9632-46f58a8a166c" STATE="2" VALUE="4" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_BORDERCOLOR" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="9e7ed495-373b-461a-b018-94bad9d4981c" STATE="4" VALUE="2147483647" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MAGFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="637d3e37-8562-432b-bffb-be6e117c9838" STATE="5" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MINFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="ae167908-22c1-4cbb-bc52-18327744f556" STATE="6" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MIPFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="44eecb0c-e289-46bf-9285-169ff6d40b0b" STATE="7" VALUE="3" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MIPMAPLODBIAS" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="15c8771d-26e9-44fe-8cb0-8c0ac729e2bb" STATE="8" VALUE="-1.000000" USAGE="SAMPLER_STATE"/>
+               </RmTextureObject>
+               <RmTextureObject NAME="short_stroke" TYPE="RmTextureObject" API="D3D" HIDDEN="FALSE" GUID="03de78ce-65df-4ee7-bf49-0f80a81c443c" STATE_INDEX="2">
+                  <RmTextureReference NAME="short_stroke" TYPE="RmTextureReference" API="None" HIDDEN="FALSE" GUID="fca304e2-b023-4283-9199-9c6e42aca326"/>
+                  <RmState NAME="D3DSAMP_ADDRESSU" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="74b009ce-5cf6-477c-8b73-e772ec38c060" STATE="1" VALUE="4" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_ADDRESSV" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="53498892-cee6-4a9b-bea8-4e7f469887bc" STATE="2" VALUE="4" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_BORDERCOLOR" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="f0ad80b1-1398-4922-abb5-cc4d9f9d0ad8" STATE="4" VALUE="2147483647" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MAGFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="480c8d96-f7ad-4156-b546-00d20f46e35c" STATE="5" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MINFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="021cc908-9563-4d53-a452-40e56b0add89" STATE="6" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MIPFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="ae309858-2efb-48df-b903-bf9220bdf69f" STATE="7" VALUE="3" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MIPMAPLODBIAS" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="5dccb5e9-6e4d-49d4-8bb9-3d721ca46a03" STATE="8" VALUE="-1.000000" USAGE="SAMPLER_STATE"/>
+               </RmTextureObject>
+               <RmTextureObject NAME="index" TYPE="RmTextureObject" API="D3D" HIDDEN="FALSE" GUID="d4859274-a165-4a7b-9a56-b075aabdcdac" STATE_INDEX="3">
+                  <RmTextureReference NAME="index" TYPE="RmTextureReference" API="None" HIDDEN="FALSE" GUID="5b40f3a8-bf1a-422c-bc79-ecc409625f2a"/>
+                  <RmState NAME="D3DSAMP_ADDRESSU" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="c5507155-58da-4219-a278-17ccb3032535" STATE="1" VALUE="1" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_ADDRESSV" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="27e76b5b-4616-48ac-8174-bbc22f65129a" STATE="2" VALUE="1" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_ADDRESSW" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="ba6a1ad1-73f4-415d-98c4-e081288f963c" STATE="3" VALUE="3" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MAGFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="8ff02f49-4451-4f4e-84d7-ae8d8cd9107f" STATE="5" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MINFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="ee0ecfe3-291c-49ee-bbdf-f638252c84f9" STATE="6" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MIPFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="5a831cd5-ec38-496b-927d-2deacd56c4f4" STATE="7" VALUE="3" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MIPMAPLODBIAS" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="53fa23d6-8f0e-4a45-b54b-bbc71382163a" STATE="8" VALUE="-1.000000" USAGE="SAMPLER_STATE"/>
+               </RmTextureObject>
+               <RmTextureObject NAME="threshold_lookup" TYPE="RmTextureObject" API="D3D" HIDDEN="FALSE" GUID="d3828bc0-620b-48f3-adda-31c9cb128c9a" STATE_INDEX="0">
+                  <RmTextureReference NAME="threshold_lookup" TYPE="RmTextureReference" API="None" HIDDEN="FALSE" GUID="7d603828-cf50-4d50-b6d2-589f98d69a9b"/>
+                  <RmState NAME="D3DSAMP_ADDRESSU" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="c4300c12-5406-4e88-bdff-f32557ab8382" STATE="1" VALUE="1" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_ADDRESSV" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="7038d064-8ba8-4256-81d6-da6a7ab5055f" STATE="2" VALUE="1" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_ADDRESSW" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="f285727a-43a4-420a-b888-13201819fd6b" STATE="3" VALUE="3" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MAGFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="95fe30bb-9af0-4876-b65c-8d6e68ea971b" STATE="5" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MINFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="9e8148eb-bb97-4f14-b95c-f7ecbf630e2a" STATE="6" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MIPFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="902c2aa6-a941-43e5-bc15-d996fbb2e9a9" STATE="7" VALUE="3" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MIPMAPLODBIAS" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="ba578058-5fb2-43da-90c3-4d92aa559715" STATE="8" VALUE="-1.000000" USAGE="SAMPLER_STATE"/>
+               </RmTextureObject>
+            </RmPass>
+         </RmDirectXEffect>
+         <RmDirectXEffect NAME="threshold hatching" TYPE="RmDirectXEffect" API="D3D" HIDDEN="FALSE" GUID="066946a9-f587-4ac3-b2ef-11d82bd4af8d" ACTIVE_CAMERA="">
+            <RmPass NAME="Pass 1" TYPE="RmPass" API="D3D" HIDDEN="FALSE" GUID="1a7c879a-5265-4591-b152-43a57f3d12a1" PASS_INDEX="0" ENABLED="TRUE">
+               <RmModelReference NAME="model" TYPE="RmModelReference" API="None" HIDDEN="FALSE" GUID="ab21bb9f-8df4-4138-8f68-a3c87a708c41"/>
+               <RmHLSLShader NAME="vs" TYPE="RmHLSLShader" API="D3D" HIDDEN="FALSE" GUID="e895eb07-d60a-4217-a1d7-f0b7836f0fc1" CODE="struct VS_OUTPUT&#xA;{&#xA;   float4 Pos    : POSITION;&#xA;   float2 Tex0   : TEXCOORD0;&#xA;   float2 Tex1   : TEXCOORD1;&#xA;   float2 Tex2   : TEXCOORD2;&#xA;   float2 Tex3   : TEXCOORD3;&#xA;   float2 Tex4   : TEXCOORD4;&#xA;   float3 Norm   : TEXCOORD5;&#xA;   float3 View   : TEXCOORD6;&#xA;   float3 Light  : TEXCOORD7;&#xA;};&#xA;VS_OUTPUT main( &#xA;   float4 inPos  : POSITION,&#xA;   float3 inNorm : NORMAL,&#xA;   float2 Tex  : TEXCOORD0 )&#xA;{&#xA;   VS_OUTPUT Out = (VS_OUTPUT) 0; &#xA;&#xA;   // Output transformed position:&#xA;   Out.Pos = mul( view_proj_matrix, inPos ); &#xA;   &#xA;   // Output light vector:&#xA;   Out.Light = -normalize(lightDir);&#xA;&#xA;   // Compute position in view space:&#xA;   float3 Pview = mul( view_matrix, inPos ); &#xA;&#xA;   // Transform the input normal to view space:&#xA;   Out.Norm = normalize( mul( view_matrix, inNorm ) );   &#xA; &#xA;   // Compute the view direction in view space:&#xA;   Out.View = - normalize( Pview );&#xA;&#xA;   // Propagate the texture coordinates for the object:&#xA;   Out.Tex0 = float2(-Tex.x, Tex.y);&#xA;   Out.Tex1 = float2(-Tex.x, Tex.y) + offset0.xy;&#xA;   Out.Tex2 = float2(-Tex.x, Tex.y) + offset0.zw;&#xA;   Out.Tex3 = float2(-Tex.y, -Tex.x) + offset1.xy;&#xA;   Out.Tex4 = float2(-Tex.y, -Tex.x) + offset1.zw;&#xA;&#xA;   return Out;&#xA;}&#xA;&#xA;" PIXEL_SHADER="FALSE" DECLARATION_BLOCK="float4 offset1;&#xA;float4 lightDir;&#xA;float4x4 view_matrix;&#xA;float4 offset0;&#xA;float4x4 view_proj_matrix;&#xA;" TARGET="vs_1_1" ENTRY_POINT="main">
+                  <RmShaderConstant NAME="offset1" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="8f784104-87a7-4c3d-8e68-23ed052a0b0f" REGISTER="-1"/>
+                  <RmShaderConstant NAME="lightDir" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="0a81f713-55de-498f-baaa-b3840c40dd51" REGISTER="-1"/>
+                  <RmShaderConstant NAME="view_matrix" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="453b715e-5113-4935-93e5-8ab1e19c6383" REGISTER="-1"/>
+                  <RmShaderConstant NAME="offset0" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="d71b882d-1d98-4187-adb5-9931c0693e92" REGISTER="-1"/>
+                  <RmShaderConstant NAME="view_proj_matrix" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="4187184e-8833-4099-b150-4c64b9b5df27" REGISTER="-1"/>
+               </RmHLSLShader>
+               <RmHLSLShader NAME="ps" TYPE="RmHLSLShader" API="D3D" HIDDEN="FALSE" GUID="933f1a18-6b73-4bf4-8fa4-42797056876c" CODE="float4 main( float4 Diff   : COLOR0,&#xA;   float2 Tex0   : TEXCOORD0,&#xA;   float2 Tex1   : TEXCOORD1,&#xA;   float2 Tex2   : TEXCOORD2,&#xA;   float2 Tex3   : TEXCOORD3,&#xA;   float2 Tex4   : TEXCOORD4,&#xA;   float3 Normal   : TEXCOORD5,&#xA;   float3 View   : TEXCOORD6,&#xA;   float3 Light  : TEXCOORD7 ) : COLOR&#xA;{&#xA;   // Compute the reflection vector:&#xA;   float3 vReflect = normalize( 2 * dot( Normal, Light) * Normal - Light );       &#xA;&#xA;   // Compute ambient term:&#xA;   float4 Intensity = Ka + Kd * max( 0, dot( Normal, Light ))&#xA;                         + Ks * pow( max( 0, dot(vReflect, View)), n_specular );&#xA;&#xA;   float2 stroke = tex2D(threshold_hatching, Tex0).ra;&#xA;   float color = (Intensity &lt; 5.0/7.0 + stroke.y/7.0) ? stroke.x : 1.0;&#xA;&#xA;   stroke = tex2D(threshold_hatching, Tex1).ra;&#xA;   color *= (Intensity &lt; 4.0/7.0 + stroke.y/7.0) ? stroke.x : 1.0;&#xA;&#xA;   stroke = tex2D(threshold_hatching, Tex2).ra;&#xA;   color *= (Intensity &lt; 3.0/7.0+ stroke.y/7.0) ? stroke.x : 1.0;&#xA;&#xA;   stroke = tex2D(threshold_hatching, Tex3).ra;&#xA;   color *= (Intensity &lt; 2.0/7.0 + stroke.y/7.0) ? stroke.x : 1.0;&#xA;&#xA;   stroke = tex2D(threshold_hatching, Tex4).ra;&#xA;   color *= (Intensity &lt; 1.0/7.0 + stroke.y/7.0) ? stroke.x : 1.0;&#xA;&#xA;   stroke = tex2D(threshold_hatching, Tex3.yx).ra;&#xA;   color *= (Intensity &lt; stroke.y/7.0) ? stroke.x : 1.0;&#xA;   &#xA;   return float4(color.x, color.x, color.x, 1.0);&#xA;}&#xA;&#xA;&#xA;" PIXEL_SHADER="TRUE" DECLARATION_BLOCK="float Kd;&#xA;float Ks;&#xA;float n_specular;&#xA;float Ka;&#xA;sampler threshold_hatching;&#xA;" TARGET="ps_2_0" ENTRY_POINT="main">
+                  <RmSampler NAME="threshold_hatching" TYPE="RmSampler" API="None" HIDDEN="TRUE" GUID="a265c899-dba8-45e1-899e-e793563d5eda" REGISTER="-1"/>
+                  <RmShaderConstant NAME="Kd" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="30f8ba8c-92d9-43e3-b78c-bf5245bdc82f" REGISTER="-1"/>
+                  <RmShaderConstant NAME="Ks" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="563daa5b-37c2-457a-b47e-05dc9afedd8a" REGISTER="-1"/>
+                  <RmShaderConstant NAME="n_specular" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="f198965b-84ab-48b5-a34c-8ada744c246f" REGISTER="-1"/>
+                  <RmShaderConstant NAME="Ka" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="f37ffb43-04c2-40eb-b9f0-6b6606992f7c" REGISTER="-1"/>
+               </RmHLSLShader>
+               <RmStreamMapReference NAME="Stream Mapping" TYPE="RmStreamMapReference" API="None" HIDDEN="FALSE" GUID="a2bdc979-77e2-40e9-b752-5b6ea4641033"/>
+               <RmTextureObject NAME="threshold_hatching" TYPE="RmTextureObject" API="D3D" HIDDEN="FALSE" GUID="db4d8adf-5f17-46a7-be15-b8ed555bac53" STATE_INDEX="0">
+                  <RmTextureReference NAME="threshold_hatching" TYPE="RmTextureReference" API="None" HIDDEN="FALSE" GUID="cab3ea31-2117-437b-9456-b7caeba20bf7"/>
+                  <RmState NAME="D3DSAMP_ADDRESSU" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="c0a56a3a-8952-4fbf-93ff-b2996de8778e" STATE="1" VALUE="1" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_ADDRESSV" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="b41266ed-5185-4083-b52f-bc509bae8a0b" STATE="2" VALUE="1" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_ADDRESSW" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="efa717ba-13c9-4f10-9868-d8417b5f6a9f" STATE="3" VALUE="3" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MAGFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="6428d1e9-8914-44fb-b3bb-bedf8ed69dc5" STATE="5" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MINFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="f872e971-53c5-4197-9b4f-cc715b4b974f" STATE="6" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MIPFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="483aac0f-6e8d-4cab-a066-a5d5de3a860c" STATE="7" VALUE="3" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MIPMAPLODBIAS" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="87f40e72-beb3-43a9-833b-fae02abccc51" STATE="8" VALUE="-1.000000" USAGE="SAMPLER_STATE"/>
+               </RmTextureObject>
+            </RmPass>
+         </RmDirectXEffect>
+         <RmFloatVariable NAME="n_specular" TYPE="RmFloatVariable" API="None" HIDDEN="FALSE" GUID="18638621-08b3-4e05-b03f-f9574a82d85e" ARTIST_EDITABLE="FALSE" VALUE="2.500000" MIN="0.000000" MAX="100.000000" CLAMP="TRUE"/>
+         <RmFloatVariable NAME="texture_scale" TYPE="RmFloatVariable" API="None" HIDDEN="FALSE" GUID="05b900f4-229f-40f2-9402-3fe52d3bb9ad" ARTIST_EDITABLE="FALSE" VALUE="2.000000" MIN="1.000000" MAX="10.000000" CLAMP="TRUE"/>
+         <RmFloatVariable NAME="Ka" TYPE="RmFloatVariable" API="None" HIDDEN="FALSE" GUID="149d2872-8f08-4e86-91eb-a1e82c281fb2" ARTIST_EDITABLE="FALSE" VALUE="0.200000" MIN="0.000000" MAX="1.000000" CLAMP="TRUE"/>
+         <RmFloatVariable NAME="Kd" TYPE="RmFloatVariable" API="None" HIDDEN="FALSE" GUID="f1629c8c-6cbc-40b9-821a-15e3be03f76f" ARTIST_EDITABLE="FALSE" VALUE="0.500000" MIN="0.000000" MAX="1.000000" CLAMP="TRUE"/>
+         <RmFloatVariable NAME="Ks" TYPE="RmFloatVariable" API="None" HIDDEN="FALSE" GUID="3b451052-75a0-47a3-a46c-3371d85094d1" ARTIST_EDITABLE="FALSE" VALUE="0.300000" MIN="0.000000" MAX="1.000000" CLAMP="TRUE"/>
+         <RmVectorVariable NAME="lightDir" TYPE="RmVectorVariable" API="None" HIDDEN="FALSE" GUID="88b575c1-e12f-4fd0-b8a9-fd63c0beb527" ARTIST_EDITABLE="FALSE" VALUE_0="1.000000" VALUE_1="-1.000000" VALUE_2="1.000000" VALUE_3="1.000000" MIN="-10.000000" MAX="10.000000" CLAMP="FALSE" NORMALIZE="FALSE"/>
+         <RmVectorVariable NAME="offset0" TYPE="RmVectorVariable" API="None" HIDDEN="FALSE" GUID="1b7e03b6-dc63-4305-b53e-d3d83cee2af2" ARTIST_EDITABLE="FALSE" VALUE_0="0.080000" VALUE_1="0.380000" VALUE_2="0.260000" VALUE_3="0.020000" MIN="-10.000000" MAX="10.000000" CLAMP="FALSE" NORMALIZE="FALSE"/>
+         <RmVectorVariable NAME="offset1" TYPE="RmVectorVariable" API="None" HIDDEN="FALSE" GUID="8c5e55db-c5b2-4a19-8ce1-d7e7e6d239c5" ARTIST_EDITABLE="FALSE" VALUE_0="0.120000" VALUE_1="0.180000" VALUE_2="0.250000" VALUE_3="0.500000" MIN="-10.000000" MAX="10.000000" CLAMP="FALSE" NORMALIZE="FALSE"/>
+         <RmColorVariable NAME="ambient" TYPE="RmColorVariable" API="None" HIDDEN="FALSE" GUID="728173ef-6199-485a-81c8-e0749d3af6af" ARTIST_EDITABLE="TRUE" VALUE_0="0.772549" VALUE_1="0.776471" VALUE_2="0.666667" VALUE_3="1.000000"/>
+         <RmColorVariable NAME="diffuse" TYPE="RmColorVariable" API="None" HIDDEN="FALSE" GUID="c0da5e3a-4939-4ffb-8b0c-922c23c54818" ARTIST_EDITABLE="TRUE" VALUE_0="0.235294" VALUE_1="0.235294" VALUE_2="0.200000" VALUE_3="1.000000"/>
+         <RmColorVariable NAME="specular" TYPE="RmColorVariable" API="None" HIDDEN="FALSE" GUID="18cdb53d-e900-4124-8259-2faf9a89b24f" ARTIST_EDITABLE="TRUE" VALUE_0="1.000000" VALUE_1="1.000000" VALUE_2="0.788235" VALUE_3="1.000000"/>
+         <Rm2DTextureVariable NAME="index" TYPE="Rm2DTextureVariable" API="None" HIDDEN="FALSE" GUID="2cdf164d-c5e9-4570-804a-1bfb24f4c493" ARTIST_EDITABLE="TRUE" FILE_NAME="..\..\Media\Textures\stroke-rendering\index.dds"/>
+         <Rm2DTextureVariable NAME="threshold_hatching" TYPE="Rm2DTextureVariable" API="None" HIDDEN="FALSE" GUID="b1ea87ad-d1dd-40e4-b247-46dc03b2ed3c" ARTIST_EDITABLE="TRUE" FILE_NAME="..\..\Media\Textures\stroke-rendering\threshold_hatching.dds"/>
+         <Rm2DTextureVariable NAME="threshold_lookup" TYPE="Rm2DTextureVariable" API="None" HIDDEN="FALSE" GUID="9f1c196c-066a-4a4c-a54c-231a47a258b3" ARTIST_EDITABLE="TRUE" FILE_NAME="..\..\Media\Textures\stroke-rendering\lookup.dds"/>
+         <Rm2DTextureVariable NAME="short_stroke" TYPE="Rm2DTextureVariable" API="None" HIDDEN="FALSE" GUID="ceadbbcf-05d6-4c13-9c77-881c5f572269" ARTIST_EDITABLE="TRUE" FILE_NAME="..\..\Media\Textures\stroke-rendering\short_stroke1.dds"/>
+         <Rm2DTextureVariable NAME="long_stroke" TYPE="Rm2DTextureVariable" API="None" HIDDEN="FALSE" GUID="62897689-5fe8-40d8-a659-d2944866d815" ARTIST_EDITABLE="TRUE" FILE_NAME="..\..\Media\Textures\stroke-rendering\long_stroke1.dds"/>
+         <RmStreamMap NAME="Stream Mapping" TYPE="RmStreamMap" API="None" HIDDEN="FALSE" GUID="456fbc0f-a76c-491f-a0e8-13c5b5650eb0">
+            <RmStream NAME="TexCoord5" TYPE="RmStream" API="None" HIDDEN="TRUE" GUID="e16f0a31-73c5-456f-be0e-5d91f74ca77b" STRIDE="100">
+               <RmStreamChannel NAME="Position_0" TYPE="RmStreamChannel" API="None" HIDDEN="TRUE" GUID="9669b888-c7cb-4515-8d2d-eee6bddbf6e1" DATA_SIZE="12" DATA_TYPE="2" REGISTER="0" USAGE="0" USAGE_INDEX="0"/>
+               <RmStreamChannel NAME="Normal_0" TYPE="RmStreamChannel" API="None" HIDDEN="TRUE" GUID="9562fc08-499c-47aa-bdf2-b47decac2b52" DATA_SIZE="12" DATA_TYPE="2" REGISTER="2" USAGE="3" USAGE_INDEX="0"/>
+               <RmStreamChannel NAME="TexCoord_0" TYPE="RmStreamChannel" API="None" HIDDEN="TRUE" GUID="9d111ac8-b7e2-4a3c-98b8-a2fd58863c7b" DATA_SIZE="8" DATA_TYPE="1" REGISTER="3" USAGE="5" USAGE_INDEX="0"/>
+               <RmStreamChannel NAME="TexCoord_1" TYPE="RmStreamChannel" API="None" HIDDEN="TRUE" GUID="ea780db9-8ddf-40bf-b429-716ce805f19c" DATA_SIZE="8" DATA_TYPE="1" REGISTER="4" USAGE="5" USAGE_INDEX="1"/>
+               <RmStreamChannel NAME="TexCoord_2" TYPE="RmStreamChannel" API="None" HIDDEN="TRUE" GUID="51e248bf-4284-46a5-a39c-74f8d5f066a0" DATA_SIZE="8" DATA_TYPE="1" REGISTER="5" USAGE="5" USAGE_INDEX="2"/>
+               <RmStreamChannel NAME="TexCoord_3" TYPE="RmStreamChannel" API="None" HIDDEN="TRUE" GUID="1a9c7c69-7e5e-4b4b-895f-106b61b62a97" DATA_SIZE="8" DATA_TYPE="1" REGISTER="6" USAGE="5" USAGE_INDEX="3"/>
+               <RmStreamChannel NAME="TexCoord_4" TYPE="RmStreamChannel" API="None" HIDDEN="TRUE" GUID="73e93809-ca2f-48ea-b730-c3b40df36e78" DATA_SIZE="8" DATA_TYPE="1" REGISTER="7" USAGE="5" USAGE_INDEX="4"/>
+               <RmStreamChannel NAME="TexCoord_5" TYPE="RmStreamChannel" API="None" HIDDEN="TRUE" GUID="5ecb759d-7879-405b-919c-ca393404814c" DATA_SIZE="12" DATA_TYPE="2" REGISTER="8" USAGE="5" USAGE_INDEX="5"/>
+               <RmStreamChannel NAME="TexCoord_6" TYPE="RmStreamChannel" API="None" HIDDEN="TRUE" GUID="dbe71b51-4242-489b-b786-03b79a64a989" DATA_SIZE="12" DATA_TYPE="2" REGISTER="9" USAGE="5" USAGE_INDEX="6"/>
+               <RmStreamChannel NAME="TexCoord_7" TYPE="RmStreamChannel" API="None" HIDDEN="TRUE" GUID="9534b8b3-2090-47f8-bd63-4470c03c8bd2" DATA_SIZE="12" DATA_TYPE="2" REGISTER="10" USAGE="5" USAGE_INDEX="7"/>
+            </RmStream>
+         </RmStreamMap>
+         <RmModelData NAME="model" TYPE="RmModelData" API="None" HIDDEN="FALSE" GUID="e87aa70b-bbbf-47a3-9e26-723a84b8ccb4" FILE_NAME="..\..\Media\Models\Teapot.3ds"/>
+      </RmEffectGroup>
+      <RmEffectGroup NAME="Painterly Tree Effect Group" TYPE="RmEffectGroup" API="None" HIDDEN="FALSE" GUID="f0f9c428-f1f5-4957-87f0-5f1f3afa7c9c">
+         <RmDirectXEffect NAME="shaded tree" TYPE="RmDirectXEffect" API="D3D" HIDDEN="FALSE" GUID="172aaf07-09d5-4b69-9e28-a099e02b48f4" ACTIVE_CAMERA="">
+            <RmPass NAME="Pass 1" TYPE="RmPass" API="D3D" HIDDEN="FALSE" GUID="d2fcff71-f465-45ec-9e03-a9ddaa4566da" PASS_INDEX="0" ENABLED="TRUE">
+               <RmModelReference NAME="quad" TYPE="RmModelReference" API="None" HIDDEN="FALSE" GUID="0ca81be8-d6cd-4eae-802d-2f431b2d29b4"/>
+               <RmRenderStateBlock NAME="Render State" TYPE="RmRenderStateBlock" API="D3D" HIDDEN="FALSE" GUID="d0fbf30b-4253-4488-826a-5389ab9ed1ae">
+                  <RmState NAME="D3DRS_SRCBLEND" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="c9a49edf-cb16-40be-87fe-e97889a557bc" STATE="19" VALUE="5" USAGE="RENDER_STATE"/>
+                  <RmState NAME="D3DRS_DESTBLEND" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="e633953c-3a5b-45be-9958-410ccd1aad3f" STATE="20" VALUE="6" USAGE="RENDER_STATE"/>
+                  <RmState NAME="D3DRS_CULLMODE" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="4c9273d4-c014-4255-82bd-9890facab149" STATE="22" VALUE="1" USAGE="RENDER_STATE"/>
+                  <RmState NAME="D3DRS_ALPHABLENDENABLE" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="3f646d0e-886a-442d-87e4-2bf67ac67134" STATE="27" VALUE="1" USAGE="RENDER_STATE"/>
+               </RmRenderStateBlock>
+               <RmHLSLShader NAME="vs" TYPE="RmHLSLShader" API="D3D" HIDDEN="FALSE" GUID="7e02acfc-1368-4eec-8aac-0c1cc445a505" CODE="struct VS_OUTPUT&#xA;{&#xA;   float4 Pos  : POSITION;&#xA;   float2 Tex  : TEXCOORD0;&#xA;   float3 LightDirT : TEXCOORD1;&#xA;};&#xA;VS_OUTPUT main( &#xA;   float4 Pos: POSITION,&#xA;   float2 Tex: TEXCOORD0 )&#xA;{&#xA;   VS_OUTPUT Out = (VS_OUTPUT) 0; &#xA;&#xA;   float4 P = mul(view_matrix, billboard_center);          // position of the center(view space)&#xA;&#xA;   float3 n0 = -P.xyz;&#xA;   float3 u  = normalize(world_up.xyz);&#xA;   float3 r  = normalize(cross(u, n0));&#xA;   float3 n  = cross(r, u);&#xA; &#xA;   P.xyz += r*(0.5 - Tex.x) * size;                              // position (view space)&#xA;   P.xyz += u*(0.5 - Tex.y) * size;                              // position (view space)&#xA;   &#xA;   float q = 1/(1 - n.z);&#xA;   float3x3 eyeToTangent = float3x3(-n.z -n.y*n.y*q,        n.x*n.y*q,  n.x,&#xA;                                    n.x*n.y*q, -n.z - n.x*n.x*q,  n.y,&#xA;                                         -n.x,             -n.y, -n.z);&#xA;&#xA;   Out.Pos = mul(proj_matrix, P); &#xA;   Out.Tex = Tex;&#xA;   Out.LightDirT = normalize(mul(eyeToTangent, lightDir));&#xA;&#xA;   return Out;&#xA;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;" PIXEL_SHADER="FALSE" DECLARATION_BLOCK="float4 lightDir;&#xA;float4x4 proj_matrix;&#xA;float4 billboard_center;&#xA;float size;&#xA;float4 world_up;&#xA;float4x4 view_matrix;&#xA;" TARGET="vs_1_1" ENTRY_POINT="main">
+                  <RmShaderConstant NAME="lightDir" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="03252601-ab1e-4eaf-b0c6-ebe57dc2611b" REGISTER="-1"/>
+                  <RmShaderConstant NAME="proj_matrix" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="56e0023c-8483-4a15-8160-e1c0ccdc5ada" REGISTER="-1"/>
+                  <RmShaderConstant NAME="billboard_center" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="971f21bc-3153-4380-a09b-35e7b55a52c5" REGISTER="-1"/>
+                  <RmShaderConstant NAME="size" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="4707ffc9-04ff-478a-9c9e-c18b0aefca3f" REGISTER="-1"/>
+                  <RmShaderConstant NAME="world_up" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="944df1b7-0143-4314-bc52-17d571dda7fb" REGISTER="-1"/>
+                  <RmShaderConstant NAME="view_matrix" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="48cedf8f-06f9-41d9-9d9d-4b396b3a2b2d" REGISTER="-1"/>
+               </RmHLSLShader>
+               <RmHLSLShader NAME="ps" TYPE="RmHLSLShader" API="D3D" HIDDEN="FALSE" GUID="3225d975-5198-4145-af3b-ee6ccddf371d" CODE="float4 main(    &#xA;   float2 Tex  : TEXCOORD0,&#xA;   float3 LightDirT : TEXCOORD1 ) : COLOR&#xA;{&#xA;   float3 L = -LightDirT;&#xA;&#xA;   float3 N0 = (tex2D(tree_normals, Tex) - float3(0.5, 0.5, 0.5))*float3(2, -2, 2);&#xA;   float3 N = normalize(N0);&#xA;&#xA;   float I =  max(0, dot(N, L))*0.5 + 0.5; // diffuse&#xA;&#xA;   return tex2D(forest_rgba, Tex) * float4(I, I, I, 1.0);&#xA;&#xA;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;" PIXEL_SHADER="TRUE" DECLARATION_BLOCK="sampler forest_rgba;&#xA;sampler tree_normals;&#xA;" TARGET="ps_2_0" ENTRY_POINT="main">
+                  <RmSampler NAME="forest_rgba" TYPE="RmSampler" API="None" HIDDEN="TRUE" GUID="d3055189-eaa5-4778-bcb7-91d2d066c6d2" REGISTER="-1"/>
+                  <RmSampler NAME="tree_normals" TYPE="RmSampler" API="None" HIDDEN="TRUE" GUID="23cfe931-4556-4ace-a932-cbdd5934453d" REGISTER="-1"/>
+               </RmHLSLShader>
+               <RmStreamMapReference NAME="Stream Mapping" TYPE="RmStreamMapReference" API="None" HIDDEN="FALSE" GUID="23e05dbc-9591-4b0d-a052-ac60e9b94b3d"/>
+               <RmTextureObject NAME="tree_normals" TYPE="RmTextureObject" API="D3D" HIDDEN="FALSE" GUID="635a6689-083d-4342-bcb4-2b9771ec5d81" STATE_INDEX="1">
+                  <RmTextureReference NAME="tree_normals" TYPE="RmTextureReference" API="None" HIDDEN="FALSE" GUID="7de3aa76-aa93-472d-986c-e42c822746ba"/>
+                  <RmState NAME="D3DSAMP_MAGFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="66434644-980d-4744-8380-d1613e85aaa5" STATE="5" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MINFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="1194bc69-7318-4fc7-ab05-a369bd892e50" STATE="6" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MIPFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="c15a1ed9-dad5-4cf2-90e3-bae025c02c35" STATE="7" VALUE="3" USAGE="SAMPLER_STATE"/>
+               </RmTextureObject>
+               <RmTextureObject NAME="forest_rgba" TYPE="RmTextureObject" API="D3D" HIDDEN="FALSE" GUID="c8a7c056-3ad4-41cb-bdf1-593480819434" STATE_INDEX="0">
+                  <RmTextureReference NAME="forest_rgba" TYPE="RmTextureReference" API="None" HIDDEN="FALSE" GUID="598ad923-6648-4953-bfb1-85c01efc04ea"/>
+                  <RmState NAME="D3DSAMP_MAGFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="443047c4-b2f2-4a8c-8e43-3d83dacd62f8" STATE="5" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MINFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="3b8fae1c-6dd9-4270-a5b6-d56ace57c669" STATE="6" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MIPFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="5d198618-ce33-4647-ab55-7987e57f86a1" STATE="7" VALUE="3" USAGE="SAMPLER_STATE"/>
+               </RmTextureObject>
+            </RmPass>
+         </RmDirectXEffect>
+         <RmDirectXEffect NAME="painterly tree" TYPE="RmDirectXEffect" API="D3D" HIDDEN="FALSE" GUID="2e669b85-4c87-4cca-8a19-8ec4bc5d5cc1" ACTIVE_CAMERA="">
+            <RmVectorVariable NAME="lighting_parameters" TYPE="RmVectorVariable" API="None" HIDDEN="FALSE" GUID="5d93f1af-60e0-4a35-9473-71350094a40e" ARTIST_EDITABLE="FALSE" VALUE_0="0.000000" VALUE_1="0.000000" VALUE_2="1.000000" VALUE_3="1.000000" MIN="-10.000000" MAX="10.000000" CLAMP="FALSE" NORMALIZE="FALSE"/>
+            <Rm2DTextureVariable NAME="tree_tam_light" TYPE="Rm2DTextureVariable" API="None" HIDDEN="FALSE" GUID="5f05c8ba-3ffe-47d7-87ce-8ae1506dde9d" ARTIST_EDITABLE="TRUE" FILE_NAME="..\..\Media\Textures\stroke-rendering\tree_tam_light.dds"/>
+            <Rm2DTextureVariable NAME="tree_tam_dark" TYPE="Rm2DTextureVariable" API="None" HIDDEN="FALSE" GUID="9766c35c-198d-4ed8-ab5c-e1833082742a" ARTIST_EDITABLE="TRUE" FILE_NAME="..\..\Media\Textures\stroke-rendering\tree_tam_dark.dds"/>
+            <RmPass NAME="Pass 1" TYPE="RmPass" API="D3D" HIDDEN="FALSE" GUID="a1626faf-8dd0-466b-9b76-39b66be17dbc" PASS_INDEX="0" ENABLED="TRUE">
+               <RmModelReference NAME="quad" TYPE="RmModelReference" API="None" HIDDEN="FALSE" GUID="51a33f0c-1aad-4eb1-bce6-502799575219"/>
+               <RmRenderStateBlock NAME="Render State" TYPE="RmRenderStateBlock" API="D3D" HIDDEN="FALSE" GUID="e51c963c-9603-474c-a392-6eaf2ab351e1">
+                  <RmState NAME="D3DRS_SRCBLEND" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="b50f0308-e5e8-491e-a576-98085626e70f" STATE="19" VALUE="5" USAGE="RENDER_STATE"/>
+                  <RmState NAME="D3DRS_DESTBLEND" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="8a55cc3d-1fa0-470e-9a17-9303f5faf68e" STATE="20" VALUE="6" USAGE="RENDER_STATE"/>
+                  <RmState NAME="D3DRS_CULLMODE" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="2c043623-78ec-4391-b6b6-279d9378b02a" STATE="22" VALUE="1" USAGE="RENDER_STATE"/>
+                  <RmState NAME="D3DRS_ALPHABLENDENABLE" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="680dcde2-d7e3-4daf-bcdc-be55ad6a2120" STATE="27" VALUE="1" USAGE="RENDER_STATE"/>
+               </RmRenderStateBlock>
+               <RmHLSLShader NAME="vs" TYPE="RmHLSLShader" API="D3D" HIDDEN="FALSE" GUID="9015d6c7-1a38-47b0-902f-ac2ed7790202" CODE="struct VS_OUTPUT&#xA;{&#xA;   float4 Pos  : POSITION;&#xA;   float2 Tex  : TEXCOORD0;&#xA;   float3 LightDirT : TEXCOORD1;&#xA;};&#xA;VS_OUTPUT main( &#xA;   float4 Pos: POSITION,&#xA;   float2 Tex: TEXCOORD0 )&#xA;{&#xA;   VS_OUTPUT Out = (VS_OUTPUT) 0; &#xA;&#xA;   float4 P = mul(view_matrix, billboard_center);          // position of the center(view space)&#xA;&#xA;   float3 n0 = -P.xyz;&#xA;   float3 u  = normalize(world_up.xyz);&#xA;   float3 r  = normalize(cross(u, n0));&#xA;   float3 n  = cross(r, u);&#xA; &#xA;   P.xyz += r*(0.5 - Tex.x) * size;                              // position (view space)&#xA;   P.xyz += u*(0.5 - Tex.y) * size;                              // position (view space)&#xA;   &#xA;   float q = 1/(1 - n.z);&#xA;   float3x3 eyeToTangent = float3x3(-n.z -n.y*n.y*q,        n.x*n.y*q,  n.x,&#xA;                                    n.x*n.y*q, -n.z - n.x*n.x*q,  n.y,&#xA;                                         -n.x,             -n.y, -n.z);&#xA;&#xA;   Out.Pos = mul(proj_matrix, P); &#xA;   Out.Tex = Tex;&#xA;   Out.LightDirT = normalize(mul(eyeToTangent, lightDir));&#xA;&#xA;   return Out;&#xA;}&#xA;&#xA;" PIXEL_SHADER="FALSE" DECLARATION_BLOCK="float4x4 proj_matrix;&#xA;float4x4 view_matrix;&#xA;float4 billboard_center;&#xA;float4 world_up;&#xA;float size;&#xA;float4 lightDir;&#xA;" TARGET="vs_1_1" ENTRY_POINT="main">
+                  <RmShaderConstant NAME="proj_matrix" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="a72982cf-0448-443c-a830-f4ba7b9b2def" REGISTER="-1"/>
+                  <RmShaderConstant NAME="view_matrix" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="52222841-bf1b-412e-8cbe-8583f5b93401" REGISTER="-1"/>
+                  <RmShaderConstant NAME="billboard_center" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="b62a38ee-94a5-4be8-8d37-c03a4547e671" REGISTER="-1"/>
+                  <RmShaderConstant NAME="world_up" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="586a8752-9d5b-476b-937c-0caf4d9a862e" REGISTER="-1"/>
+                  <RmShaderConstant NAME="size" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="ec178d41-0f6c-43d2-9c6e-d1205219c1ed" REGISTER="-1"/>
+                  <RmShaderConstant NAME="lightDir" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="4aafbaae-1bff-43c4-af2f-9ebc35e5b43a" REGISTER="-1"/>
+               </RmHLSLShader>
+               <RmHLSLShader NAME="ps" TYPE="RmHLSLShader" API="D3D" HIDDEN="FALSE" GUID="c816af16-ccb8-4d30-947b-4209f05828a0" CODE="float4 main(    &#xA;   float2 Tex  : TEXCOORD0,&#xA;   float3 LightDirT : TEXCOORD1 ) : COLOR&#xA;{&#xA;   float3 L = -LightDirT;&#xA;&#xA;   float3 N0 = (tex2D(tree_normals, Tex) - float3(0.5, 0.5, 0.5))*float3(2, -2, 2);&#xA;   float3 N = normalize(N0);&#xA;&#xA;   float I =  max(0, dot(N, L))*0.5 + 0.5; // diffuse&#xA;&#xA;   I = (lighting_parameters.z &lt; lighting_parameters.w) ?&#xA;      1 - I : I;&#xA;   float scaledNegI = (1-I)*0.625+0.0625;&#xA;&#xA;   float3 tam_light_value = tex2D(tree_tam_light, Tex);&#xA;   float3 tam_dark_value  = tex2D(tree_tam_dark,  Tex);&#xA;&#xA;   float3 tam_light_weight = tex2D(tam_weights, float2(scaledNegI, 0));&#xA;   float3 tam_dark_weight  = tex2D(tam_weights, float2(scaledNegI - 0.375, 0));&#xA;   &#xA;   float tam_intensity = 1.0 - (dot(tam_light_value, tam_light_weight)+ dot(tam_dark_value, tam_dark_weight));&#xA;&#xA;   float4 rgbaColor = tex2D(forest_rgba, Tex);&#xA;&#xA;   float3 backgroundColor = rgbaColor.xyz;&#xA;   // LightingParameter.z: 2-&gt;white, 1-&gt;rgb, 0-&gt;black&#xA;   backgroundColor = (lighting_parameters.z &gt; 1) &#xA;      ? float3(1.0, 1.0, 1.0) : backgroundColor * lighting_parameters.z;&#xA;   &#xA;   float3 strokeColor = 0.5 * rgbaColor.xyz;&#xA;   // LightingParameter.w: 2-&gt;white, 1-&gt;rgb, 0-&gt;black&#xA;   strokeColor = (lighting_parameters.w &gt; 1) &#xA;      ? float3(1.0, 1.0, 1.0) : strokeColor * lighting_parameters.w;&#xA;&#xA;   float4 outColor;&#xA;   outColor.xyz = lerp(strokeColor, backgroundColor, tam_intensity);&#xA;   outColor.w = rgbaColor.w;&#xA;&#xA;   return outColor;&#xA;&#xA;}&#xA;&#xA;&#xA;&#xA;&#xA;" PIXEL_SHADER="TRUE" DECLARATION_BLOCK="float4 lighting_parameters;&#xA;sampler forest_rgba;&#xA;sampler tam_weights;&#xA;sampler tree_normals;&#xA;sampler tree_tam_dark;&#xA;sampler tree_tam_light;&#xA;" TARGET="ps_2_0" ENTRY_POINT="main">
+                  <RmSampler NAME="forest_rgba" TYPE="RmSampler" API="None" HIDDEN="TRUE" GUID="27066152-5f82-4ab8-81fb-9277d264776b" REGISTER="-1"/>
+                  <RmSampler NAME="tam_weights" TYPE="RmSampler" API="None" HIDDEN="TRUE" GUID="3f0b0e6c-4a2b-4ea9-9e87-70982370ffd8" REGISTER="-1"/>
+                  <RmSampler NAME="tree_normals" TYPE="RmSampler" API="None" HIDDEN="TRUE" GUID="cc3d369a-661e-4eab-882b-86b428122f96" REGISTER="-1"/>
+                  <RmSampler NAME="tree_tam_dark" TYPE="RmSampler" API="None" HIDDEN="TRUE" GUID="6a4992c5-4b43-4e4b-a3f4-ba743993dcae" REGISTER="-1"/>
+                  <RmSampler NAME="tree_tam_light" TYPE="RmSampler" API="None" HIDDEN="TRUE" GUID="e25f0c9d-8cf9-43d8-9451-a06d13236e18" REGISTER="-1"/>
+                  <RmShaderConstant NAME="lighting_parameters" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="89880695-3fed-42ef-ac69-6586db7bdd35" REGISTER="-1"/>
+               </RmHLSLShader>
+               <RmStreamMapReference NAME="Stream Mapping" TYPE="RmStreamMapReference" API="None" HIDDEN="FALSE" GUID="36872702-831a-4280-b6bb-9bfc94281ab1"/>
+               <RmTextureObject NAME="tree_normals" TYPE="RmTextureObject" API="D3D" HIDDEN="FALSE" GUID="312bbb66-55b2-4643-941b-de5c055cf29e" STATE_INDEX="1">
+                  <RmTextureReference NAME="tree_normals" TYPE="RmTextureReference" API="None" HIDDEN="FALSE" GUID="68055118-6356-46b6-b119-d3dde50a2529"/>
+                  <RmState NAME="D3DSAMP_MAGFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="1598599c-adad-42f8-9631-2bf1ca116896" STATE="5" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MINFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="792a6e16-e1a9-4c34-97be-dda56c220548" STATE="6" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MIPFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="d704b351-78f2-4ae4-9517-51c4bf6d67a3" STATE="7" VALUE="3" USAGE="SAMPLER_STATE"/>
+               </RmTextureObject>
+               <RmTextureObject NAME="tam_weights" TYPE="RmTextureObject" API="D3D" HIDDEN="FALSE" GUID="79bf4fdf-4194-4b41-ae12-83a426c46fbc" STATE_INDEX="2">
+                  <RmTextureReference NAME="tam_weights" TYPE="RmTextureReference" API="None" HIDDEN="FALSE" GUID="a28cc53f-69e5-465e-8c23-4628a06c6caf"/>
+                  <RmState NAME="D3DSAMP_MAGFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="a5cab167-80c1-4a8a-888d-b6a82491dd31" STATE="5" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MINFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="59a9dfaa-571c-4655-a179-e673ac8658c8" STATE="6" VALUE="2" USAGE="SAMPLER_STATE"/>
+               </RmTextureObject>
+               <RmTextureObject NAME="tree_tam_light" TYPE="RmTextureObject" API="D3D" HIDDEN="FALSE" GUID="bdb29a09-e024-421f-bc81-4d080e7ce79a" STATE_INDEX="3">
+                  <RmTextureReference NAME="tree_tam_light" TYPE="RmTextureReference" API="None" HIDDEN="FALSE" GUID="5f4908d7-d217-4282-a66d-cc315f7ec532"/>
+                  <RmState NAME="D3DSAMP_MAGFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="faddaa96-1712-4cd8-aa48-21f7d9977e96" STATE="5" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MINFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="81a3d210-0aec-43cd-bdea-950ba710c8dd" STATE="6" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MIPFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="f83a9cdf-ea90-49b4-9222-cb8051f1cad4" STATE="7" VALUE="3" USAGE="SAMPLER_STATE"/>
+               </RmTextureObject>
+               <RmTextureObject NAME="tree_tam_dark" TYPE="RmTextureObject" API="D3D" HIDDEN="FALSE" GUID="24705ee9-c7cc-4678-b147-34f1cb89e1cb" STATE_INDEX="4">
+                  <RmTextureReference NAME="tree_tam_dark" TYPE="RmTextureReference" API="None" HIDDEN="FALSE" GUID="e8eb64be-c189-4cd2-b717-030de6d0c615"/>
+                  <RmState NAME="D3DSAMP_MAGFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="3642fcd5-dd29-4fe8-8b86-588946a61c7e" STATE="5" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MINFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="9f03f0c7-18bf-41ff-aca0-04cac8486e77" STATE="6" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MIPFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="9676f198-e9f2-4e46-b269-77c84bb4e1d0" STATE="7" VALUE="3" USAGE="SAMPLER_STATE"/>
+               </RmTextureObject>
+               <RmTextureObject NAME="forest_rgba" TYPE="RmTextureObject" API="D3D" HIDDEN="FALSE" GUID="6b915f8f-dbe5-4dd9-a35a-abcc67afef96" STATE_INDEX="0">
+                  <RmTextureReference NAME="forest_rgba" TYPE="RmTextureReference" API="None" HIDDEN="FALSE" GUID="751daded-184b-422e-a346-9924177b3b02"/>
+                  <RmState NAME="D3DSAMP_MAGFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="f35d9a2c-09e7-41b5-8cec-6bd78e7c1395" STATE="5" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MINFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="92dac67f-9ec1-4992-80c4-06d85676455b" STATE="6" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MIPFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="e07c6764-4406-42d4-a045-8faf2b0a659c" STATE="7" VALUE="3" USAGE="SAMPLER_STATE"/>
+               </RmTextureObject>
+            </RmPass>
+         </RmDirectXEffect>
+         <RmDirectXEffect NAME="screen aligned, view plane aligned billboarding" TYPE="RmDirectXEffect" API="D3D" HIDDEN="FALSE" GUID="57982922-dd5c-403d-9c63-8949a2bba784" ACTIVE_CAMERA="">
+            <RmPass NAME="Pass 1" TYPE="RmPass" API="D3D" HIDDEN="FALSE" GUID="4a6eb6c9-67c1-4958-8d21-cd611841f1dd" PASS_INDEX="0" ENABLED="TRUE">
+               <RmModelReference NAME="quad" TYPE="RmModelReference" API="None" HIDDEN="FALSE" GUID="670f443c-4b97-4f5a-b364-95f9b8324d23"/>
+               <RmRenderStateBlock NAME="Render State" TYPE="RmRenderStateBlock" API="D3D" HIDDEN="FALSE" GUID="41b6d97d-1751-43b1-901d-1bbf133d5bda">
+                  <RmState NAME="D3DRS_SRCBLEND" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="b1e17e48-1e29-4efa-86db-c2ee93088813" STATE="19" VALUE="5" USAGE="RENDER_STATE"/>
+                  <RmState NAME="D3DRS_DESTBLEND" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="967c9fcc-a73e-4a9d-9611-c80c8486387f" STATE="20" VALUE="6" USAGE="RENDER_STATE"/>
+                  <RmState NAME="D3DRS_CULLMODE" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="af0e5366-8944-4d15-8156-81ca09b609e8" STATE="22" VALUE="1" USAGE="RENDER_STATE"/>
+                  <RmState NAME="D3DRS_ALPHABLENDENABLE" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="95f83f26-e7a7-4351-9c6c-4829c9e91a5e" STATE="27" VALUE="1" USAGE="RENDER_STATE"/>
+               </RmRenderStateBlock>
+               <RmHLSLShader NAME="vs" TYPE="RmHLSLShader" API="D3D" HIDDEN="FALSE" GUID="520d4be9-f3d2-4481-bb70-edb001a84812" CODE="struct VS_OUTPUT&#xA;{&#xA;   float4 Pos  : POSITION;&#xA;   float2 Tex  : TEXCOORD0;&#xA;};&#xA;VS_OUTPUT main( &#xA;   float4 Pos: POSITION,&#xA;   float2 Tex: TEXCOORD0 )&#xA;{&#xA;   VS_OUTPUT Out = (VS_OUTPUT) 0; &#xA;&#xA;   float4 P = mul(view_matrix, billboard_center);          // position of the center(view space)&#xA;   P.x -= (0.5 - Tex.x) * size;                              // position (view space)&#xA;   P.y += (0.5 - Tex.y) * size;                              // position (view space)&#xA;&#xA;   Out.Pos = mul(proj_matrix, P); &#xA;   Out.Tex = Tex;&#xA;&#xA;   return Out;&#xA;}&#xA;&#xA;&#xA;&#xA;" PIXEL_SHADER="FALSE" DECLARATION_BLOCK="float size;&#xA;float4 billboard_center;&#xA;float4x4 view_matrix;&#xA;float4x4 proj_matrix;&#xA;" TARGET="vs_1_1" ENTRY_POINT="main">
+                  <RmShaderConstant NAME="size" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="f8e121ec-30d0-4dc5-af00-2049bd7b038a" REGISTER="-1"/>
+                  <RmShaderConstant NAME="billboard_center" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="6a326f34-d5dc-4f84-a016-a692eb6a87f1" REGISTER="-1"/>
+                  <RmShaderConstant NAME="view_matrix" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="f18fce8c-2ac6-4b02-b607-65cd9b1912f4" REGISTER="-1"/>
+                  <RmShaderConstant NAME="proj_matrix" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="8b5ababd-5ffc-4bfe-a052-bbde0ecadd73" REGISTER="-1"/>
+               </RmHLSLShader>
+               <RmHLSLShader NAME="ps" TYPE="RmHLSLShader" API="D3D" HIDDEN="FALSE" GUID="1d0b7785-6801-40d6-85f5-3dbd2baaaecc" CODE="float4 main(    &#xA;   float2 Tex  : TEXCOORD0 ) : COLOR&#xA;{&#xA;&#xA;   return tex2D(forest_rgba, Tex);&#xA;&#xA;}&#xA;" PIXEL_SHADER="TRUE" DECLARATION_BLOCK="sampler forest_rgba;&#xA;" TARGET="ps_1_1" ENTRY_POINT="main">
+                  <RmSampler NAME="forest_rgba" TYPE="RmSampler" API="None" HIDDEN="TRUE" GUID="94ed29f5-2260-4f8f-97ef-787d9ee6c1d6" REGISTER="-1"/>
+               </RmHLSLShader>
+               <RmStreamMapReference NAME="Stream Mapping" TYPE="RmStreamMapReference" API="None" HIDDEN="FALSE" GUID="02e93f33-5e79-46ce-a118-6a3ef15deb3a"/>
+               <RmTextureObject NAME="forest_rgba" TYPE="RmTextureObject" API="D3D" HIDDEN="FALSE" GUID="8f88881b-2789-445e-8de2-20b6ed15e12b" STATE_INDEX="0">
+                  <RmTextureReference NAME="forest_rgba" TYPE="RmTextureReference" API="None" HIDDEN="FALSE" GUID="0ea96858-69ad-4322-8a86-649fad4a9fbe"/>
+                  <RmState NAME="D3DSAMP_MAGFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="facc9d7a-8278-423a-9773-e0a1e5b61292" STATE="5" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MINFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="fd83face-79ce-4b74-9f1f-8ed35b2091c4" STATE="6" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MIPFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="e4a0dc69-8a20-4a9c-a544-38eef5184f2a" STATE="7" VALUE="3" USAGE="SAMPLER_STATE"/>
+               </RmTextureObject>
+            </RmPass>
+         </RmDirectXEffect>
+         <RmDirectXEffect NAME="screen aligned, viewpoint oriented billboarding" TYPE="RmDirectXEffect" API="D3D" HIDDEN="FALSE" GUID="4b3dfc1b-14d0-4f63-abe2-337962458b75" ACTIVE_CAMERA="">
+            <RmPass NAME="Pass 1" TYPE="RmPass" API="D3D" HIDDEN="FALSE" GUID="97801c30-d57d-453c-9a86-9adf10df32a9" PASS_INDEX="0" ENABLED="TRUE">
+               <RmModelReference NAME="quad" TYPE="RmModelReference" API="None" HIDDEN="FALSE" GUID="bfe98f5d-caa0-47f4-9888-a5e4b55094a3"/>
+               <RmRenderStateBlock NAME="Render State" TYPE="RmRenderStateBlock" API="D3D" HIDDEN="FALSE" GUID="393670f1-0102-4327-bfb4-6a545eed5e79">
+                  <RmState NAME="D3DRS_SRCBLEND" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="ef2e22fa-4641-4a7c-8334-1e4baa31686b" STATE="19" VALUE="5" USAGE="RENDER_STATE"/>
+                  <RmState NAME="D3DRS_DESTBLEND" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="a57da9d0-f04f-4075-8bb0-8afde4d979be" STATE="20" VALUE="6" USAGE="RENDER_STATE"/>
+                  <RmState NAME="D3DRS_CULLMODE" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="4bda6509-6139-4c06-9400-cae6a9ae4bf8" STATE="22" VALUE="1" USAGE="RENDER_STATE"/>
+                  <RmState NAME="D3DRS_ALPHABLENDENABLE" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="34c0359c-932b-4293-bc9e-946826a96776" STATE="27" VALUE="1" USAGE="RENDER_STATE"/>
+               </RmRenderStateBlock>
+               <RmHLSLShader NAME="vs" TYPE="RmHLSLShader" API="D3D" HIDDEN="FALSE" GUID="1d9c0d5e-374c-4ed0-b5ff-16f27b01ea33" CODE="struct VS_OUTPUT&#xA;{&#xA;   float4 Pos  : POSITION;&#xA;   float2 Tex  : TEXCOORD0;&#xA;};&#xA;VS_OUTPUT main( &#xA;   float4 Pos: POSITION,&#xA;   float2 Tex: TEXCOORD0 )&#xA;{&#xA;   VS_OUTPUT Out = (VS_OUTPUT) 0; &#xA;&#xA;   float4 P = mul(view_matrix, billboard_center);          // position of the center(view space)&#xA;&#xA;   float3 n  = normalize(-P.xyz);&#xA;   float3 u0 = float3(0.0, 1.0, 0.0);&#xA;   float3 r  = normalize(cross(u0, n));&#xA;   float3 u  = cross(n, r);&#xA; &#xA;   P.xyz += r*(0.5 - Tex.x) * size;                              // position (view space)&#xA;   P.xyz += u*(0.5 - Tex.y) * size;                              // position (view space)&#xA;&#xA;   Out.Pos = mul(proj_matrix, P); &#xA;   Out.Tex = Tex;&#xA;&#xA;   return Out;&#xA;}&#xA;" PIXEL_SHADER="FALSE" DECLARATION_BLOCK="float size;&#xA;float4 billboard_center;&#xA;float4x4 view_matrix;&#xA;float4x4 proj_matrix;&#xA;" TARGET="vs_1_1" ENTRY_POINT="main">
+                  <RmShaderConstant NAME="size" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="fab9cb61-2504-47a4-97ec-46ff25f5df1d" REGISTER="-1"/>
+                  <RmShaderConstant NAME="billboard_center" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="691fbfdb-a31f-4548-92e5-f284ab8331b4" REGISTER="-1"/>
+                  <RmShaderConstant NAME="view_matrix" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="4ba9811f-f805-4e83-9b0b-16e2a4780949" REGISTER="-1"/>
+                  <RmShaderConstant NAME="proj_matrix" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="159349d2-6ae8-477c-b088-ad35d7890370" REGISTER="-1"/>
+               </RmHLSLShader>
+               <RmHLSLShader NAME="ps" TYPE="RmHLSLShader" API="D3D" HIDDEN="FALSE" GUID="f6d6b51e-4ee4-4a10-bec4-708e88bf130b" CODE="float4 main(    &#xA;   float2 Tex  : TEXCOORD0 ) : COLOR&#xA;{&#xA;&#xA;   return tex2D(forest_rgba, Tex);&#xA;&#xA;}&#xA;" PIXEL_SHADER="TRUE" DECLARATION_BLOCK="sampler forest_rgba;&#xA;" TARGET="ps_1_1" ENTRY_POINT="main">
+                  <RmSampler NAME="forest_rgba" TYPE="RmSampler" API="None" HIDDEN="TRUE" GUID="1d158f1e-f7ad-4092-821d-90a44b6bda66" REGISTER="-1"/>
+               </RmHLSLShader>
+               <RmStreamMapReference NAME="Stream Mapping" TYPE="RmStreamMapReference" API="None" HIDDEN="FALSE" GUID="ade949da-866d-4058-b62d-e3a0387c903b"/>
+               <RmTextureObject NAME="forest_rgba" TYPE="RmTextureObject" API="D3D" HIDDEN="FALSE" GUID="d80108db-4ddf-435d-be5f-401767b97d23" STATE_INDEX="0">
+                  <RmTextureReference NAME="forest_rgba" TYPE="RmTextureReference" API="None" HIDDEN="FALSE" GUID="2eac84a5-2337-4af6-bcbf-dba9adc882c0"/>
+                  <RmState NAME="D3DSAMP_MAGFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="ddd236e3-4ab1-406c-8c70-76e76b3cb810" STATE="5" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MINFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="9128bc04-8b09-4fa1-89a3-8961272cb936" STATE="6" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MIPFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="6dc9a169-8aba-4b44-8f25-8f586b3fb273" STATE="7" VALUE="3" USAGE="SAMPLER_STATE"/>
+               </RmTextureObject>
+            </RmPass>
+         </RmDirectXEffect>
+         <RmDirectXEffect NAME="world-oriented, view plane aligned billboarding" TYPE="RmDirectXEffect" API="D3D" HIDDEN="FALSE" GUID="90bb9be1-bed3-4513-a938-ead9304c5cc1" ACTIVE_CAMERA="">
+            <RmPass NAME="Pass 1" TYPE="RmPass" API="D3D" HIDDEN="FALSE" GUID="cdb7afc8-4b40-48e8-8cff-c22bbf4241c2" PASS_INDEX="0" ENABLED="TRUE">
+               <RmModelReference NAME="quad" TYPE="RmModelReference" API="None" HIDDEN="FALSE" GUID="f05b6b6e-ff64-48f7-b4a9-0c790e37f131"/>
+               <RmRenderStateBlock NAME="Render State" TYPE="RmRenderStateBlock" API="D3D" HIDDEN="FALSE" GUID="b1c6edd4-7fc7-4988-87c0-7cc49fe64343">
+                  <RmState NAME="D3DRS_SRCBLEND" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="2d754b3b-c994-48ef-885b-d5806e6f37a3" STATE="19" VALUE="5" USAGE="RENDER_STATE"/>
+                  <RmState NAME="D3DRS_DESTBLEND" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="3bd6a394-4acc-45df-9dce-d647db569fdb" STATE="20" VALUE="6" USAGE="RENDER_STATE"/>
+                  <RmState NAME="D3DRS_CULLMODE" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="b1780add-ebd5-4194-9167-4568a4abb348" STATE="22" VALUE="1" USAGE="RENDER_STATE"/>
+                  <RmState NAME="D3DRS_ALPHABLENDENABLE" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="5c1aa909-a40a-40db-9d56-a444a7ca9371" STATE="27" VALUE="1" USAGE="RENDER_STATE"/>
+               </RmRenderStateBlock>
+               <RmHLSLShader NAME="vs" TYPE="RmHLSLShader" API="D3D" HIDDEN="FALSE" GUID="55bc3a65-9434-4582-8dd0-2e988b7a0ff0" CODE="struct VS_OUTPUT&#xA;{&#xA;   float4 Pos  : POSITION;&#xA;   float2 Tex  : TEXCOORD0;&#xA;};&#xA;VS_OUTPUT main( &#xA;   float4 Pos: POSITION,&#xA;   float2 Tex: TEXCOORD0 )&#xA;{&#xA;   VS_OUTPUT Out = (VS_OUTPUT) 0; &#xA;&#xA;   float4 P = mul(view_matrix, billboard_center);          // position of the center(view space)&#xA;&#xA;   float3 n  = float3(0.0, 0.0, -1.0);&#xA;   float3 u0 = world_up.xyz;&#xA;   float3 r  = normalize(cross(u0, n));&#xA;   float3 u  = cross(n, r);&#xA; &#xA;   P.xyz += r*(0.5 - Tex.x) * size;                              // position (view space)&#xA;   P.xyz += u*(0.5 - Tex.y) * size;                              // position (view space)&#xA;&#xA;   Out.Pos = mul(proj_matrix, P); &#xA;   Out.Tex = Tex;&#xA;&#xA;   return Out;&#xA;}&#xA;&#xA;&#xA;&#xA;" PIXEL_SHADER="FALSE" DECLARATION_BLOCK="float4 billboard_center;&#xA;float size;&#xA;float4x4 proj_matrix;&#xA;float4 world_up;&#xA;float4x4 view_matrix;&#xA;" TARGET="vs_1_1" ENTRY_POINT="main">
+                  <RmShaderConstant NAME="billboard_center" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="5021b0b7-566e-4cde-9af5-c53147518fbb" REGISTER="-1"/>
+                  <RmShaderConstant NAME="size" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="7406808e-1090-45df-9adc-bae5ffeccf7f" REGISTER="-1"/>
+                  <RmShaderConstant NAME="proj_matrix" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="380ca0de-cc3e-4216-9f6f-5eb542bbed9c" REGISTER="-1"/>
+                  <RmShaderConstant NAME="world_up" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="6bd7e245-c7bb-417d-b2dc-a2f12de572de" REGISTER="-1"/>
+                  <RmShaderConstant NAME="view_matrix" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="349fc9d7-c859-4568-998a-ac7fdec24cb5" REGISTER="-1"/>
+               </RmHLSLShader>
+               <RmHLSLShader NAME="ps" TYPE="RmHLSLShader" API="D3D" HIDDEN="FALSE" GUID="1e60a9c7-016a-4964-b773-bbb8cdd2e012" CODE="float4 main(    &#xA;   float2 Tex  : TEXCOORD0 ) : COLOR&#xA;{&#xA;&#xA;   return tex2D(forest_rgba, Tex);&#xA;&#xA;}&#xA;&#xA;" PIXEL_SHADER="TRUE" DECLARATION_BLOCK="sampler forest_rgba;&#xA;" TARGET="ps_1_4" ENTRY_POINT="main">
+                  <RmSampler NAME="forest_rgba" TYPE="RmSampler" API="None" HIDDEN="TRUE" GUID="8702d9e9-d3e3-4b87-b625-bf6ed95697a8" REGISTER="-1"/>
+               </RmHLSLShader>
+               <RmStreamMapReference NAME="Stream Mapping" TYPE="RmStreamMapReference" API="None" HIDDEN="FALSE" GUID="09d95dee-7313-44b2-a339-5886da5e48af"/>
+               <RmTextureObject NAME="forest_rgba" TYPE="RmTextureObject" API="D3D" HIDDEN="FALSE" GUID="52b9ea6b-9874-45a5-805c-5cf1704abe87" STATE_INDEX="0">
+                  <RmTextureReference NAME="forest_rgba" TYPE="RmTextureReference" API="None" HIDDEN="FALSE" GUID="d42e5094-3030-4a0c-87b3-53a6391f18da"/>
+                  <RmState NAME="D3DSAMP_MAGFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="7dc3d00d-f420-4776-9130-d838cd2ca012" STATE="5" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MINFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="7c655e69-118d-4807-83d9-6337201c3739" STATE="6" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MIPFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="e8820344-2b55-4af7-985a-c31b008b3ae0" STATE="7" VALUE="3" USAGE="SAMPLER_STATE"/>
+               </RmTextureObject>
+            </RmPass>
+         </RmDirectXEffect>
+         <RmDirectXEffect NAME="world-oriented, viewpoint oriented billboarding" TYPE="RmDirectXEffect" API="D3D" HIDDEN="FALSE" GUID="98e1906f-acd5-431d-ae45-dedb606d7a8b" ACTIVE_CAMERA="">
+            <RmPass NAME="Pass 1" TYPE="RmPass" API="D3D" HIDDEN="FALSE" GUID="85ca9406-f10c-4b55-928a-f5edbe8e2f1c" PASS_INDEX="0" ENABLED="TRUE">
+               <RmModelReference NAME="quad" TYPE="RmModelReference" API="None" HIDDEN="FALSE" GUID="de2b8922-5506-49ec-9e27-a2ca7c3fe92d"/>
+               <RmRenderStateBlock NAME="Render State" TYPE="RmRenderStateBlock" API="D3D" HIDDEN="FALSE" GUID="505e9f13-35e1-4227-9326-72e05ef5ab40">
+                  <RmState NAME="D3DRS_SRCBLEND" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="f09f5aac-f729-4d6c-8229-2cf66a1012a0" STATE="19" VALUE="5" USAGE="RENDER_STATE"/>
+                  <RmState NAME="D3DRS_DESTBLEND" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="588d9cf7-db48-4583-8989-ab11a0ad04de" STATE="20" VALUE="6" USAGE="RENDER_STATE"/>
+                  <RmState NAME="D3DRS_CULLMODE" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="02ec2ec6-ae09-4cd7-ba82-91daef47a038" STATE="22" VALUE="1" USAGE="RENDER_STATE"/>
+                  <RmState NAME="D3DRS_ALPHABLENDENABLE" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="9b9c6fd4-cfa3-4bdc-9a4b-c68dbebbf238" STATE="27" VALUE="1" USAGE="RENDER_STATE"/>
+               </RmRenderStateBlock>
+               <RmHLSLShader NAME="vs" TYPE="RmHLSLShader" API="D3D" HIDDEN="FALSE" GUID="976c0136-1437-438e-a203-759cb94c289c" CODE="struct VS_OUTPUT&#xA;{&#xA;   float4 Pos  : POSITION;&#xA;   float2 Tex  : TEXCOORD0;&#xA;};&#xA;VS_OUTPUT main( &#xA;   float4 Pos: POSITION,&#xA;   float2 Tex: TEXCOORD0 )&#xA;{&#xA;   VS_OUTPUT Out = (VS_OUTPUT) 0; &#xA;&#xA;   float4 P = mul(view_matrix, billboard_center);          // position of the center(view space)&#xA;&#xA;   float3 n  = normalize(-P.xyz);&#xA;   float3 u0 = world_up.xyz;&#xA;   float3 r  = normalize(cross(u0, n));&#xA;   float3 u  = cross(n, r);&#xA; &#xA;   P.xyz += r*(0.5 - Tex.x) * size;                              // position (view space)&#xA;   P.xyz += u*(0.5 - Tex.y) * size;                              // position (view space)&#xA;&#xA;   Out.Pos = mul(proj_matrix, P); &#xA;   Out.Tex = Tex;&#xA;&#xA;   return Out;&#xA;}&#xA;&#xA;&#xA;" PIXEL_SHADER="FALSE" DECLARATION_BLOCK="float4 billboard_center;&#xA;float size;&#xA;float4x4 proj_matrix;&#xA;float4 world_up;&#xA;float4x4 view_matrix;&#xA;" TARGET="vs_1_1" ENTRY_POINT="main">
+                  <RmShaderConstant NAME="billboard_center" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="11d62982-bf2d-4c59-8562-d7ccc1f984c5" REGISTER="-1"/>
+                  <RmShaderConstant NAME="size" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="da8c89b2-d907-4de5-a327-cdbe99693714" REGISTER="-1"/>
+                  <RmShaderConstant NAME="proj_matrix" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="f48f911a-b97a-4365-8ede-ed3b9bdecf4f" REGISTER="-1"/>
+                  <RmShaderConstant NAME="world_up" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="95b576df-504d-475c-80b4-77439acb995f" REGISTER="-1"/>
+                  <RmShaderConstant NAME="view_matrix" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="5f600436-437f-41ed-ba0e-e403a9a16b6b" REGISTER="-1"/>
+               </RmHLSLShader>
+               <RmHLSLShader NAME="ps" TYPE="RmHLSLShader" API="D3D" HIDDEN="FALSE" GUID="f3ca79e4-96be-4901-bb72-625c45ff4a4b" CODE="float4 main(    &#xA;   float2 Tex  : TEXCOORD0 ) : COLOR&#xA;{&#xA;&#xA;   return tex2D(forest_rgba, Tex);&#xA;&#xA;}&#xA;&#xA;" PIXEL_SHADER="TRUE" DECLARATION_BLOCK="sampler forest_rgba;&#xA;" TARGET="ps_1_1" ENTRY_POINT="main">
+                  <RmSampler NAME="forest_rgba" TYPE="RmSampler" API="None" HIDDEN="TRUE" GUID="c1ef6fb1-c383-4152-8cef-9cd41268c7e6" REGISTER="-1"/>
+               </RmHLSLShader>
+               <RmStreamMapReference NAME="Stream Mapping" TYPE="RmStreamMapReference" API="None" HIDDEN="FALSE" GUID="0834d815-6097-4a4e-899a-9d0b201c3b1e"/>
+               <RmTextureObject NAME="forest_rgba" TYPE="RmTextureObject" API="D3D" HIDDEN="FALSE" GUID="febd982f-92db-448e-8b06-5000ee771099" STATE_INDEX="0">
+                  <RmTextureReference NAME="forest_rgba" TYPE="RmTextureReference" API="None" HIDDEN="FALSE" GUID="4bc96b69-bd3f-41e6-8a00-45a4dae7d126"/>
+                  <RmState NAME="D3DSAMP_MAGFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="68180003-3e28-4727-82bc-b4189de2aa96" STATE="5" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MINFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="5f7da444-1bed-4870-9089-2c24c5a303ef" STATE="6" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MIPFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="cc0013b2-79a6-4ca3-a51b-7e877a7e0c25" STATE="7" VALUE="3" USAGE="SAMPLER_STATE"/>
+               </RmTextureObject>
+            </RmPass>
+         </RmDirectXEffect>
+         <RmDirectXEffect NAME="axial, view plan aligned billboarding" TYPE="RmDirectXEffect" API="D3D" HIDDEN="FALSE" GUID="1c41a672-b363-4744-ab70-1eb762538f2e" ACTIVE_CAMERA="">
+            <RmPass NAME="Pass 1" TYPE="RmPass" API="D3D" HIDDEN="FALSE" GUID="740fd47f-35c5-4147-a61e-85aeac8920ab" PASS_INDEX="0" ENABLED="TRUE">
+               <RmModelReference NAME="quad" TYPE="RmModelReference" API="None" HIDDEN="FALSE" GUID="038efc01-4c10-4d49-830d-0232d6877273"/>
+               <RmRenderStateBlock NAME="Render State" TYPE="RmRenderStateBlock" API="D3D" HIDDEN="FALSE" GUID="5ea27504-4131-4837-b31d-d58171bbcedf">
+                  <RmState NAME="D3DRS_SRCBLEND" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="78116c1b-5916-4061-be83-fcf1478cb636" STATE="19" VALUE="5" USAGE="RENDER_STATE"/>
+                  <RmState NAME="D3DRS_DESTBLEND" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="c3168248-549e-4171-bcfc-cc1696dd0e0a" STATE="20" VALUE="6" USAGE="RENDER_STATE"/>
+                  <RmState NAME="D3DRS_CULLMODE" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="f91e7f1f-b46a-4cca-9f93-b6561feceb6a" STATE="22" VALUE="1" USAGE="RENDER_STATE"/>
+                  <RmState NAME="D3DRS_ALPHABLENDENABLE" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="9e477078-3243-4b81-b849-88ec0c2e1c47" STATE="27" VALUE="1" USAGE="RENDER_STATE"/>
+               </RmRenderStateBlock>
+               <RmHLSLShader NAME="vs" TYPE="RmHLSLShader" API="D3D" HIDDEN="FALSE" GUID="0e4ec70b-9297-4c63-a358-b35820f94778" CODE="struct VS_OUTPUT&#xA;{&#xA;   float4 Pos  : POSITION;&#xA;   float2 Tex  : TEXCOORD0;&#xA;};&#xA;VS_OUTPUT main( &#xA;   float4 Pos: POSITION,&#xA;   float2 Tex: TEXCOORD0 )&#xA;{&#xA;   VS_OUTPUT Out = (VS_OUTPUT) 0; &#xA;&#xA;   float4 P = mul(view_matrix, billboard_center);          // position of the center(view space)&#xA;&#xA;   float3 n0 = float3(0.0, 0.0, -1.0);&#xA;   float3 u  = normalize(world_up.xyz);&#xA;   float3 r  = normalize(cross(u, n0));&#xA; &#xA;   P.xyz += r*(0.5 - Tex.x) * size;                              // position (view space)&#xA;   P.xyz += u*(0.5 - Tex.y) * size;                              // position (view space)&#xA;&#xA;   Out.Pos = mul(proj_matrix, P); &#xA;   Out.Tex = Tex;&#xA;&#xA;   return Out;&#xA;}&#xA;&#xA;&#xA;" PIXEL_SHADER="FALSE" DECLARATION_BLOCK="float4 billboard_center;&#xA;float size;&#xA;float4x4 proj_matrix;&#xA;float4 world_up;&#xA;float4x4 view_matrix;&#xA;" TARGET="vs_1_1" ENTRY_POINT="main">
+                  <RmShaderConstant NAME="billboard_center" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="295e9846-8f59-4d9c-a3c8-e6f711e389b0" REGISTER="-1"/>
+                  <RmShaderConstant NAME="size" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="ba83eaab-fe42-4ce1-9720-5f90a357976a" REGISTER="-1"/>
+                  <RmShaderConstant NAME="proj_matrix" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="346946f4-e1b1-4c39-bde5-444f6869ef67" REGISTER="-1"/>
+                  <RmShaderConstant NAME="world_up" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="4c6267b4-524b-4fdd-83eb-5e77ac8dadde" REGISTER="-1"/>
+                  <RmShaderConstant NAME="view_matrix" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="d66ac177-d68d-4dd0-909f-306c4a3937be" REGISTER="-1"/>
+               </RmHLSLShader>
+               <RmHLSLShader NAME="ps" TYPE="RmHLSLShader" API="D3D" HIDDEN="FALSE" GUID="ddae7287-ca17-457f-9af7-cb2c8e110d6a" CODE="float4 main(    &#xA;   float2 Tex  : TEXCOORD0 ) : COLOR&#xA;{&#xA;&#xA;   return tex2D(forest_rgba, Tex);&#xA;&#xA;}&#xA;&#xA;" PIXEL_SHADER="TRUE" DECLARATION_BLOCK="sampler forest_rgba;&#xA;" TARGET="ps_1_1" ENTRY_POINT="main">
+                  <RmSampler NAME="forest_rgba" TYPE="RmSampler" API="None" HIDDEN="TRUE" GUID="3bec537d-506a-4b90-9e64-e5ddb56495ab" REGISTER="-1"/>
+               </RmHLSLShader>
+               <RmStreamMapReference NAME="Stream Mapping" TYPE="RmStreamMapReference" API="None" HIDDEN="FALSE" GUID="33d4c668-7424-4c6e-ac6b-f02d08b356bc"/>
+               <RmTextureObject NAME="forest_rgba" TYPE="RmTextureObject" API="D3D" HIDDEN="FALSE" GUID="47da935c-9d87-4e72-90a4-8ed4e3da2383" STATE_INDEX="0">
+                  <RmTextureReference NAME="forest_rgba" TYPE="RmTextureReference" API="None" HIDDEN="FALSE" GUID="58714ad4-be3b-442a-8ae1-fca2c63e1300"/>
+                  <RmState NAME="D3DSAMP_MAGFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="4603212c-ee05-43de-a0de-87d680189b1d" STATE="5" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MINFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="83aebb46-54e4-47f6-85fa-ad810a2d5569" STATE="6" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MIPFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="bf99517a-ff5d-4488-bf9b-13f8cd645373" STATE="7" VALUE="3" USAGE="SAMPLER_STATE"/>
+               </RmTextureObject>
+            </RmPass>
+         </RmDirectXEffect>
+         <RmDirectXEffect NAME="axial, viewpoint oriented billboarding" TYPE="RmDirectXEffect" API="D3D" HIDDEN="FALSE" GUID="ffaee71e-7de6-41fe-a2c5-11d3c7a2e4b3" ACTIVE_CAMERA="">
+            <RmPass NAME="Pass 1" TYPE="RmPass" API="D3D" HIDDEN="FALSE" GUID="a243c3f6-b6f3-4386-9a0c-c74c2cba941e" PASS_INDEX="0" ENABLED="TRUE">
+               <RmModelReference NAME="quad" TYPE="RmModelReference" API="None" HIDDEN="FALSE" GUID="62e4207b-0f54-4fdf-a684-9383748ef105"/>
+               <RmRenderStateBlock NAME="Render State" TYPE="RmRenderStateBlock" API="D3D" HIDDEN="FALSE" GUID="1787b2e8-3943-455c-975d-de043d24d19e">
+                  <RmState NAME="D3DRS_SRCBLEND" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="592b9202-b2bf-42fd-84ce-bbbfd435a9ad" STATE="19" VALUE="5" USAGE="RENDER_STATE"/>
+                  <RmState NAME="D3DRS_DESTBLEND" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="8f136faf-7141-46e9-aef5-f0cf8321e819" STATE="20" VALUE="6" USAGE="RENDER_STATE"/>
+                  <RmState NAME="D3DRS_CULLMODE" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="ec5f7ebf-8bc3-4776-a709-7fb245f23d89" STATE="22" VALUE="1" USAGE="RENDER_STATE"/>
+                  <RmState NAME="D3DRS_ALPHABLENDENABLE" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="1bb4240f-15ae-4ddb-9e09-5b8536d88a80" STATE="27" VALUE="1" USAGE="RENDER_STATE"/>
+               </RmRenderStateBlock>
+               <RmHLSLShader NAME="vs" TYPE="RmHLSLShader" API="D3D" HIDDEN="FALSE" GUID="f1fdc1ff-f7ec-49f5-b640-b208fe7c8ad7" CODE="struct VS_OUTPUT&#xA;{&#xA;   float4 Pos  : POSITION;&#xA;   float2 Tex  : TEXCOORD0;&#xA;};&#xA;VS_OUTPUT main( &#xA;   float4 Pos: POSITION,&#xA;   float2 Tex: TEXCOORD0 )&#xA;{&#xA;   VS_OUTPUT Out = (VS_OUTPUT) 0; &#xA;&#xA;   float4 P = mul(view_matrix, billboard_center);          // position of the center(view space)&#xA;&#xA;   float3 n0 = -P.xyz;&#xA;   float3 u  = normalize(world_up.xyz);&#xA;   float3 r  = normalize(cross(u, n0));&#xA; &#xA;   P.xyz += r*(0.5 - Tex.x) * size;                              // position (view space)&#xA;   P.xyz += u*(0.5 - Tex.y) * size;                              // position (view space)&#xA;&#xA;   Out.Pos = mul(proj_matrix, P); &#xA;   Out.Tex = Tex;&#xA;&#xA;   return Out;&#xA;}&#xA;&#xA;&#xA;" PIXEL_SHADER="FALSE" DECLARATION_BLOCK="float4 billboard_center;&#xA;float size;&#xA;float4x4 proj_matrix;&#xA;float4 world_up;&#xA;float4x4 view_matrix;&#xA;" TARGET="vs_1_1" ENTRY_POINT="main">
+                  <RmShaderConstant NAME="billboard_center" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="174fc345-cf29-4d37-93ed-ebf9b6ce2912" REGISTER="-1"/>
+                  <RmShaderConstant NAME="size" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="34582dc3-70a1-4aea-9046-eca8f2f1a875" REGISTER="-1"/>
+                  <RmShaderConstant NAME="proj_matrix" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="b67c103c-d7c9-4a67-9344-c0858b6b6836" REGISTER="-1"/>
+                  <RmShaderConstant NAME="world_up" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="246ee859-9c25-4d84-9d0e-aed17b2727b6" REGISTER="-1"/>
+                  <RmShaderConstant NAME="view_matrix" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="95599d8b-6511-4477-945c-8297cff0a245" REGISTER="-1"/>
+               </RmHLSLShader>
+               <RmHLSLShader NAME="ps" TYPE="RmHLSLShader" API="D3D" HIDDEN="FALSE" GUID="e816c487-a77e-42e1-972d-a30f4e2a2513" CODE="float4 main(    &#xA;   float2 Tex  : TEXCOORD0 ) : COLOR&#xA;{&#xA;&#xA;   return tex2D(forest_rgba, Tex);&#xA;&#xA;}&#xA;" PIXEL_SHADER="TRUE" DECLARATION_BLOCK="sampler forest_rgba;&#xA;" TARGET="ps_1_1" ENTRY_POINT="main">
+                  <RmSampler NAME="forest_rgba" TYPE="RmSampler" API="None" HIDDEN="TRUE" GUID="4f54c95b-2761-4170-80fc-08f8a7c1ac20" REGISTER="-1"/>
+               </RmHLSLShader>
+               <RmStreamMapReference NAME="Stream Mapping" TYPE="RmStreamMapReference" API="None" HIDDEN="FALSE" GUID="79857143-c07d-4807-a826-543bd1427aed"/>
+               <RmTextureObject NAME="forest_rgba" TYPE="RmTextureObject" API="D3D" HIDDEN="FALSE" GUID="3302fa03-2d19-43da-a281-1afee271de60" STATE_INDEX="0">
+                  <RmTextureReference NAME="forest_rgba" TYPE="RmTextureReference" API="None" HIDDEN="FALSE" GUID="b6f53c16-adb7-4f3b-b0ea-f451bc19d7ae"/>
+                  <RmState NAME="D3DSAMP_MAGFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="8175f65f-3291-4657-844e-00c71be7875b" STATE="5" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MINFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="e58804ad-7a35-4c66-80a0-df0a64099e17" STATE="6" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MIPFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="b3af228c-46ef-44a2-9322-b0806f3ac085" STATE="7" VALUE="3" USAGE="SAMPLER_STATE"/>
+               </RmTextureObject>
+            </RmPass>
+         </RmDirectXEffect>
+         <RmFloatVariable NAME="size" TYPE="RmFloatVariable" API="None" HIDDEN="FALSE" GUID="8ed986fd-2763-405d-8ecb-ae828507f5c0" ARTIST_EDITABLE="FALSE" VALUE="50.000000" MIN="0.000000" MAX="100.000000" CLAMP="TRUE"/>
+         <RmVectorVariable NAME="billboard_center" TYPE="RmVectorVariable" API="None" HIDDEN="FALSE" GUID="86bcae6c-2535-419d-ad80-8cf6d2363c0a" ARTIST_EDITABLE="FALSE" VALUE_0="50.000000" VALUE_1="0.000000" VALUE_2="0.000000" VALUE_3="1.000000" MIN="-100.000000" MAX="100.000000" CLAMP="FALSE" NORMALIZE="FALSE"/>
+         <RmVectorVariable NAME="lightDir" TYPE="RmVectorVariable" API="None" HIDDEN="FALSE" GUID="2bdb03fe-0b91-4a53-9c00-bc284ad520b8" ARTIST_EDITABLE="FALSE" VALUE_0="-1.000000" VALUE_1="-1.000000" VALUE_2="1.000000" VALUE_3="1.000000" MIN="-10.000000" MAX="10.000000" CLAMP="FALSE" NORMALIZE="FALSE"/>
+         <RmVectorVariable NAME="world_up" TYPE="RmVectorVariable" API="None" HIDDEN="FALSE" GUID="c76657c3-bc0f-4966-8421-a52553a780f3" ARTIST_EDITABLE="FALSE" VALUE_0="0.000000" VALUE_1="1.000000" VALUE_2="0.000000" VALUE_3="1.000000" MIN="-10.000000" MAX="10.000000" CLAMP="FALSE" NORMALIZE="FALSE"/>
+         <Rm2DTextureVariable NAME="tam_weights" TYPE="Rm2DTextureVariable" API="None" HIDDEN="FALSE" GUID="3a3c0888-eef9-4c77-980b-58967ab41634" ARTIST_EDITABLE="TRUE" FILE_NAME="..\..\Media\Textures\stroke-rendering\tam_weights.tga"/>
+         <Rm2DTextureVariable NAME="forest_rgba" TYPE="Rm2DTextureVariable" API="None" HIDDEN="FALSE" GUID="c057fc89-b55f-4bfd-b444-6484df678597" ARTIST_EDITABLE="TRUE" FILE_NAME="..\..\Media\Textures\stroke-rendering\forest_rgba.dds"/>
+         <Rm2DTextureVariable NAME="tree_normals" TYPE="Rm2DTextureVariable" API="None" HIDDEN="FALSE" GUID="3e9c3a25-6c6f-4662-b310-9f935064283d" ARTIST_EDITABLE="TRUE" FILE_NAME="..\..\Media\Textures\stroke-rendering\tree_normals.dds"/>
+         <RmStreamMap NAME="Stream Mapping" TYPE="RmStreamMap" API="None" HIDDEN="FALSE" GUID="86b8f480-1cce-4d65-ab45-cf02c253a2f9">
+            <RmStream NAME="TexCoord5" TYPE="RmStream" API="None" HIDDEN="TRUE" GUID="3bdc3830-d91f-4df4-935e-d80d619ba383" STRIDE="32">
+               <RmStreamChannel NAME="Position_0" TYPE="RmStreamChannel" API="None" HIDDEN="TRUE" GUID="42b874ee-a15d-49f3-94ff-d2d0b32b191a" DATA_SIZE="12" DATA_TYPE="2" REGISTER="0" USAGE="0" USAGE_INDEX="0"/>
+               <RmStreamChannel NAME="TexCoord_0" TYPE="RmStreamChannel" API="None" HIDDEN="TRUE" GUID="6ce3d34b-f2a9-46d0-83ce-f4132a781c74" DATA_SIZE="8" DATA_TYPE="1" REGISTER="1" USAGE="5" USAGE_INDEX="0"/>
+               <RmStreamChannel NAME="TexCoord_1" TYPE="RmStreamChannel" API="None" HIDDEN="TRUE" GUID="c9a6147a-cab5-4a8f-978d-67de479db974" DATA_SIZE="12" DATA_TYPE="2" REGISTER="2" USAGE="5" USAGE_INDEX="1"/>
+            </RmStream>
+         </RmStreamMap>
+         <RmModelData NAME="quad" TYPE="RmModelData" API="None" HIDDEN="FALSE" GUID="1894fbf6-76b4-46c2-bea1-2e4d91fff532" FILE_NAME="..\..\Media\Models\ScreenAlignedQuad.3ds"/>
+      </RmEffectGroup>
+      <RmEffectGroup NAME="Pointillistic Butterfly Effect Group" TYPE="RmEffectGroup" API="None" HIDDEN="FALSE" GUID="7858c41f-00f0-4593-8e1e-467818665fca">
+         <RmDirectXEffect NAME="Pointillistic Butterfly HLSL" TYPE="RmDirectXEffect" API="D3D" HIDDEN="FALSE" GUID="d63347ca-cab6-47fe-bae4-2363aac5042a" ACTIVE_CAMERA="">
+            <RmPass NAME="Pointillistic Wings Pass" TYPE="RmPass" API="D3D" HIDDEN="FALSE" GUID="6b8623ac-3b27-419d-a88f-14f5056242e8" PASS_INDEX="0" ENABLED="TRUE">
+               <RmModelReference NAME="wings" TYPE="RmModelReference" API="None" HIDDEN="FALSE" GUID="41a32716-54ed-45b7-b02e-5e3096b6dbee"/>
+               <RmHLSLShader NAME="Vertex Shader" TYPE="RmHLSLShader" API="D3D" HIDDEN="FALSE" GUID="e2cbe98b-c2c1-40c0-b4eb-aed84731eeb5" CODE="struct VS_OUTPUT&#xA;{&#xA;   float4 Pos   : POSITION;&#xA;   float2 Tex   : TEXCOORD0;&#xA;};&#xA;&#xA;VS_OUTPUT main( float4 Pos      : POSITION,&#xA;                float2 Tex      : TEXCOORD0 )&#xA;{&#xA;   VS_OUTPUT Out = (VS_OUTPUT) 0; &#xA;&#xA;   // Output transformed vertex position:&#xA;   Out.Pos = mul( view_proj_matrix, Pos );&#xA;&#xA;   // Propagate input texture coordinates:&#xA;   Out.Tex = Tex;&#xA;&#xA;   return Out;&#xA;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;" PIXEL_SHADER="FALSE" DECLARATION_BLOCK="float4x4 view_proj_matrix;&#xA;" TARGET="vs_1_1" ENTRY_POINT="main">
+                  <RmShaderConstant NAME="view_proj_matrix" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="a7b69e03-b73c-45ba-8703-b743c1974b61" REGISTER="-1"/>
+               </RmHLSLShader>
+               <RmHLSLShader NAME="Pixel Shader" TYPE="RmHLSLShader" API="D3D" HIDDEN="FALSE" GUID="857101e8-a3a7-4525-99a6-8bf08ef881c0" CODE="//=====================================================================================//&#xA;// Pointillistic Butterfly Pixel shader - Kevin Buchin, Maike Walther                  //&#xA;//=====================================================================================//&#xA;float4 main( float2 Tex : TEXCOORD0) : COLOR&#xA;{&#xA;&#xA;   // calculate offset: &quot;offset_scale&quot; is the relative size of the dots/strokes/marks in&#xA;   // the offset texture. If the texture coordinates for the offset texture are scaled &#xA;   // by &quot;scale&quot; the relative size &quot;offset_scale&quot; has to be adjusted by dividing through&#xA;   // &quot;scale&quot; &#xA;   float2 offset = (tex2D(dots, Tex.xy*scale).xy - 0.5)*offset_scale.xy/scale;&#xA;   float2 TexNew = Tex - offset;&#xA;&#xA;   return float4(tex2D( base_opacityMap, TexNew ).xyz, 1);&#xA;&#xA;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;" PIXEL_SHADER="TRUE" DECLARATION_BLOCK="float scale;&#xA;float4 offset_scale;&#xA;sampler base_opacityMap;&#xA;sampler dots;&#xA;" TARGET="ps_2_0" ENTRY_POINT="main">
+                  <RmSampler NAME="base_opacityMap" TYPE="RmSampler" API="None" HIDDEN="TRUE" GUID="b9d856a0-c233-4609-bfef-45df2aa4c4cd" REGISTER="-1"/>
+                  <RmSampler NAME="dots" TYPE="RmSampler" API="None" HIDDEN="TRUE" GUID="de21f759-7c80-4b6e-950d-8aaec26c4098" REGISTER="-1"/>
+                  <RmShaderConstant NAME="scale" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="e0532b72-6e0c-49d1-88de-42ab25bb8efb" REGISTER="-1"/>
+                  <RmShaderConstant NAME="offset_scale" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="383aca88-5120-41d8-8649-ad3c95e7c2e8" REGISTER="-1"/>
+               </RmHLSLShader>
+               <RmStreamMapReference NAME="Stream Mapping" TYPE="RmStreamMapReference" API="None" HIDDEN="FALSE" GUID="0d8cfe7b-3d92-4844-b154-e151b8c6c4cb"/>
+               <RmTextureObject NAME="dots" TYPE="RmTextureObject" API="D3D" HIDDEN="FALSE" GUID="2eec3e64-c96b-43ff-bea1-1dd011712552" STATE_INDEX="1">
+                  <RmTextureReference NAME="dots" TYPE="RmTextureReference" API="None" HIDDEN="FALSE" GUID="1e9f875d-9d4d-4564-8e57-1e30458d28e5"/>
+                  <RmState NAME="D3DSAMP_ADDRESSU" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="0f61d668-376f-4415-86d2-c0c8dd290944" STATE="1" VALUE="1" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_ADDRESSV" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="bbabeb4f-08a6-430b-8ea6-0a35a37a76b7" STATE="2" VALUE="1" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_ADDRESSW" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="a3f02973-49c3-4357-aaed-6561917d3c55" STATE="3" VALUE="1" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MAGFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="6a1837e0-b19b-46c7-ae9f-5412f8789edc" STATE="5" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MINFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="2ce9743f-e6ee-436e-bea0-1585a091d729" STATE="6" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MIPFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="830c4d61-3441-4554-87f0-9f7831e057ab" STATE="7" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MIPMAPLODBIAS" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="fe2fe82c-6330-4971-b989-8dc156ee595a" STATE="8" VALUE="-1.000000" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MAXMIPLEVEL" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="ace39881-710c-48ca-9c8b-d35984945025" STATE="9" VALUE="0" USAGE="SAMPLER_STATE"/>
+               </RmTextureObject>
+               <RmTextureObject NAME="base_opacityMap" TYPE="RmTextureObject" API="D3D" HIDDEN="FALSE" GUID="4a44a2be-dd7b-4440-9d52-1090aa159d07" STATE_INDEX="0">
+                  <RmTextureReference NAME="base_opacityMap" TYPE="RmTextureReference" API="None" HIDDEN="FALSE" GUID="28edd999-323f-4e2a-ba66-9985660a3230"/>
+                  <RmState NAME="D3DSAMP_ADDRESSU" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="e3ea25a5-95e9-44b6-abc6-16549bbe950c" STATE="1" VALUE="3" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_ADDRESSV" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="24633e4d-0ae4-4664-8618-0c6f957938f6" STATE="2" VALUE="3" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MAGFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="5ceca89d-9005-4799-a36f-432fcd83faa6" STATE="5" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MINFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="57aa5a1a-63fe-40eb-b4d8-0910a35c1201" STATE="6" VALUE="2" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MIPFILTER" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="2eb30d18-3a2f-4889-a78c-5a27f09b3099" STATE="7" VALUE="3" USAGE="SAMPLER_STATE"/>
+                  <RmState NAME="D3DSAMP_MAXANISOTROPY" TYPE="RmState" API="D3D" HIDDEN="TRUE" GUID="9bf405e0-8cfd-4946-9099-20265380adf1" STATE="10" VALUE="16" USAGE="SAMPLER_STATE"/>
+               </RmTextureObject>
+            </RmPass>
+            <RmPass NAME="Butterfly Body Pass" TYPE="RmPass" API="D3D" HIDDEN="FALSE" GUID="1141b9a9-1e6f-4ff2-ad2c-f29021751801" PASS_INDEX="1" ENABLED="TRUE">
+               <RmModelReference NAME="body" TYPE="RmModelReference" API="None" HIDDEN="FALSE" GUID="61f52933-b33f-41cf-8221-2ab95c0ae9a2"/>
+               <RmHLSLShader NAME="vs" TYPE="RmHLSLShader" API="D3D" HIDDEN="FALSE" GUID="5d831e77-95f4-4482-9303-0cd510ad22e1" CODE="struct VS_OUTPUT&#xA;{&#xA;   float4 Pos: POSITION;&#xA;};&#xA;VS_OUTPUT main( float4 Pos: POSITION )&#xA;{&#xA;   VS_OUTPUT Out = (VS_OUTPUT) 0; &#xA;   Out.Pos = mul( view_proj_matrix, Pos );&#xA;   return Out;&#xA;}&#xA;" PIXEL_SHADER="FALSE" DECLARATION_BLOCK="float4x4 view_proj_matrix: register(c0);&#xA;" TARGET="vs_1_1" ENTRY_POINT="main">
+                  <RmShaderConstant NAME="view_proj_matrix" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="825bafaa-0308-43f7-a8f3-6f5c814d4e64" REGISTER="0"/>
+               </RmHLSLShader>
+               <RmHLSLShader NAME="ps" TYPE="RmHLSLShader" API="D3D" HIDDEN="FALSE" GUID="94b37d3f-c22d-4083-bb91-63c82f0ae0d7" CODE="float4 main( float4 Diff: COLOR0 ) : COLOR&#xA;{&#xA;    return body_color;&#xA;}&#xA;&#xA;&#xA;" PIXEL_SHADER="TRUE" DECLARATION_BLOCK="float4 body_color;&#xA;" TARGET="ps_1_4" ENTRY_POINT="main">
+                  <RmShaderConstant NAME="body_color" TYPE="RmShaderConstant" API="None" HIDDEN="TRUE" GUID="eba9df68-4ccf-41be-be94-789719987015" REGISTER="-1"/>
+               </RmHLSLShader>
+               <RmStreamMapReference NAME="Stream Mapping" TYPE="RmStreamMapReference" API="None" HIDDEN="FALSE" GUID="21ae0a74-6258-4713-bdb0-15aa4fb0fe2e"/>
+            </RmPass>
+         </RmDirectXEffect>
+         <RmFloatVariable NAME="scale" TYPE="RmFloatVariable" API="None" HIDDEN="FALSE" GUID="3fcfbcd6-b53a-4873-8b82-7de8d2f31b20" ARTIST_EDITABLE="TRUE" VALUE="3.000000" MIN="0.250000" MAX="10.000000" CLAMP="TRUE"/>
+         <RmVectorVariable NAME="offset_scale" TYPE="RmVectorVariable" API="None" HIDDEN="FALSE" GUID="4cea4366-9beb-4510-8618-327ea93271a7" ARTIST_EDITABLE="FALSE" VALUE_0="-0.140000" VALUE_1="0.140000" VALUE_2="0.000000" VALUE_3="0.000000" MIN="0.000000" MAX="32.000000" CLAMP="FALSE" NORMALIZE="FALSE"/>
+         <RmColorVariable NAME="body_color" TYPE="RmColorVariable" API="None" HIDDEN="FALSE" GUID="5ddbcb83-0568-485e-9b3e-c230350ce1bd" ARTIST_EDITABLE="TRUE" VALUE_0="0.171320" VALUE_1="0.138163" VALUE_2="0.442308" VALUE_3="1.000000"/>
+         <Rm2DTextureVariable NAME="dots" TYPE="Rm2DTextureVariable" API="None" HIDDEN="FALSE" GUID="172365b7-af23-45fd-b3c7-d02136b5e82b" ARTIST_EDITABLE="FALSE" FILE_NAME="..\..\Media\Textures\stroke-rendering\flowers.tga"/>
+         <Rm2DTextureVariable NAME="base_opacityMap" TYPE="Rm2DTextureVariable" API="None" HIDDEN="FALSE" GUID="617c3fe7-09f8-41d3-9ac0-29b71191dd51" ARTIST_EDITABLE="FALSE" FILE_NAME="..\..\Media\Textures\Butterfly\Iridescence-Base-OpacityMap.tga"/>
+         <RmStreamMap NAME="Stream Mapping" TYPE="RmStreamMap" API="None" HIDDEN="FALSE" GUID="ed0921ed-b582-4472-984e-6b543fe4586f">
+            <RmStream NAME="TexCoord5" TYPE="RmStream" API="None" HIDDEN="TRUE" GUID="aec050fa-c71f-4ec9-adcf-898dcd4ec5d9" STRIDE="20">
+               <RmStreamChannel NAME="Position_0" TYPE="RmStreamChannel" API="None" HIDDEN="TRUE" GUID="0cb85bab-cd3c-4b4a-9810-3a3c55f118e0" DATA_SIZE="12" DATA_TYPE="2" REGISTER="0" USAGE="0" USAGE_INDEX="0"/>
+               <RmStreamChannel NAME="TexCoord_0" TYPE="RmStreamChannel" API="None" HIDDEN="TRUE" GUID="1835e1a4-5ca8-4e26-a4f7-84c7f848c77a" DATA_SIZE="8" DATA_TYPE="1" REGISTER="1" USAGE="5" USAGE_INDEX="0"/>
+            </RmStream>
+         </RmStreamMap>
+         <RmModelData NAME="body" TYPE="RmModelData" API="None" HIDDEN="FALSE" GUID="2ace65d5-ea6a-4e9a-bdaa-0cd1c227ce81" FILE_NAME="..\..\Media\Models\ButterflyBody.3ds"/>
+         <RmModelData NAME="wings" TYPE="RmModelData" API="None" HIDDEN="FALSE" GUID="f075720f-cd11-408c-9144-237f5d6cedcb" FILE_NAME="..\..\Media\Models\ButterflyWings.3ds"/>
+      </RmEffectGroup>
+      <RmMatrixVariable NAME="view_matrix" TYPE="RmMatrixVariable" API="None" HIDDEN="FALSE" GUID="a26ffdd5-bea0-404c-a2c8-d84981aca8a2" ARTIST_EDITABLE="FALSE" VALUE_0="-0.109017" VALUE_1="0.565951" VALUE_2="-0.817200" VALUE_3="0.000000" VALUE_4="-0.323479" VALUE_5="0.757155" VALUE_6="0.567519" VALUE_7="0.000050" VALUE_8="0.939934" VALUE_9="0.326216" VALUE_10="0.100531" VALUE_11="199.999954" VALUE_12="0.000000" VALUE_13="0.000000" VALUE_14="0.000000" VALUE_15="1.000000"/>
+      <RmMatrixVariable NAME="proj_matrix" TYPE="RmMatrixVariable" API="None" HIDDEN="FALSE" GUID="ebc57d8d-f657-4faf-b81a-88767383a8d3" ARTIST_EDITABLE="FALSE" VALUE_0="2.230677" VALUE_1="0.000000" VALUE_2="0.000000" VALUE_3="0.000000" VALUE_4="0.000000" VALUE_5="2.414213" VALUE_6="0.000000" VALUE_7="0.000000" VALUE_8="0.000000" VALUE_9="0.000000" VALUE_10="1.001001" VALUE_11="-1.001001" VALUE_12="0.000000" VALUE_13="0.000000" VALUE_14="1.000000" VALUE_15="0.000000"/>
+      <RmMatrixVariable NAME="view_proj_matrix" TYPE="RmMatrixVariable" API="None" HIDDEN="FALSE" GUID="717ba081-ba5b-4136-a8b4-895124203363" ARTIST_EDITABLE="FALSE" VALUE_0="-0.243181" VALUE_1="1.262453" VALUE_2="-1.822908" VALUE_3="0.000000" VALUE_4="-0.780947" VALUE_5="1.827933" VALUE_6="1.370113" VALUE_7="0.000120" VALUE_8="0.940875" VALUE_9="0.326543" VALUE_10="0.100631" VALUE_11="199.199142" VALUE_12="0.939934" VALUE_13="0.326216" VALUE_14="0.100531" VALUE_15="199.999954"/>
+   </RmEffectWorkspace>
+</RENDER_MONKEY>

@@ -1,0 +1,9 @@
+app.exe -m spotlight -i scene7_sampled.xml -s 10
+app.exe -m spotlight2 -i scene7_sampled.xml -s 10
+app.exe -m spotlight3 -i scene7_sampled.xml -s 10
+app.exe -m cooktorrance -i scene7_sampled.xml -s 10
+app.exe -m cooktorrance2 -i scene7_sampled.xml -s 10
+app.exe -m orennayar -i scene7_sampled.xml -s 10
+app.exe -m envmap -i scene7_sampled.xml -s 10
+app.exe -m envmap2 -i scene7_sampled.xml -s 10
+app.exe -m shadow -i scene7_sampled.xml -s 10

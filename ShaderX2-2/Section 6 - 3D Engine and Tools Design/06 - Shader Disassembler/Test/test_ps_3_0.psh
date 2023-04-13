@@ -1,0 +1,32 @@
+ps_3_0
+dcl_texcoord0       v0      
+dcl_color0          v1.xyz  
+dcl_2d              s0      
+dclvFace   
+dclvPos.xy 
+defb       b0      , true
+defb       b1      , false
+defi       i0      , 9, 1, -2, 0
+texld      r0      ,   v0          ,   s0          
+texldb     r0      ,   v0          ,   s0          
+texldp     r0      ,   v0          ,   s0          
+texldl     r0      ,   v0          ,   s0          
+texldd     r0      ,   v0          ,   s0          ,   r0.x        ,   r0.y        
+setp_ne    p0      ,   vFace       ,   c0          
+( p0  )add r0      ,   c0          ,   c0          
+if_le        c220.x      ,   c220.y      
+if           p0.z        
+loop         aL          ,   i0          
+break_ge     c1.y        ,   c1.w        
+break      
+endloop    
+endif      
+call         l0          
+rep          i4          
+endrep     
+endif      
+ret        
+label        l0          
+if           b1          
+endif      
+ret        

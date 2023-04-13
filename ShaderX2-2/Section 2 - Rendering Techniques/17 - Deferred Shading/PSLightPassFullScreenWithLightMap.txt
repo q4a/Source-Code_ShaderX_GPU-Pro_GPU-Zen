@@ -1,0 +1,111 @@
+; PSLightPassFullscreenWithLightmap.txt
+;
+; Constants
+; c0 : light position in world space
+; c1 : 0, 0, 0, light intensity 
+; c4-c7: texture matrix for lightmap (WITHOUT concatenated world matrix)
+; c8 : camera position in world space
+; c14: lightmap border color
+; c22: c22.a = max distance for falloff, c22.rgb = 1.0f
+
+ps_2_0
+
+; Samplers
+dcl_2d s0	; MRT#0 = World space XY
+dcl_2d s1	; MRT#1 = World space Z
+dcl_2d s2	; MRT#2 = World space normal vector
+dcl_2d s3	; MRT#3 = Pixel Diffuse Color + specular power in alpha
+dcl_2d s4	; Lightmap texture
+dcl_2d s5	; Falloff texture
+dcl_cube s6 ; Cube normalization map
+dcl_2d s7   ; Power lookup texture (u=(N.H), v=power, lookup=(N.H)^(power*60.0))
+
+; Texture coordinates
+dcl t0.xy	; Model screen-space texture coordinates
+
+; Constants
+def c20, 0.5, 2.0, 0.0, 1.0
+def c21, 0.0, -0.75, 4.0, 60.0
+
+
+;------------------------------------------------------------------------------
+; Texture sampling			r3 = Diffuse map color
+;------------------------------------------------------------------------------
+texld r0, t0, s0				// r0.rg =	XY
+texld r1, t0, s1				// r1.r =	Z
+texld r2, t0, s2				// r2.rgb = Pixel normal (world space)
+texld r3, t0, s3				// r3 =		Diffuse map color + power in alpha
+
+
+;------------------------------------------------------------------------------
+; World position			r0 = world space XYZ
+;------------------------------------------------------------------------------
+mov r0.b, r1.r					// Copy Z into r0.b
+
+
+;------------------------------------------------------------------------------
+; Diffuse lighting			r2 = Normal vector
+;							r4 = Normalized vertex-to-light vector
+;							r5.w = DOT3 between light vector and normal
+;------------------------------------------------------------------------------
+mad r2, r2, c20.y, -c20.w		// Normal = (normal - 0.5)*2 (convert to signed value)
+
+sub r1.xyz, c0, r0				// Compute pixel-to-light vector
+mov r1.w, c20.w					// Set r1.w to 1 (tmp)
+nrm	r4, r1						// Normalize vector (r4.w contains inverse of distance)
+
+dp3	r5.w, r4, r2				// r5 = (N.L)
+
+
+;------------------------------------------------------------------------------
+; FallOff					r6 = falloff
+;------------------------------------------------------------------------------
+rcp r6, r4.w					// r6 = 1/(1/distance) = distance
+mul r6, r6, c22.a				// Multiply by inverse of max distance: r6 = distance/MaxDistance
+texld r6, r6, s5				// Sample falloff texture with falloff texture coordinate
+
+
+;------------------------------------------------------------------------------
+; Specular lighting			r7.a = specular intensity (r7.xyz = reflection vector)
+;------------------------------------------------------------------------------
+sub r1.xyz, c8, r0				// Compute view vector V (pixel to camera)
+
+texld r7, r1, s6				// Retrieve normalized vector from cube normalization map
+mad r7, r7, c20.y, -c20.w		// Convert to signed format
+
+mul r1, r5.w, c20.g				// Compute reflection vector R    r1 = 2*(N.L)
+mad r1, r1, r2, -r4				// r1 = R = 2*(N.L)*N - L	
+
+dp3_sat r7.x, r7, r1			// Compute specular intensity   r7.a = (V.R)
+
+mov r7.y, r3.a					// Bring specular to power using power map lookup
+texld r7, r7, s7				// Sample power map
+
+cmp r7.w, r5.w, r7.x, c20.z		// Set specular color to 0 if pixel is back facing
+
+
+;------------------------------------------------------------------------------
+; Lightmap					r8 = lightmap color
+;------------------------------------------------------------------------------
+dp4 r1.x, r0, c4
+dp4 r1.y, r0, c5
+dp4 r1.w, r0, c7				// Perform texture coordinate transformation (no need to transform z)
+
+texldp r8, r1, s4				// Sample lightmap texture with projected texture coordinates
+
+cmp r8.rgb, r1.w, r8, c14		// Clamp color to border color (c14) if w sign is negative. This is to avoid "back projection".
+
+
+;------------------------------------------------------------------------------
+; Output color
+;------------------------------------------------------------------------------
+mad r0, r3, r5.w, r7.w			// Modulate diffuse color and diffuse intensity and add specular
+mul r0, r0, r6					// Modulate with falloff
+mul r0, r0, r8					// Modulate with lightmap
+mul r0, r0, c1.w				// Modulate with light intensity
+
+mov oC0, r0						// Output final color
+
+
+
+

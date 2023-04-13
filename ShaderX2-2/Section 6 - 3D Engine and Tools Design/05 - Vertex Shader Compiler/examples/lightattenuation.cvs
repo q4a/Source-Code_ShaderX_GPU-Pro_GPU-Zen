@@ -1,0 +1,31 @@
+////////////////////////////////////////////////////////////////////////////
+//
+// Lighting attenuation shader
+// Created 24.02.2003
+//
+// Shaders
+//   {shader:attenuation_light}       
+//
+////////////////////////////////////////////////////////////////////////////
+
+#include <standard.hvs>
+void vsmain()
+{  
+   // position transformation
+   vector pos,nor;
+   vstransform( pos , nor );
+   
+   // std output
+   out.Pos=m4x4( pos , FinalMatrix.x );
+   
+   // attenuation texture coordinates
+   lightattenuation( pos , nor , SelectedLight.Pos , SelectedLight.Color , SelectedLight.Range , out.Tex0 , out.Tex1 )
+   
+   // light intensity
+   out.DColor=light( pos , nor , SelectedLight.Pos , SelectedLight.Color );
+   
+   // base texture for alpha
+   #ifdef inTex0
+      out.Tex2=in.Tex0;
+   #endif
+}

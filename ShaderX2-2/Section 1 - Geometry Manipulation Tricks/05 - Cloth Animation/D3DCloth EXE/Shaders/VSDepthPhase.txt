@@ -1,0 +1,21 @@
+vs_3_0
+
+; Input registers
+dcl_position0 v0    ;Position in NORMALIZED SCREEN COORDINATES (x,y,z)
+
+; Output registers
+dcl_position0 o0.xyzw    ;Vertex position
+dcl_texcoord0 o1.x       ;Texcoord	
+
+m4x4 r0, v0, c0      ;Transform vertices by view/projection/world matrix
+mov  o0, r0          ;Output Position
+
+dp4 r1.z,  v0, c6    ;Transform world+view Z
+mov r1  ,  r1.z
+add r1  , -r1, c9.x  ;Convert back to world space depths rather than camera relative depths
+mul r1  ,  r1, c9.y  ;Scale to unit cube depth sizes (240=1, 0=0, thus scale = 1/240)
+mov o1.x, r1         ;Move Scaled World Depth result into Tex Coord
+
+
+
+

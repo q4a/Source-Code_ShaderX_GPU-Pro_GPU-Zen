@@ -1,0 +1,1 @@
+This is a RenderMonkey example. Please open in RenderMonkey the metal.xml and click on Car Paint Effects -> Car Paint Metallic

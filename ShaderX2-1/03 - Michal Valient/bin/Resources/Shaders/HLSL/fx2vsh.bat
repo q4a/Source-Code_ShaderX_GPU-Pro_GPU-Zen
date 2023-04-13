@@ -1,0 +1,1 @@
+fxc /Tvs_2_0 /Fc%1.vsh %1.vsh.fx

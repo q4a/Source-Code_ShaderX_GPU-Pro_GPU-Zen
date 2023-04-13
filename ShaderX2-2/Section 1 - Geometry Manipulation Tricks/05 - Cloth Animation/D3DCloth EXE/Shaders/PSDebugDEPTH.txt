@@ -1,0 +1,16 @@
+ps_3_0
+
+; Samplers
+dcl_2d s0   ; DepthMap (R16F)
+;dcl_2d s0   ; MRT0 (X ,Y )
+;dcl_2d s1   ; MRT1 (Z ,NX)
+;dcl_2d s2   ; MRT2 (NY,NZ)
+
+; Inputs
+dcl_texcoord0   v0.xy	; Texture Coordinate
+
+texld r0, v0, s0	; Sample MRT0
+mov r1, r0.r		; Copy Data to other channels
+mov oC0, r1		; Display
+
+

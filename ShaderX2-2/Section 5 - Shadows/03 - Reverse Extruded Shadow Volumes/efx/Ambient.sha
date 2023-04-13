@@ -1,0 +1,36 @@
+
+// transposed world*view*projection transform
+matrix mwvp;
+
+// dead simple - just transform positions
+// c0	-	transposed world*view*proj matrix
+
+vertexshader vs = 
+decl
+{
+	stream 0;
+	float v0[3];				// position
+}
+asm
+{
+	vs.1.1
+
+	// to projection space
+	m4x4 oPos, v0, c0
+};
+
+technique t0
+{
+	pass pAmbient
+	{
+		vertexshader = <vs>;
+
+		VertexShaderConstant[0]	= <mwvp>;
+
+		TextureFactor = 0xFF304030;
+
+		ColorOp[0]   = SelectArg1;
+		ColorArg1[0] = TFactor;
+		ColorOp[1] = Disable;
+	}
+}

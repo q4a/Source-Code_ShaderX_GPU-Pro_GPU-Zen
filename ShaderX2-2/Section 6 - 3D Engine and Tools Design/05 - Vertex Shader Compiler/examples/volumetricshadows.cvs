@@ -1,0 +1,21 @@
+////////////////////////////////////////////////////////////////////////////
+//
+// Shadow Volume
+//
+////////////////////////////////////////////////////////////////////////////
+
+#include <standard.hvs>
+void vsmain( float projectionlength )
+{
+   // in Tex0.x is plane D parameter
+   // test if face normal is facing towards light
+   vector pos,nor;
+   vstransform( pos , nor );
+   //
+   vector lightdir=pos - Light1.Pos;
+   lightdir=normalize( lightdir );
+   float test=dp3( nor , lightdir ).x;
+   pos.xyz=pos + ( test < 0 ? lightdir*projectionlength );
+   //
+   out.Pos=m4x4( pos , FinalMatrix.x );
+} 

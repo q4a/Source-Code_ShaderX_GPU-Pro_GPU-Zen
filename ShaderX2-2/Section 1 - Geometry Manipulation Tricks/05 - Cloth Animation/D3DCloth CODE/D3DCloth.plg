@@ -1,0 +1,41 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: D3DCloth - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x809 /fo"Release/D3DCloth.res" /d "NDEBUG" "\\Gb1\powervr\DevRel\Sdk\Internal\ShaderX2 Good to go\Cloth Animation with Pixel and Vertex Shader 3.0\D3DCloth CODE\D3DCloth.rc"" 
+Creating temporary file "C:\WINDOWS\TEMP\RSP6303.TMP" with contents
+[
+/nologo /ML /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /Fp"Release/D3DCloth.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
+"\\Gb1\powervr\DevRel\Sdk\Internal\ShaderX2 Good to go\Cloth Animation with Pixel and Vertex Shader 3.0\D3DCloth CODE\D3DCloth.cpp"
+"\\Gb1\powervr\DevRel\Sdk\Internal\ShaderX2 Good to go\Cloth Animation with Pixel and Vertex Shader 3.0\D3DCloth CODE\D3DShell.cpp"
+]
+Creating command line "cl.exe @C:\WINDOWS\TEMP\RSP6303.TMP" 
+Creating temporary file "C:\WINDOWS\TEMP\RSP6304.TMP" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib D3d9.lib d3dx9.lib /nologo /subsystem:windows /incremental:no /pdb:"Release/D3DCloth.pdb" /machine:I386 /out:"Release/D3DCloth.exe" 
+".\Release\D3DCloth.obj"
+".\Release\D3DShell.obj"
+".\Release\D3DCloth.res"
+".\D3DTools.lib"
+]
+Creating command line "link.exe @C:\WINDOWS\TEMP\RSP6304.TMP"
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+D3DCloth.cpp
+D3DShell.cpp
+Linking...
+LINK : warning LNK4075: ignoring /EDITANDCONTINUE due to /INCREMENTAL:NO specification
+LINK : warning LNK4098: defaultlib "LIBCD" conflicts with use of other libs; use /NODEFAULTLIB:library
+
+
+
+<h3>Results</h3>
+D3DCloth.exe - 0 error(s), 2 warning(s)
+</pre>
+</body>
+</html>

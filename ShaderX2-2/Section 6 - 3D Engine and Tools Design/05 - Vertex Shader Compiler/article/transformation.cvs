@@ -1,0 +1,37 @@
+// transformation.cvs
+
+// softbind.cvs
+input vertexshader {
+   vector      Pos;
+   vector      Normal;
+};
+
+output vertexshader {
+   vector      Pos;
+   vector      Normal;
+};
+
+// normal mesh vertex type transformation 
+void vstransform_normal(vector pos,vector nor)
+{
+   pos=in.Pos;
+   nor=in.Normal;
+}
+
+void vstransform_wobly(vector pos, vector nor)
+{
+   pos=in.Pos * in.Pos;
+   nor=in.Normal * 2;
+}
+
+radical plugin FinalMatrix(vector x, vector y, vector z, vector w);
+
+void vsmain()
+{  
+   // position and normal transformation
+   vector pos,nor;
+   vstransform( pos , nor );
+   
+   // transform position into world space
+   out.Pos=m4x4( pos , FinalMatrix.x );
+}

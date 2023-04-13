@@ -1,0 +1,42 @@
+struct Vert
+{
+    float4 pos  : POSITION;
+    float4 dif  : COLOR0;
+    float4 tex  : TEXCOORD0;
+};
+struct VertOut
+{
+    float4 pos  : POSITION;
+    float4 dif  : COLOR0;
+    float4 tex  : TEXCOORD0;
+    float4 tex1  : TEXCOORD1;
+	float3 tex2  : TEXCOORD2;
+};
+VertOut main(const Vert In, const uniform float4x4 ModelViewProj,const uniform float NumberOfPoints,const uniform float3 light,const uniform float layer)
+{
+    VertOut Out;
+	float4 Sphere=In.pos;
+	float4 SphereTex=In.tex;
+	float fxsin;
+	float fxcos;
+	float fysin;
+	float fycos;
+	sincos(In.pos.x,fxsin,fxcos);
+	sincos(In.pos.y,fysin,fycos);
+	Sphere.x=fysin*fxsin;
+	Sphere.y=fysin*fxcos;
+	Sphere.z=fycos;
+	Sphere.xyz*=(1.65+layer);
+	SphereTex.x=SphereTex.x/(NumberOfPoints);
+	SphereTex.y=(2*SphereTex.y)/(NumberOfPoints);
+	float4 OutPut=mul(Sphere, ModelViewProj);
+	Out.pos = OutPut;
+    Out.dif.x=1;
+	Out.dif.y=1;
+	Out.dif.z=1;
+	Out.dif.w=.5;
+    Out.tex= OutPut;
+	Out.tex1= OutPut;
+	Out.tex2=normalize(light - OutPut.xyz);
+	return Out;
+}

@@ -1,0 +1,149 @@
+<html>
+<head>
+<title>Untitled Document</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000" background="html/back.jpg">
+<div align="center"> 
+  <h1><font face="Arial, Helvetica, sans-serif" color="#DFE92E">Terrain Rendering 
+    Project</font> </h1>
+</div>
+<p><b><font color="#FFFFFF" face="Verdana, Arial, Helvetica, sans-serif">
+  All Scenes can be started using the corresponding .bat files.
+  Information about all scenes can be found at the end of this document.
+</font></b></p>
+<p>&nbsp;</p>
+<h2><font face="Arial, Helvetica, sans-serif" color="#DFE92E">Basic Options</font></h2>
+<p><b><font face="Verdana, Arial, Helvetica, sans-serif" color="#FFFFFF">
+  can be changed by modifying the file 'config.cfg'. You can (de-)activate</font></b></p>
+<ul>
+  <li><font color="#C7EDFC"><b><font color="#FFFFFF" face="Verdana, Arial, Helvetica, sans-serif">Disable_HardwareVertexShader<br>
+    If this value is set to 'yes' the vertex shader program is executed by the CPU instead of the GPU.
+    On some systems (those with an old graphics card and fast CPU) this can speed up the overall performance.<br><br>
+    </font></b></font></li>
+  <li><font color="#C7EDFC"><b><font color="#FFFFFF" face="Verdana, Arial, Helvetica, sans-serif">MergeSmallestPatches<br>
+    If this value is set to 'yes' all smallest patches (those with just one quad) will be merged into one large list.
+    For most scenes this will result in a speed up.<br>
+    </font></b></font><br>
+  </li>
+</ul>
+<h2><font face="Arial, Helvetica, sans-serif" color="#DFE92E">Navigation</font></h2>
+<p><font color="#C7EDFC"><b><font color="#FFFFFF" face="Verdana, Arial, Helvetica, sans-serif">
+  Steering is done (if activated) by using mouse and keyboard.<br>
+  There are three navigation modes (switch by pressing &lt;m&gt;):
+  </font></b></font></p>
+<p><font color="#C7EDFC"><b><font color="#FFFFFF" face="Verdana, Arial, Helvetica, sans-serif">
+  All keyboard bindings can be modified in 'config.cfg'.<br>
+  These are the default settings:</font></b></font>
+</p>
+
+<ul>
+  <li><font color="#FFFFFF" face="Verdana, Arial, Helvetica, sans-serif"><b>INSPECT<br>
+    </b> </font> 
+    <ul>
+      <li><font color="#FFFFFF" face="Verdana, Arial, Helvetica, sans-serif"><b>forward: 
+        &lt;w&gt;</b></font></li>
+      <li><font color="#FFFFFF" face="Verdana, Arial, Helvetica, sans-serif"><b>back: 
+        &lt;s&gt;</b></font></li>
+      <li><font color="#FFFFFF" face="Verdana, Arial, Helvetica, sans-serif"><b>up: 
+        &lt;mouse-left&gt; or &lt;e&gt;</b></font></li>
+      <li><font color="#FFFFFF" face="Verdana, Arial, Helvetica, sans-serif"><b>down: 
+        &lt;mouse-right&gt; or &lt;q&gt;</b></font></li>
+      <li><font color="#FFFFFF" face="Verdana, Arial, Helvetica, sans-serif"><b>left: 
+        &lt;a&gt;</b></font></li>
+      <li><font color="#FFFFFF" face="Verdana, Arial, Helvetica, sans-serif"><b>right: 
+        &lt;d&gt;</b></font></li>
+      <li><font color="#FFFFFF" face="Verdana, Arial, Helvetica, sans-serif"><b>rotate by using the cursor keys (or mouse)
+      </b></font></li>
+      <li><font color="#FFFFFF" face="Verdana, Arial, Helvetica, sans-serif"><b>by pressing 
+        &lt;shift-left&gt; all movements are accelerated</b></font></li>
+      <li><font color="#FFFFFF" face="Verdana, Arial, Helvetica, sans-serif"><b>by pressing
+      &lt;space&gt; single step movement is activated</b></font></li>
+    </ul>
+  </li>
+  <li><font color="#FFFFFF" face="Verdana, Arial, Helvetica, sans-serif"><b>FLY 
+    </b> </font> 
+    <ul>
+      <li><font color="#FFFFFF" face="Verdana, Arial, Helvetica, sans-serif"><b>rotate by using the cursor keys (or mouse)
+      </b></font></li>
+      <li><font color="#FFFFFF" face="Verdana, Arial, Helvetica, sans-serif"><b>speed up: 
+        &lt;space&gt;</b></font></li>
+      <li><font color="#FFFFFF" face="Verdana, Arial, Helvetica, sans-serif"><b>by pressing 
+        &lt;shift-left&gt; all movements are accelerated</b></font></li>
+    </ul>
+  </li>
+  <li><font color="#FFFFFF" face="Verdana, Arial, Helvetica, sans-serif"><b>ROTATE</b></font></li>
+  <ul>
+    <li><font color="#FFFFFF" face="Verdana, Arial, Helvetica, sans-serif"><b>navigation is similar to the INSPECT mode, but the camera rotates around a point in front of the camera.<br>
+      </b></font></li>
+  </ul>
+</ul>
+<p><font color="#FFFFFF" face="Verdana, Arial, Helvetica, sans-serif"><b>Miscellaneous settings<br>
+  </b></font></p>
+<p><font color="#FFFFFF" face="Verdana, Arial, Helvetica, sans-serif"><b>pressing &lt;f&gt; 
+  switches wireframe on/off<br>
+  pressing &lt;v&gt; freezes the visibility calculation (no more vis-updates)<br>
+  pressing &lt;alt-enter&gt; switches to and from fullscreen<br>
+  <br>
+  It is possible to record and replay benchmarks:
+  New benchmarks are written into a file 'bench.new'.<br>
+  To play a benchmark add the corresponding line into the scene-file.<br>
+  (have a look into maps/grandcanyon/terrain.cfg).
+  </b></font></p>
+<p>&nbsp;</p>
+<h2><font face="Arial, Helvetica, sans-serif" color="#DFE92E">Modifying the demo scenes</font></h2>
+<p><font color="#C7EDFC" face="Arial, Helvetica, sans-serif"><b><font color="#FFFFFF" face="Verdana, Arial, Helvetica, sans-serif">
+  Any information about a scene is stored in a cfg file.<br>
+  All settings in the cfg files are documented.
+  The most interesting settings are:
+</font></b></font></p>
+<ul>
+  <li><font color="#FFFFFF" face="Verdana, Arial, Helvetica, sans-serif"><b>MipmapFilter: 
+    Sets the type of mipmap filtering</b></font></li>
+  <li><font color="#FFFFFF" face="Verdana, Arial, Helvetica, sans-serif"><b>ClipPlanes: 
+    Change the viewing range</b></font></li>
+  <li><font color="#FFFFFF" face="Verdana, Arial, Helvetica, sans-serif"><b>MaxTerrainError: 
+    Defines how fine the terrain is tesselated<br>
+    (the smaller the value, the more polygones will be created)</b></font></li>
+  <li><font color="#FFFFFF" face="Verdana, Arial, Helvetica, sans-serif"><b>RenderMode: 
+    Selects a render mode (SPLIT does no Morphing)</b></font></li>
+</ul>
+<br>
+<h2><font face="Arial, Helvetica, sans-serif" color="#DFE92E">Overview of the demo scenes</font></h2>
+<h3>&nbsp;</h3>
+<h2><font face="Arial, Helvetica, sans-serif" color="#DFE92E">gamescene</font></h2>
+<p><font color="#FFFFFF" face="Verdana, Arial, Helvetica, sans-serif"><b>
+  Resembles a typical game scene (without any objects on the surface).<br>
+  This scene uses three materials plus a cloud shadow layer.<br>
+  Additionally skybox and a lensflare is rendered.<br>
+  The complete scene consists of 131.072 triangles.</b></font></p>
+<p><font color="#C7EDFC"><img src="html/gamescene.jpg" width="400" height="300"></font></p>
+<p>&nbsp;</p>
+
+<h2><font face="Arial, Helvetica, sans-serif" color="#DFE92E">gamescene_minimum</font></h2>
+<p><font color="#FFFFFF" face="Verdana, Arial, Helvetica, sans-serif"><b>
+  Same terrain as gamescene but uses only one material and no skybox or lensflare.<br>
+  The complete scene consists again of 131.072 triangles.</b></font></p></b></font></p>
+<p><font color="#C7EDFC"><img src="html/gamescene_minimum.jpg" width="400" height="300"></font></p>
+<p>&nbsp;</p>
+
+<h2><font face="Arial, Helvetica, sans-serif" color="#DFE92E">grandcanyon</font></h2>
+<p><font color="#FFFFFF" face="Verdana, Arial, Helvetica, sans-serif"><b>
+  Part of the Grand Canyon dataset by Hugues Hoppe (thanks).<br>
+  The complete scene consists of 524.288 triangles.</font></p></b>
+<p><font color="#C7EDFC"><img src="html/grandcanyon.jpg" width="400" height="300"></font></p>
+<p>&nbsp;</p>
+
+<h2><font face="Arial, Helvetica, sans-serif" color="#DFE92E">mountains</font></h2>
+<p><font color="#FFFFFF" face="Verdana, Arial, Helvetica, sans-serif"><b>
+  Demonstrates the usage of PVS.<br>
+  The complete scene consists again of 131.072 triangles.</b></font></p>
+<p></p>
+<p><font color="#C7EDFC"><img src="html/mountains.jpg" width="400" height="300"></font></p>
+<p>&nbsp;</p>
+
+<p align="right"> <font color="#DFE92E" face="Verdana, Arial, Helvetica, sans-serif"><b>&copy; 
+  2003 by <a href='mailto:daniel@darum.org'>Daniel Wagner</a></b></font></p>
+</body>
+</html>

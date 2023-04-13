@@ -1,0 +1,109 @@
+; PSLightPassConeShape.txt
+;
+; Constants
+; c0 : light position in world space
+; c1 : 0, 0, 0, light intensity 
+; c8 : camera position in world space
+; c22: c22.a = max distance for falloff, c22.rgb = 1.0f
+; c25: Cone vector
+; c26: Real cone's top vertex
+; c27: 1, 1-cos(alpha), 1/(1-cos(alpha)), cos(alpha)   // alpha being the half-cone angle
+
+ps_2_0
+
+; Samplers
+dcl_2d s0	; MRT#0 = World space XY
+dcl_2d s1	; MRT#1 = World space Z
+dcl_2d s2	; MRT#2 = World space normal vector
+dcl_2d s3	; MRT#3 = Pixel Diffuse Color
+dcl_2d s5	; Falloff texture
+dcl_cube s6 ; Cube normalization map
+dcl_2d s7   ; Power lookup texture (u=(N.H), v=power, lookup=(N.H)^(power*60.0))
+
+; Texture coordinates
+dcl t0.xyzw	; Light space clipping coordinates (before perspective divide)
+
+; Constants
+def c20, 0.5, 2.0, -2.0, 1.0
+def c21, 8.0, -0.75, 4.0, 60.0
+def c23, 1.0, -1.0, 0.0, 0.0
+
+
+;------------------------------------------------------------------------------
+; Texture sampling			r3 = Diffuse map color
+;------------------------------------------------------------------------------
+texldp r0, t0, s0				// r0.rg =	XY
+texldp r1, t0, s1				// r1.r =	Z
+texldp r2, t0, s2				// r2.rgb = Pixel normal (world space)
+texldp r3, t0, s3				// r3 =		Diffuse map color
+
+;------------------------------------------------------------------------------
+; World position			r0 = world space XYZ
+;------------------------------------------------------------------------------
+mov r0.b, r1.r					// Copy Z into r0.b
+
+
+;------------------------------------------------------------------------------
+; Diffuse lighting			r2 = Normal vector
+;							r4 = Normalized vertex-to-light vector (r4.a = 1/Distance)
+;							r5.w = DOT3 between light vector and normal
+;------------------------------------------------------------------------------
+mad r2, r2, c20.g, -c20.w		// Normal = (normal - 0.5)*2 (convert to signed value)
+
+sub r1.xyz, c0, r0				// Compute pixel-to-light vector
+mov r1.w, c20.w					// Set r1.w to 1 (tmp)
+nrm	r4, r1						// Normalize vector (r4.w contains inverse of distance)
+
+dp3	r5.w, r4, r2				// r5 = DOT3 between light vector and normal
+
+
+;------------------------------------------------------------------------------
+; Cone FallOff				
+;------------------------------------------------------------------------------
+sub r1.xyz, r0, c26				// Compute cone top-to-pixel vector
+nrm r9.xyz, r1					// Use nrm because of dep read limit
+
+dp3 r1.w, r9, c25				// Compute cosine angle between this vector and the cone vector
+mad r9.xy, -r1.w, c27.z, c27.z	// Attenuation = 1 - (cos Phi - cos alpha)/(1 - cos alpha)
+texld r9, r9, s5				// Sample falloff with attenuation
+
+
+;------------------------------------------------------------------------------
+; FallOff					r6 = falloff
+;------------------------------------------------------------------------------
+rcp r6, r4.a					// r6 = 1/(1/distance) = distance
+mul r6, r6, c22.a				// Multiply by inverse of max distance: r6 = distance/MaxDistance
+texld r6, r6, s5				// Sample falloff texture with falloff texture coordinate
+
+
+;------------------------------------------------------------------------------
+; Specular lighting			r7.x = specular intensity
+;------------------------------------------------------------------------------
+sub r1.xyz, c8, r0				// Compute view vector V (pixel to camera)
+
+texld r7, r1, s6				// Retrieve normalized vector from cube normalization map
+mad r7, r7, c20.y, -c20.w		// Convert to signed format
+
+mul r1, r5.w, c20.g				// Compute reflection vector R    r1 = 2*(N.L)
+mad r1, r1, r2, -r4				// r1 = R = 2*(N.L)*N - L	
+
+dp3_sat r8.x, r7, r1			// Compute specular intensity   r8.x = (V.R)
+mov r8.y, r3.a					// Bring specular to power using power map lookup
+texld r7, r8, s7				// Sample power map
+
+cmp r7.x, r5.w, r7.x, c20.z		// Set specular color to 0 if pixel is back facing
+
+
+;------------------------------------------------------------------------------
+; Output color
+;------------------------------------------------------------------------------
+mad r0, r3, r5.w, r7.x			// Modulate diffuse color and diffuse intensity and add specular
+mul r0, r0, r6					// Modulate with falloff
+mul r0, r0, r9					// Modulate with cone falloff
+mul r0, r0, c1.w				// Modulate with light intensity
+
+mov oC0, r0						// Output final color
+	
+
+
+

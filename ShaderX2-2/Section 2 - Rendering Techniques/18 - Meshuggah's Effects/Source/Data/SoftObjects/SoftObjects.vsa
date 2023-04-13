@@ -1,0 +1,65 @@
+#include "..\..\Effects\SoftObjects\SoftObjectsShaderConstants.h"
+
+#define srcP    v0
+#define srcN    v1
+
+#define N       r0
+#define V       r1
+
+#define NShort  r9
+#define Temp    r10
+#define Temp1   r11
+
+
+
+vs.1.1
+
+
+
+// normalize normal
+dp3 N.w, srcN, srcN
+rsq N.w, N.w
+mul N, N.w, srcN
+
+
+
+// vector from vertex to eye
+add V, c[ CV_VIEWERPOS ], -srcP
+dp3 V.w, V, V
+rsq V.w, V.w
+mul V, V, V.w
+
+
+
+// calculate approximated Fresnel term F
+// F = Fresnel_factor * ( 1 - V.N ) ^ 2
+dp3 Temp, V, N
+add Temp, c[ CV_CONSTANTS ].z, -Temp
+mul Temp, Temp, Temp
+mul oD0.xyz, Temp, c[ CV_FRENSEL_FACTOR ].x
+
+
+
+// calculate reflection vector
+// R = 2 * (E.N) * N - V
+dp3 Temp, N, V
+mul Temp1, Temp, c[ CV_CONSTANTS ].w
+mul Temp1, Temp1, N
+add oT0.xyz, Temp1, -V
+
+
+
+// calculate refraction vector
+// R' = 2 * (E.NShort) * N - V
+mul NShort, N, c[ CV_REFRACT ]
+dp3 Temp, NShort, V
+mul Temp1, Temp, c[ CV_CONSTANTS ].w
+mul Temp1, Temp1, NShort
+add oT1.xyz, Temp1, -V
+
+
+// transform vertex to clip space
+dp4 oPos.x, srcP, c[ CV_WORLDVIEWPROJ_0 ]
+dp4 oPos.y, srcP, c[ CV_WORLDVIEWPROJ_1 ]
+dp4 oPos.z, srcP, c[ CV_WORLDVIEWPROJ_2 ]
+dp4 oPos.w, srcP, c[ CV_WORLDVIEWPROJ_3 ]

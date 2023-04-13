@@ -1,0 +1,31 @@
+////////////////////////////////////////////////////////////////////////////
+//
+// multiblend_tutBase_tutBase shader
+// Created 21.01.2003
+//
+//   {shader:multiblend_tutBase_tutBase_tutBase}
+//
+////////////////////////////////////////////////////////////////////////////
+
+#include <standard.hvs>
+void vsmain()
+{  
+   vector pos,nor;
+   vstransform( pos , nor );
+   out.Pos=m4x4( pos , FinalMatrix.x );
+   
+   // define color
+   out.DColor=in.Color.zwxy;
+   out.SColor=in.Color.xyzw;
+   
+   // define as many texure outputs as given
+   #ifdef inTex1
+      out.Tex0=in.Tex0;
+      out.Tex1=in.Tex1;
+      out.Tex2=in.Tex1;
+   #else 
+      out.Tex0=in.Tex0;
+      out.Tex1=in.Tex0;
+      out.Tex2=in.Tex0;
+   #endif
+}

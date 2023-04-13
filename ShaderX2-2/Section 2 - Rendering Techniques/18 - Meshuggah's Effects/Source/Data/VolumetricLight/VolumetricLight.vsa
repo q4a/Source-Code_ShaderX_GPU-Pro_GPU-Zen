@@ -1,0 +1,24 @@
+#include "..\..\Effects\VolumetricLight\ShaderConstants.h"
+
+#define srcP    v0
+#define srcCol  v1
+#define srcTex  v2
+
+
+
+vs.1.1
+
+
+
+mov oT0.x, srcTex.x
+
+
+
+mov oD0, srcCol
+
+
+
+dp4 oPos.x, srcP, c[ CV_WORLDVIEWPROJ_0 ]
+dp4 oPos.y, srcP, c[ CV_WORLDVIEWPROJ_1 ]
+dp4 oPos.z, srcP, c[ CV_WORLDVIEWPROJ_2 ]
+dp4 oPos.w, srcP, c[ CV_WORLDVIEWPROJ_3 ]

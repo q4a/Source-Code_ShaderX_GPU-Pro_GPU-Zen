@@ -1,0 +1,136 @@
+//*****************************************************************************
+//* This file is part of the Dimension3 renderer library                      *
+//* Copyright (C) 2003  Michal Valient (valient@host.sk)                      *
+//*                                                                           *
+//* Dimension3 renderer can be found at http://www.dimension3.host.sk         *
+//*                                                                           *
+//* This program is free software; you can redistribute it and/or modify      *
+//* it under the terms of the GNU General Public License as published by      *
+//* the Free Software Foundation; either version 2 of the License, or         *
+//* (at your option) any later version.                                       *
+//*                                                                           *
+//* This program is distributed in the hope that it will be useful,           *
+//* but WITHOUT ANY WARRANTY; without even the implied warranty of            *
+//* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the             *
+//* GNU General Public License for more details.                              *
+//*                                                                           *
+//* You should have received a copy of the GNU General Public License         *
+//* along with this program; if not, write to the Free Software               *
+//* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA * 
+//*****************************************************************************
+//hdr_utility_remove_tag
+
+
+//------------------------------
+// Per pixel diffuse and specular - Pixel shader
+//
+// Desc :
+//   Renders diffuse and specular spotlight for 4 lights per pixel using Phong's equation
+//
+// Part of Dimension3 Renderer
+// (c)2003 Michal Valient
+// akka em / STV3 akka  R.A.Y / EastW00D
+//------------------------------
+
+ps_3_0
+
+//------------------------------
+// Constant registers 
+//------------------------------
+//
+// c0       - diffuse texture multiplier
+// c1       - specular texture multiplier
+// c2       - specular shininess (shi, shi, shi, 1.0f)
+// c3       - special constants - see below
+// c4 >>    - light colors 
+def c3, 2.0f, 1.0f, 0.0f, 0.0f
+def c223, 2.5f, 1.5f, 0.5f, 0.0f    //light color comparison indexes
+
+//------------------------------
+// Used input registers
+//------------------------------
+//
+dcl_texcoord0 v0.xy                 //texture coordinates
+dcl_texcoord1 v1.xyz                //eye vector
+dcl_texcoord2 v2                    //Light vector 1
+dcl_texcoord3 v3                    //Projector texture coordinates 1
+dcl_texcoord4 v4                    //Light vector 2
+dcl_texcoord5 v5                    //Projector texture coordinates 2
+dcl_texcoord6 v6                    //Light vector 3
+dcl_texcoord7 v7                    //Projector texture coordinates 3
+dcl_texcoord8 v8                    //Light vector 4
+dcl_texcoord9 v9                    //Projector texture coordinates 4
+
+//------------------------------
+// Used input texture samplers
+//------------------------------
+//
+dcl_2d      s0                      //diffuse texture (gloss in alpha)
+dcl_2d      s1                      //normal texture
+dcl_2d      s3                      //spotlight texture
+
+//------------------------------
+// Output
+//------------------------------
+//
+// oC0 - output color
+
+//#########################################################################
+//##   CODE    ############################################################
+//#########################################################################
+//
+//------------------------------
+// Setup needed vectors - load and normalize
+//------------------------------
+texld       r0, v0, s1                      //load normal
+mad         r1, r0, c3.r, -c3.g             //bias normal to range -1,1
+nrm         r11, r1                         //r11 = normalized normal
+
+mov         r1.xyz, v1                      //load eye vector
+nrm         r9, r1                          //r9 = normalized eye vector
+
+mov         r8, c3.b                        //reset overall diffuse light output register
+mov         r7, c3.b                        //reset overall specular light output register
+
+//------------------------------
+// In following loop, lighting contribution will be computed for each light
+//------------------------------
+mov         r6, c3.b                        //reset iteration counter - used to get correct light color
+loop        aL, i0                          //This is the light loop
+    mov         r1.xyz, v2[aL]              //load light vector
+    nrm         r10, r1                     //r10 = normalized light vector
+
+    dp3         r0, r11, r10                //r0 = (n.l)
+    if_gt       r0.r, c3.b                  //Light only if (n.l)>0
+        mul         r1, r0, c3.r            //r1 = 2*(n.l)
+        mad         r1, r1, r11, -r10       //compute reflectance vector - r1 = 2(n.l)n - l
+        dp3_sat     r1, r1, r9              //r1 = (r.v)
+        pow         r0.g, r1.r, c2.r        //r1 = (r.v)^shi
+        
+	mov r3, c4
+	setp_gt p0, r6.r, c223
+	(p0.z) mov r3, c5
+	(p0.y) mov r3, c6
+	(p0.x) mov r3, c7
+
+        mov         r4, v2[aL+1]            //have to move texture coord to temp register, to get this work.
+                                            //Probably to enable dependend texture look-up.
+        texldp      r1, r4, s3              //load projector texture (perspective correct)
+        mul         r1, r1, r3              //modulate with light color
+        mul         r1, r1, r3.a            //modulate with light intensity
+        mad         r8, r0.r, r1, r8        //modulate diffuse intensity with spot and add to overall
+        mad         r7, r0.g, r1, r7        //modulate specular intensity with spot and add to overall
+    endif
+    add         r6, r6, c3.g                //increment iteration counter by one
+endloop
+
+//------------------------------
+// Compute resulting color
+//------------------------------
+texld       r1, v0, s0                      //load diffuse texture (gloss map is in alpha)
+mul         r8, r8, c0                      //multiply overall diffuse with material's diffuse color
+mul         r8, r8, r1                      //modulate it with texture
+mul         r7, r7, c1                      //multiply overall specular with material's specular color
+mad         r7, r7, r1.a, r8                //modulate it with gloss map and add computed diffuse part
+
+mov         oC0, r7                         //output the color

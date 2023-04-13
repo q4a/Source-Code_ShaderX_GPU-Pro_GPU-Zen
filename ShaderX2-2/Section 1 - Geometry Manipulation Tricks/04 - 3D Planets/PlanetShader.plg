@@ -1,0 +1,56 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: PlanetShader - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x409 /fo"Debug/PlanetShader.res" /d "_DEBUG" /d "_AFXDLL" "\\Annabaer\d\Books Source Code\ShaderX2 - Shader Tips & Tricks\Section 1 - Geometry Manipulation Tricks\04 3D Planets on the GPU by Jesse Laeuchli\PlanetShader.rc"" 
+Creating temporary file "C:\DOCUME~1\wolf\LOCALS~1\Temp\RSP1340.tmp" with contents
+[
+/nologo /MDd /W4 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_AFXDLL" /FR"Debug/" /Fp"Debug/PlanetShader.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"\\Annabaer\d\Books Source Code\ShaderX2 - Shader Tips & Tricks\Section 1 - Geometry Manipulation Tricks\04 3D Planets on the GPU by Jesse Laeuchli\d3dapp.cpp"
+"\\Annabaer\d\Books Source Code\ShaderX2 - Shader Tips & Tricks\Section 1 - Geometry Manipulation Tricks\04 3D Planets on the GPU by Jesse Laeuchli\d3denumeration.cpp"
+"\\Annabaer\d\Books Source Code\ShaderX2 - Shader Tips & Tricks\Section 1 - Geometry Manipulation Tricks\04 3D Planets on the GPU by Jesse Laeuchli\d3dsettings.cpp"
+"\\Annabaer\d\Books Source Code\ShaderX2 - Shader Tips & Tricks\Section 1 - Geometry Manipulation Tricks\04 3D Planets on the GPU by Jesse Laeuchli\d3dutil.cpp"
+"\\Annabaer\d\Books Source Code\ShaderX2 - Shader Tips & Tricks\Section 1 - Geometry Manipulation Tricks\04 3D Planets on the GPU by Jesse Laeuchli\dxutil.cpp"
+"\\Annabaer\d\Books Source Code\ShaderX2 - Shader Tips & Tricks\Section 1 - Geometry Manipulation Tricks\04 3D Planets on the GPU by Jesse Laeuchli\PlanetShader.cpp"
+]
+Creating command line "C:\Program Files\Codeplay\vectorcl.exe @C:\DOCUME~1\wolf\LOCALS~1\Temp\RSP1340.tmp" 
+Creating temporary file "C:\DOCUME~1\wolf\LOCALS~1\Temp\RSP1341.tmp" with contents
+[
+/nologo /MDd /W4 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_AFXDLL" /FR"Debug/" /Fp"Debug/PlanetShader.pch" /Yc"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"\\Annabaer\d\Books Source Code\ShaderX2 - Shader Tips & Tricks\Section 1 - Geometry Manipulation Tricks\04 3D Planets on the GPU by Jesse Laeuchli\StdAfx.cpp"
+]
+Creating command line "C:\Program Files\Codeplay\vectorcl.exe @C:\DOCUME~1\wolf\LOCALS~1\Temp\RSP1341.tmp" 
+Creating temporary file "C:\DOCUME~1\wolf\LOCALS~1\Temp\RSP1342.tmp" with contents
+[
+dsound.lib dinput8.lib dxerr9.lib d3dx9.lib d3d9.lib d3dxof.lib dxguid.lib winmm.lib comctl32.lib /nologo /subsystem:windows /incremental:yes /pdb:"Debug/PlanetShader.pdb" /debug /machine:I386 /out:"Debug/PlanetShader.exe" /pdbtype:sept 
+".\Debug\d3dapp.obj"
+".\Debug\d3denumeration.obj"
+".\Debug\d3dsettings.obj"
+".\Debug\d3dutil.obj"
+".\Debug\dxutil.obj"
+".\Debug\PlanetShader.obj"
+".\Debug\StdAfx.obj"
+".\Debug\PlanetShader.res"
+"\Books Source Code\ShaderX2 - Shader Tips & Tricks\Lib\cg.lib"
+"\Books Source Code\ShaderX2 - Shader Tips & Tricks\Lib\cgD3D9.lib"
+]
+Creating command line "link.exe @C:\DOCUME~1\wolf\LOCALS~1\Temp\RSP1342.tmp"
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+Using default compiler
+StdAfx.cpp
+\\annabaer\d\books source code\shaderx2 - shader tips & tricks\section 1 - geometry manipulation tricks\04 3d planets on the gpu by jesse laeuchli\stdafx.h(28) : fatal error C1083: Cannot open include file: 'CG/cgD3D9.h': No such file or directory
+Error executing C:\Program.
+
+
+
+<h3>Results</h3>
+PlanetShader.exe - 1 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

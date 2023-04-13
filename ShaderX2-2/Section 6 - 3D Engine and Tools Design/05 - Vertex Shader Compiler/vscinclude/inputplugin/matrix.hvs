@@ -1,0 +1,14 @@
+////////////////////////////////////////////////////////////////
+//
+// Matrix plugins
+// Created 21.07.2002
+// Copyright by gp
+//
+////////////////////////////////////////////////////////////////
+
+radical plugin FinalMatrix(      vector x , vector y , vector z , vector w   );
+radical plugin ProjectionMatrix( vector x , vector y , vector z , vector w   );
+radical plugin CameraMatrix(     vector x , vector y , vector z , vector Pos );
+radical plugin CameraInvMatrix(  vector x , vector y , vector z , vector Pos );
+radical plugin ObjectMatrix(     vector x , vector y , vector z , vector Pos );
+radical plugin ObjectInvMatrix(  vector x , vector y , vector z , vector Pos );

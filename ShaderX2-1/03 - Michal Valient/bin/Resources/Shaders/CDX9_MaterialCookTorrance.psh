@@ -1,0 +1,315 @@
+//*****************************************************************************
+//* This file is part of the Dimension3 renderer library                      *
+//* Copyright (C) 2003  Michal Valient (valient@host.sk)                      *
+//*                                                                           *
+//* Dimension3 renderer can be found at http://www.dimension3.host.sk         *
+//*                                                                           *
+//* This program is free software; you can redistribute it and/or modify      *
+//* it under the terms of the GNU General Public License as published by      *
+//* the Free Software Foundation; either version 2 of the License, or         *
+//* (at your option) any later version.                                       *
+//*                                                                           *
+//* This program is distributed in the hope that it will be useful,           *
+//* but WITHOUT ANY WARRANTY; without even the implied warranty of            *
+//* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the             *
+//* GNU General Public License for more details.                              *
+//*                                                                           *
+//* You should have received a copy of the GNU General Public License         *
+//* along with this program; if not, write to the Free Software               *
+//* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA * 
+//*****************************************************************************
+//hdr_utility_remove_tag
+
+
+//*
+//------------------------------
+// Cook-Torrance lighting and shading - Pixel Shader
+//
+// Desc :
+//   Cook-Torrance lighting and shading
+//
+// Part of Dimension3 Renderer
+// (c)2003 Michal Valient
+// akka em / STV3 akka  R.A.Y / EastW00D
+//------------------------------
+
+ps_2_0
+
+//------------------------------
+// Constant registers 
+//------------------------------
+//
+def c0, 2.718281828459045235360287471352662497757247093699959574966967628f, //e
+        3.141592653589793238462643383279502884197169399375105820974944592f, //pi
+        4.0f,   //useful constants
+        1.0f    //useful constants
+def c1, 5.0f, 2.0f, 1.0f, 0.0f      //useful constants
+//  c2 - roughness (should be redefined in material)
+//  c3 - refraction index (should be redefined in material)
+
+//------------------------------
+// Used input registers
+//------------------------------
+//
+dcl         t0.xy                   //texture coordinates
+dcl         t1.xyz                  //light vector
+dcl         t2.xyz                  //eye vector
+dcl         t3.xyz                  //half vector between light and eye
+dcl         t4.xyzw                 //projector texture coordinates
+
+//------------------------------
+// Used input texture samplers
+//------------------------------
+//
+dcl_2d      s0                      //diffuse texture (gloss in alpha)
+dcl_2d      s1                      //normal texture
+dcl_2d      s5                      //spotlight texture
+
+//------------------------------
+// Output
+//------------------------------
+//
+// oC0 - output color
+
+
+//#########################################################################
+//##   CODE    ############################################################
+//#########################################################################
+//
+
+
+//------------------------------
+// Load and normalize input vectors
+//------------------------------
+//
+texld       r0, t0, s1              //load normal
+mad         r1, r0, c1.g, -c1.b     //bias normal to range -1,1
+nrm         r11, r1                 //r11 = normalized normal
+mov         r1.xyz, t1
+nrm         r10, r1                 //r10 = normalized light vector
+mov         r1.xyz, t2
+nrm         r9, r1                  //r9 = normalized eye vector
+mov         r1.xyz, t3
+nrm         r8, r1                  //r8 = normalized half vector
+
+//------------------------------
+// Compute Beckmann's distribution function D = (1 / m^2*cos(A)^4) * e^(-tan(A) / m^2)
+//------------------------------
+//
+dp3         r1, r11, r8             //n.h
+mul         r1, r1.r, r1.r          //x = (n.h)^2
+mul         r2, c2.r, c2.r          //y = m^2
+mul         r3, r2.r, r1.r          //z = m^2 * (n.h)^2
+
+sub         r4, c0.a, r1.r          //1-x
+rcp         r5, r3.r                //1 / z
+mul         r4, r4.r, r5.r          //(1-x) / z
+pow         r5, c0.r, -r4.r         // pow(e, -(1-x) / z)
+
+mul         r3, r3.r, r1.r          //z*x
+rcp         r4, r3.r                //1/(z*x)
+
+mul         r1, r5.r, r4.r          //r1 will hold final D
+
+//------------------------------
+// Compute Fresnel term (Schlick's approximation) F = IR + (1-IR)*(1 - (n.l))^5
+//------------------------------
+//
+dp3         r3, r11, r9             //n.v
+sub         r3, c0.a, r3.r          //1 - n.v
+pow         r3, r3.r, c1.r          //(1 - n.v)^5
+lrp         r2, c3.r, c3.g, r3.r    //r2 will hold final F
+
+//------------------------------
+// Compute self shadowing term G = min(1, X*(n.l), X*(n.v)); X = 2*(n.h) / (v.h)
+//------------------------------
+//
+dp3         r3, r11, r8             //n.h
+dp3         r4, r9, r8              //v.h
+mul         r3, r3.r, c1.g          //2.(n.h)
+rcp         r5, r4.r                //1 / (v.h)
+mul         r3, r3.r, r5.r          //2.(n.h) / (v.h)
+
+dp3         r4, r11, r10            //n.l
+dp3         r5, r11, r9             //n.v
+mul         r4, r4.r, r3.r          //second parameter of G
+mul         r5, r5.r, r3.r          //third parameter of G
+min         r4, r4.r, r5.r          //min of second and third parameters
+min         r3, r4.r, c0.a          //min of previous and 1. We have final G
+
+//------------------------------
+// Compute division part of lighting equation - 1 / (n.v)*pi
+//------------------------------
+//
+dp3         r5, r11, r9             //n.v
+mul         r5, r5.r, c0.g          //(n.v)*pi
+rcp         r4, r5.r                //r4 = 1 / (n.v)*pi
+
+//------------------------------
+// Compute final Cook-Torrance specular term - (1 / (n.v)*pi) * D*F*G
+//------------------------------
+//
+mul         r5, r1.r, r2.r          //D.F
+mul         r5, r5.r, r3.r          //D.F.G
+mul         r5, r5.r, r4.r          //D.F.G / ((n.v)*pi)
+
+//------------------------------
+// Load texture, compute diffuse part and combine it all to output
+//------------------------------
+//
+dp3_sat     r1, r11, r10            //n.l
+texld       r0, t0, s0              //load diffuse and specular texture
+mul         r2, r0, r0.a            //modulate texture with gloss map
+mul         r1, r0, r1              //compute diffuse texture
+mul         r2, r2, r5.r            //compute specular
+add         r0, r2, r1              //compute specular + diffuse
+texldp      r4, t4, s5              //load projector texture (perspective correct)
+mul         r0, r0, r4              //modulate it with spotlight texture
+mov         oC0, r0
+//*/
+
+/*
+//------------------------------
+// Cook-Torrance lighting and shading - Pixel Shader
+//
+// Desc :
+//   Cook-Torrance lighting and shading with 1/3 of diffuse
+//
+// Part of Dimension3 Renderer
+// (c)2003 Michal Valient
+// akka em / STV3 akka  R.A.Y / EastW00D
+//------------------------------
+
+ps_2_0
+
+//------------------------------
+// Constant registers 
+//------------------------------
+//
+def c0, 2.718281828459045235360287471352662497757247093699959574966967628f, //e
+        3.141592653589793238462643383279502884197169399375105820974944592f, //pi
+        4.0f,   //useful constants
+        1.0f    //useful constants
+def c1, 5.0f, 2.0f, 1.0f, 0.0f      //useful constants
+//  c2 - roughness (should be redefined in material)
+//  c3 - refraction index (should be redefined in material)
+
+def c6, 0.33, 0.33, 0.33, 0.33
+
+//------------------------------
+// Used input registers
+//------------------------------
+//
+dcl         t0.xy                   //texture coordinates
+dcl         t1.xyz                  //light vector
+dcl         t2.xyz                  //eye vector
+dcl         t3.xyz                  //half vector between light and eye
+
+//------------------------------
+// Used input texture samplers
+//------------------------------
+//
+dcl_2d      s0                      //diffuse texture (gloss in alpha)
+dcl_2d      s1                      //normal texture
+
+//------------------------------
+// Output
+//------------------------------
+//
+// oC0 - output color
+
+
+//#########################################################################
+//##   CODE    ############################################################
+//#########################################################################
+//
+
+
+//------------------------------
+// Load and normalize input vectors
+//------------------------------
+//
+texld       r0, t0, s1              //load normal
+mad         r1, r0, c1.g, -c1.b     //bias normal to range -1,1
+nrm         r11, r1                 //r11 = normalized normal
+mov         r1.xyz, t1
+nrm         r10, r1                 //r10 = normalized light vector
+mov         r1.xyz, t2
+nrm         r9, r1                  //r9 = normalized eye vector
+mov         r1.xyz, t3
+nrm         r8, r1                  //r8 = normalized half vector
+
+//------------------------------
+// Compute Beckmann's distribution function D = (1 / m^2*cos(A)^4) * e^(-tan(A) / m^2)
+//------------------------------
+//
+dp3         r1, r11, r8             //n.h
+mul         r1, r1.r, r1.r          //x = (n.h)^2
+mul         r2, c2.r, c2.r          //y = m^2
+mul         r3, r2.r, r1.r          //z = m^2 * (n.h)^2
+
+sub         r4, c0.a, r1.r          //1-x
+rcp         r5, r3.r                //1 / z
+mul         r4, r4.r, r5.r          //(1-x) / z
+pow         r5, c0.r, -r4.r         // pow(e, -(1-x) / z)
+
+mul         r3, r3.r, r1.r          //z*x
+rcp         r4, r3.r                //1/(z*x)
+
+mul         r1, r5.r, r4.r          //r1 will hold final D
+
+//------------------------------
+// Compute Fresnel term (Schlick's approximation) F = IR + (1-IR)*(1 - (n.l))^5
+//------------------------------
+//
+dp3         r3, r11, r9             //n.v
+sub         r3, c0.a, r3.r          //1 - n.v
+pow         r3, r3.r, c1.r          //(1 - n.v)^5
+lrp         r2, c3.r, c3.g, r3.r    //r2 will hold final F
+
+//------------------------------
+// Compute self shadowing term G = min(1, X*(n.l), X*(n.v)); X = 2*(n.h) / (v.h)
+//------------------------------
+//
+dp3         r3, r11, r8             //n.h
+dp3         r4, r9, r8              //v.h
+mul         r3, r3.r, c1.g          //2.(n.h)
+rcp         r5, r4.r                //1 / (v.h)
+mul         r3, r3.r, r5.r          //2.(n.h) / (v.h)
+
+dp3         r4, r11, r10            //n.l
+dp3         r5, r11, r9             //n.v
+mul         r4, r4.r, r3.r          //second parameter of G
+mul         r5, r5.r, r3.r          //third parameter of G
+min         r4, r4.r, r5.r          //min of second and third parameters
+min         r3, r4.r, c0.a          //min of previous and 1. We have final G
+
+//------------------------------
+// Compute division part of lighting equation - 1 / (n.v)*pi
+//------------------------------
+//
+dp3         r5, r11, r9             //n.v
+mul         r5, r5.r, c0.g          //(n.v)*pi
+rcp         r4, r5.r                //r4 = 1 / (n.v)*pi
+
+//------------------------------
+// Compute final Cook-Torrance specular term - (1 / (n.v)*pi) * D*F*G
+//------------------------------
+//
+mul         r5, r1.r, r2.r          //D.F
+mul         r5, r5.r, r3.r          //D.F.G
+mul         r5, r5.r, r4.r          //D.F.G / ((n.v)*pi)
+
+//------------------------------
+// Load texture, compute diffuse part and combine it all to output
+//------------------------------
+//
+dp3_sat     r1, r11, r10            //n.l
+mul         r1.rgb, r1, c6
+texld       r0, t0, s0              //load diffuse and specular texture
+mul         r2, r0, r0.a            //modulate texture with gloss map
+mul         r1, r0, r1              //compute diffuse texture
+mul         r2, r2, r5.r            //compute specular
+add         r0, r2, r1              //compute specular + diffuse
+mov         oC0, r0
+//*/

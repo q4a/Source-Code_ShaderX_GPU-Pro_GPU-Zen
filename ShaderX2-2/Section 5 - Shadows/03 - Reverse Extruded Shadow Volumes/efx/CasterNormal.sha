@@ -1,0 +1,92 @@
+
+// light position in object (!) space
+vector vLT0;
+
+// transposed world*view*projection transform
+matrix mwvp;
+
+
+// shadow volume extruder
+// c0	-	transposed world*view*proj matrix
+// c4	-	light position in object (!) space
+// c5	-	x: extrude-distance; y: extrude-from (LP.N<y);
+
+vertexshader vs = 
+decl
+{
+	stream 0;
+	float v0[3];				// position
+	float v3[3];				// normal
+}
+asm
+{
+	vs.1.1
+
+	// compute point->light vector
+	add	r0.xyz, -c4.xyz, v0.xyz		// r0: LP (point->light vector)
+	dp3	r0.w, r0.xyz, r0.xyz		// r0.w: |LP|^2
+	rsq	r0.w, r0.w					// r0.w: 1/|LP|
+	mul	r0.xyz, r0.xyz, r0.www		// r0: normalized LP
+
+	// dot with normal
+	dp3	r0.w, r0.xyz, v3.xyz		// r0.w: LP dot N
+
+	// EXTRUDE BACKFACES
+	// test if dot less than given factor
+	slt	r0.w, c5.y, r0.w			// r0.w: 0.0f if frontface, 1.0f if backface
+
+	// extrude
+	mul	r0.w, r0.w, c5.x			// r0.w: extrusion amount
+	mad	r0.xyz, r0.xyz, r0.www,	v0.xyz
+	mov	r0.w, v0.w					// r0: final world pos
+
+	// to projection space
+	m4x4 oPos, r0, c0
+};
+
+technique t0
+{
+	pass p0
+	{
+		vertexshader = <vs>;
+
+		VertexShaderConstant[0]	= <mwvp>;
+		VertexShaderConstant[4] = <vLT0>;
+		VertexShaderConstant[5] = (60.0f,0.0f,0.0f,0.0f);
+
+		CullMode = CCW;
+
+		TextureFactor = 0x00202030;
+
+		StencilEnable = True;
+		StencilFunc = Always;
+		StencilRef = 0x00000000;
+		StencilMask = 0xffffffff;
+		StencilWriteMask = 0xffffffff;
+		StencilZFail = Incr;
+		StencilFail = Keep;
+		StencilPass = Keep;
+
+        AlphaBlendEnable = True;
+        SrcBlend = One;
+        SrcBlend = Zero;
+        DestBlend = One;
+
+		//FillMode = Wireframe;
+
+		ZWriteEnable = False;
+		ZEnable = True;
+		ZFunc = Less;
+
+		ColorOp[0]   = SelectArg1;
+		ColorArg1[0] = TFactor;
+		ColorOp[1] = Disable;
+	}
+
+	pass p1
+	{
+		CullMode = CW;
+
+		StencilZFail = Decr;
+	}
+}

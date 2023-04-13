@@ -1,0 +1,16 @@
+D:\Books Source Code\ShaderX2 - Shader Tips & Tricks\Section 2 - Rendering Techniques\01 - Rendering Objects as Thick Volumes by Greg James\FogPolygonVolumes\TOOLS\bin\release\CgBrowser
+8
+0
+1
+
+D:\Books Source Code\ShaderX2 - Shader Tips & Tricks\Section 2 - Rendering Techniques\01 - Rendering Objects as Thick Volumes by Greg James\FogPolygonVolumes\DEMOS\Direct3D9\dll\release\D3D9_FogPolygonVolume.bfx
+0
+Fog Polygon Volumes
+1.0
+Effects\Atmospheric
+8
+0
+4
+
+1
+

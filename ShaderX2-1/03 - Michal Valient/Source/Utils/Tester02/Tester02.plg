@@ -1,0 +1,110 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: Tester02 - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x41b /fo"Debug/EngineResources.res" /i "\Documents and Settings\wolf\Desktop\Proof-Reading\source\Michal Valient\Dimension3 Renderer\Source\Resource" /d "_DEBUG" "C:\Documents and Settings\wolf\Desktop\Proof-Reading\source\Michal Valient\Dimension3 Renderer\Source\Resource\EngineResources.rc"" 
+Creating temporary file "C:\DOCUME~1\wolf\LOCALS~1\Temp\RSP111.tmp" with contents
+[
+/nologo /MLd /W4 /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FR"Debug/" /Fp"Debug/Tester02.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"C:\Documents and Settings\wolf\Desktop\Proof-Reading\source\Michal Valient\Dimension3 Renderer\Source\BaseClass.cpp"
+"C:\Documents and Settings\wolf\Desktop\Proof-Reading\source\Michal Valient\Dimension3 Renderer\Source\Managers\DirectGraphicsManager\DG-DirectGraphicsDeviceInfo.cpp"
+"C:\Documents and Settings\wolf\Desktop\Proof-Reading\source\Michal Valient\Dimension3 Renderer\Source\Engine\ENG-Base3DObject.cpp"
+"C:\Documents and Settings\wolf\Desktop\Proof-Reading\source\Michal Valient\Dimension3 Renderer\Source\Engine\ENG-BaseScene.cpp"
+"C:\Documents and Settings\wolf\Desktop\Proof-Reading\source\Michal Valient\Dimension3 Renderer\Source\Engine\ENG-BaseVisibilityDeterminer.cpp"
+"C:\Documents and Settings\wolf\Desktop\Proof-Reading\source\Michal Valient\Dimension3 Renderer\Source\Engine\ENG-Engine.cpp"
+"C:\Documents and Settings\wolf\Desktop\Proof-Reading\source\Michal Valient\Dimension3 Renderer\Source\Engine\ENG-Mesh.cpp"
+"C:\Documents and Settings\wolf\Desktop\Proof-Reading\source\Michal Valient\Dimension3 Renderer\Source\Engine\ENG-MeshManager.cpp"
+"C:\Documents and Settings\wolf\Desktop\Proof-Reading\source\Michal Valient\Dimension3 Renderer\Source\Engine\ENG-RenderSettings.cpp"
+"C:\Documents and Settings\wolf\Desktop\Proof-Reading\source\Michal Valient\Dimension3 Renderer\Source\Engine\ENG-TestCube.cpp"
+"C:\Documents and Settings\wolf\Desktop\Proof-Reading\source\Michal Valient\Dimension3 Renderer\Source\Engine\ENG-Texture2D.cpp"
+"C:\Documents and Settings\wolf\Desktop\Proof-Reading\source\Michal Valient\Dimension3 Renderer\Source\Engine\ENG-TextureManager.cpp"
+"C:\Documents and Settings\wolf\Desktop\Proof-Reading\source\Michal Valient\Dimension3 Renderer\Source\Engine\ENG-Types.cpp"
+"C:\Documents and Settings\wolf\Desktop\Proof-Reading\source\Michal Valient\Dimension3 Renderer\Source\Engine\ENG-VirtualIndexBuffer.cpp"
+"C:\Documents and Settings\wolf\Desktop\Proof-Reading\source\Michal Valient\Dimension3 Renderer\Source\Engine\ENG-VirtualVertexBuffer.cpp"
+"C:\Documents and Settings\wolf\Desktop\Proof-Reading\source\Michal Valient\Dimension3 Renderer\Source\Files\FIL-BaseDirectory.cpp"
+"C:\Documents and Settings\wolf\Desktop\Proof-Reading\source\Michal Valient\Dimension3 Renderer\Source\Files\FIL-DirTreeDirectory.cpp"
+"C:\Documents and Settings\wolf\Desktop\Proof-Reading\source\Michal Valient\Dimension3 Renderer\Source\Files\FIL-FileManager.cpp"
+"C:\Documents and Settings\wolf\Desktop\Proof-Reading\source\Michal Valient\Dimension3 Renderer\Source\Managers\MGR-BaseManager.cpp"
+"C:\Documents and Settings\wolf\Desktop\Proof-Reading\source\Michal Valient\Dimension3 Renderer\Source\Managers\DirectGraphicsManager\MGR-DirectGraphicsManager.cpp"
+"C:\Documents and Settings\wolf\Desktop\Proof-Reading\source\Michal Valient\Dimension3 Renderer\Source\Managers\MGR-ErrorManager.cpp"
+"C:\Documents and Settings\wolf\Desktop\Proof-Reading\source\Michal Valient\Dimension3 Renderer\Source\Managers\MGR-MemoryManager.cpp"
+"C:\Documents and Settings\wolf\Desktop\Proof-Reading\source\Michal Valient\Dimension3 Renderer\Source\Engine\MeshLoaders\MSHIMP-ImportInterface.cpp"
+"C:\Documents and Settings\wolf\Desktop\Proof-Reading\source\Michal Valient\Dimension3 Renderer\Source\Engine\MeshLoaders\MSHIMP-MilkShape3D.cpp"
+"C:\Documents and Settings\wolf\Desktop\Proof-Reading\source\Michal Valient\Dimension3 Renderer\Source\RootClass.cpp"
+"C:\Documents and Settings\wolf\Desktop\Proof-Reading\source\Michal Valient\Dimension3 Renderer\Source\SysClasses\SC-DynamicArray.cpp"
+"C:\Documents and Settings\wolf\Desktop\Proof-Reading\source\Michal Valient\Dimension3 Renderer\Source\SysClasses\SC-HashTable.cpp"
+"C:\Documents and Settings\wolf\Desktop\Proof-Reading\source\Michal Valient\Dimension3 Renderer\Source\SysClasses\SC-IniFile.cpp"
+"C:\Documents and Settings\wolf\Desktop\Proof-Reading\source\Michal Valient\Dimension3 Renderer\Source\SysClasses\SC-MString.cpp"
+"C:\Documents and Settings\wolf\Desktop\Proof-Reading\source\Michal Valient\Dimension3 Renderer\Source\SysClasses\SC-SyntaxScanner.cpp"
+"C:\Documents and Settings\wolf\Desktop\Proof-Reading\source\Michal Valient\Dimension3 Renderer\Source\SysClasses\SC-Timer.cpp"
+"C:\Documents and Settings\wolf\Desktop\Proof-Reading\source\Michal Valient\Dimension3 Renderer\Source\SysUtils\SU-StrUtils.cpp"
+"C:\Documents and Settings\wolf\Desktop\Proof-Reading\source\Michal Valient\Dimension3 Renderer\Source\Utils\Tester02\Tester02.cpp"
+"C:\Documents and Settings\wolf\Desktop\Proof-Reading\source\Michal Valient\Dimension3 Renderer\Source\Managers\WindowManager\WND-WindowManager.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\wolf\LOCALS~1\Temp\RSP111.tmp" 
+Creating temporary file "C:\DOCUME~1\wolf\LOCALS~1\Temp\RSP112.tmp" with contents
+[
+/nologo /MLd /W4 /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FR"Debug/" /Fp"Debug/Tester02.pch" /Yc"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"C:\Documents and Settings\wolf\Desktop\Proof-Reading\source\Michal Valient\Dimension3 Renderer\Source\Utils\Tester02\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\wolf\LOCALS~1\Temp\RSP112.tmp" 
+Creating temporary file "C:\DOCUME~1\wolf\LOCALS~1\Temp\RSP113.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:no /pdb:"Debug/Tester02.pdb" /debug /machine:I386 /out:"Debug/Tester02.exe" 
+".\Debug\BaseClass.obj"
+".\Debug\DG-DirectGraphicsDeviceInfo.obj"
+".\Debug\ENG-Base3DObject.obj"
+".\Debug\ENG-BaseScene.obj"
+".\Debug\ENG-BaseVisibilityDeterminer.obj"
+".\Debug\ENG-Engine.obj"
+".\Debug\ENG-Mesh.obj"
+".\Debug\ENG-MeshManager.obj"
+".\Debug\ENG-RenderSettings.obj"
+".\Debug\ENG-TestCube.obj"
+".\Debug\ENG-Texture2D.obj"
+".\Debug\ENG-TextureManager.obj"
+".\Debug\ENG-Types.obj"
+".\Debug\ENG-VirtualIndexBuffer.obj"
+".\Debug\ENG-VirtualVertexBuffer.obj"
+".\Debug\FIL-BaseDirectory.obj"
+".\Debug\FIL-DirTreeDirectory.obj"
+".\Debug\FIL-FileManager.obj"
+".\Debug\MGR-BaseManager.obj"
+".\Debug\MGR-DirectGraphicsManager.obj"
+".\Debug\MGR-ErrorManager.obj"
+".\Debug\MGR-MemoryManager.obj"
+".\Debug\MSHIMP-ImportInterface.obj"
+".\Debug\MSHIMP-MilkShape3D.obj"
+".\Debug\RootClass.obj"
+".\Debug\SC-DynamicArray.obj"
+".\Debug\SC-HashTable.obj"
+".\Debug\SC-IniFile.obj"
+".\Debug\SC-MString.obj"
+".\Debug\SC-SyntaxScanner.obj"
+".\Debug\SC-Timer.obj"
+".\Debug\StdAfx.obj"
+".\Debug\SU-StrUtils.obj"
+".\Debug\Tester02.obj"
+".\Debug\WND-WindowManager.obj"
+".\Debug\EngineResources.res"
+"..\..\..\..\..\..\..\..\..\..\Program Files\Microsoft SDK\lib\WinMM.Lib"
+"..\..\..\..\..\..\..\..\..\..\DXSDK\lib\d3dx8.lib"
+"..\..\..\..\..\..\..\..\..\..\DXSDK\lib\d3d8.lib"
+]
+Creating command line "link.exe @C:\DOCUME~1\wolf\LOCALS~1\Temp\RSP113.tmp"
+<h3>Output Window</h3>
+Compiling resources...
+C:\Documents and Settings\wolf\Desktop\Proof-Reading\source\Michal Valient\Dimension3 Renderer\Source\Resource\EngineResources.rc(10) : fatal error RC1015: cannot open include file 'afxres.h'.
+Error executing rc.exe.
+
+
+
+<h3>Results</h3>
+Tester02.exe - 1 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

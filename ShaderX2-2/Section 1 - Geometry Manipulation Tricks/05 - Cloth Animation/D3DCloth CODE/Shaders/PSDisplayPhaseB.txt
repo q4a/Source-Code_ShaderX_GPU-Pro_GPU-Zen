@@ -1,0 +1,17 @@
+ps_3_0
+
+; Samplers
+dcl_2d    s0 ; Base Texture
+
+; Inputs
+dcl_texcoord0	v0.xy    ; Tex Coord
+dcl_color0 	v1.rgba  ;Diffuse
+
+texld r0, v0, s0
+mul   r0, r0, v1
+mov oC0, r0
+
+
+
+
+

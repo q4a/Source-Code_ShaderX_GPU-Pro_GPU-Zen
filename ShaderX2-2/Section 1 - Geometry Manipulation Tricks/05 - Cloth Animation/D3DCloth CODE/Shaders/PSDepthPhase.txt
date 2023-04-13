@@ -1,0 +1,7 @@
+ps_3_0
+
+; Inputs
+dcl_texcoord0   v0.x    ;Texture Coordinate
+
+mov r0, v0.r    ;Copy to all components to get grey scale	
+mov oC0, r0

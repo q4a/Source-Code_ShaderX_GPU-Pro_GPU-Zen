@@ -1,0 +1,51 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: dow - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\slefebvr\LOCALS~1\Temp\RSP7D.tmp" with contents
+[
+/nologo /ML /W3 /GX /Ob1 /Gy /I "C:\DXSDK\Samples\C++\Common\Include" /I "C:\Program Files\NVIDIA Corporation\Cg\include" /I "C:\DXSDK\Include" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /FR".\Release/" /Fp".\Release/dow.pch" /YX /Fo".\Release/" /GF /c 
+"C:\slefebvr\shaderX2\dow\src\dow.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\slefebvr\LOCALS~1\Temp\RSP7D.tmp" 
+Creating temporary file "C:\DOCUME~1\slefebvr\LOCALS~1\Temp\RSP7E.tmp" with contents
+[
+d3dx9.lib vfw32.lib dxguid.lib d3d9.lib d3dxof.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib winmm.lib /nologo /stack:0x200000,0x200000 /subsystem:windows /incremental:yes /pdb:".\Release/dow.pdb" /machine:I386 /out:"..\dow.exe" /pdbtype:sept /libpath:"C:\DXSDK\Lib" 
+.\Release\d3dapp.obj
+.\Release\d3denumeration.obj
+.\Release\d3dfile.obj
+.\Release\d3dfont.obj
+.\Release\d3dsettings.obj
+.\Release\d3dutil.obj
+.\Release\dxutil.obj
+.\Release\MovieMaker.obj
+.\Release\ScreenCapture.obj
+.\Release\CDARain.obj
+.\Release\CDAShower.obj
+.\Release\CDASplatch.obj
+.\Release\CDropAnimator.obj
+.\Release\CD3DCylinder.obj
+.\Release\CD3DQuad.obj
+.\Release\dow.obj
+.\Release\winmain.res
+"..\..\..\..\Program Files\NVIDIA Corporation\Cg\lib\cg.lib"
+"..\..\..\..\Program Files\NVIDIA Corporation\Cg\lib\cgD3D9.lib"
+.\libtexture\libtexture.lib
+]
+Creating command line "link.exe @C:\DOCUME~1\slefebvr\LOCALS~1\Temp\RSP7E.tmp"
+<h3>Output Window</h3>
+Compiling...
+dow.cpp
+Linking...
+
+
+
+<h3>Results</h3>
+dow.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

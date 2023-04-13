@@ -1,0 +1,26 @@
+////////////////////////////////////////////////////////////////////////////
+//
+// multiblend_tutBase_tutBase shader
+// Created 21.01.2003
+//
+//   {shader:multiblend_tutBase_tutBase_tutBase}
+//
+////////////////////////////////////////////////////////////////////////////
+
+[pixelshader] multiblend_tutBase_tutBase_tutBase_ps
+{
+   program=$$
+      ps.1.1
+      //
+      tex      t0					         	   // base texture 0
+      tex      t1					               // base texture 1
+      tex      t2					               // base texture 2
+      //
+      mul      r0.rgb   , t1  , v0.a
+      +mov     r0.a     , v0.b
+      mad      r0.rgb   , t0  , r0.a , r0
+      +mov     r1.a     , v1.b
+      mad      r0.rgb   , t2  , r1.a , r0
+   $$
+}
+

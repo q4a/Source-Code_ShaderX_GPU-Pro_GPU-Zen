@@ -1,0 +1,44 @@
+
+	//
+	// Pixel Shader (for DX8 hardware and better)
+	// Author: Marco Spoerl
+	//
+	// Function:  Sky dome
+	//
+	// v0			= calculated vertex color
+	// v1			= transformed light vector for the moon phase
+	//
+	// t0			= sun texture
+	// t1			= moon texture
+	// t2			= moon normal map
+	//
+	// c0			= scaling factor for the moon color
+	//
+
+	//
+	// version instruction
+	//
+	ps_1_1
+
+	//
+	// fetch textures
+	//
+	tex	t0
+	tex	t1
+	tex	t2
+
+	//
+	// ADDSMOOTH vertex color and sun
+	//
+	mad_sat	r0,		t0, 1 - v0, v0
+
+	//
+	// calculate moon color
+	//
+	dp3	r1,		t2_bx2, v1_bx2
+	mul_sat	r1,		t1, r1
+
+	//
+	// ADD current color and scaled moon color
+	//
+	mad_sat	r0,		r1, c0, r0

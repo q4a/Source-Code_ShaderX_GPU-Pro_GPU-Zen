@@ -1,0 +1,126 @@
+////////////////////////////////////////////////////////////////
+//
+// Vertex Shader system library
+// Created 21.07.2002
+// Copyright by gp
+//
+////////////////////////////////////////////////////////////////
+
+#include <vs.hvs>
+#include <inputplugin/matrix.hvs>
+#include <inputplugin/light.hvs>
+
+#include <transform.hvs>
+
+#ifndef INPUT_VERTEX
+#define INPUT_VERTEX
+
+input vertexshader {
+   // base
+   vector            Pos;
+   vector            Normal;
+   vector            Color;
+   vector            Tex0;
+   vector            Tex1;
+   vector            Tex2;
+   vector            Tex3;
+   
+   // for bump mapping (requires CreateBasisVectors plugin)
+   vector            S;
+   vector            T;
+   vector            SxT;           // optional ( SxT=cross( S , T ); )
+   
+   // light map
+   vector            LightMapUV;
+   
+   // soft binding
+   vector            JointWeight;
+   vector            JointIndex;
+   vector            PosOffset0;
+   vector            PosOffset1;
+   vector            PosOffset2;
+   vector            PosOffset3;
+   vector            NormalOffset0;
+   vector            NormalOffset1;
+   vector            NormalOffset2;
+   vector            NormalOffset3;
+};
+
+#endif
+
+// bump map calculation
+void bumpmap( vector uv , vector lightpos )
+{
+   vector t;
+   t.xyz=normalize( lightpos - in.Pos );
+   //
+   uv.x=dp3( in.SxT , t );
+   uv.y=dp3( in.T   , t );
+   uv.z=dp3( in.S   , t );
+}
+
+vector bumpmapuv( vector lightdir )
+{
+   vector t;
+   #ifdef inSxT
+      t.x=dp3( in.SxT , lightdir );
+   #else
+      t.x=dp3( in.Normal , lightdir );
+   #endif
+   t.y=dp3( in.T   , lightdir );
+   t.z=dp3( in.S   , lightdir );
+   //
+   return t;
+}
+
+vector bumpmapcolor( vector lightdir )
+{
+   vector t;
+   t.x=dp3( in.S   , lightdir );
+   t.y=dp3( in.T   , lightdir );
+   #ifdef inSxT
+      t.z=dp3( in.SxT , lightdir );
+   #else
+      t.z=dp3( in.Normal , lightdir );
+   #endif
+   //
+   return t;
+}
+
+// simple light calculation 
+vector light(vector pos,vector normal,vector lightpos, vector lightcolor)
+{
+   vector   lightdir=normalize( lightpos - pos );
+   //
+   return   dp3( normal , lightdir ) * lightcolor;
+}
+
+// light calculation with range fallout
+vector lightadvanced(vector pos,vector normal,vector lightpos, vector lightcolor, vector lightrange)
+{
+   vector   dir=lightpos - pos;
+   float    len=length( dir );
+   //
+   float    lightpower=dp3( normal , dir / len );
+   // 
+   #ifdef inColor
+      return   in.Color * lightrange.x * lightpower * lightcolor/(len*len) + AmbientLight.Color;
+   #else
+      return              lightrange.x * lightpower * lightcolor/(len*len) + AmbientLight.Color;
+   #endif
+}
+
+// calculates texture lookup ligh attenuation
+void lightattenuation(vector pos,vector normal,vector lightpos, vector lightcolor, vector lightrange, vector tex0, vector tex1)
+{
+   // attenuation texture coordinates
+   vector   t=(pos - lightpos) * lightrange.y;
+   //
+   t.xyz=t*0.5+0.5;
+   t.w=0.5;
+   
+   // output 
+   tex0.xy=t.xy;
+   tex1.xy=t.zw;
+}
+

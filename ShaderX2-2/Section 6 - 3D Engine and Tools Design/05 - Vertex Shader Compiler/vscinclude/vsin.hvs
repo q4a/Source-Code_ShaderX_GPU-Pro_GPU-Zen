@@ -1,0 +1,23 @@
+////////////////////////////////////////////////////////////////
+//
+// Vertex Shader system library
+// Created 21.07.2002
+// Copyright by gp
+//
+////////////////////////////////////////////////////////////////
+
+#ifndef INPUT_VERTEX 
+#define INPUT_VERTEX
+
+input vertexshader {
+   vector      Pos;
+   vector 		Normal;
+   vector 		Color;
+   vector      Tex0;
+   vector      Tex1;
+   vector      Tex2;
+   vector      Tex3;
+};
+
+#endif
+

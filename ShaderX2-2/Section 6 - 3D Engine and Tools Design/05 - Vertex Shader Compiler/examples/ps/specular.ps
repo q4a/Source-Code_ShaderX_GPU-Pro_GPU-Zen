@@ -1,0 +1,35 @@
+////////////////////////////////////////////////////////////////////////////
+//
+// specular shader
+// Created 23.01.2003
+//
+//   {shader:specular}
+//
+////////////////////////////////////////////////////////////////////////////
+
+
+[pixelshader] specular
+{
+   program=$$
+      ps.1.1
+      //
+      def 		c7       , 0 , 0 , 1 , 0 
+      //
+      tex      t0		   			                  // cube normalization map
+      tex      t1		   			                  // light map alpha
+          
+      // normal light                     
+      dp3_sat  r0       , c7     , t0_bx2          // dot(normal,light) 
+      //
+      mul 		r0.rgb	, r0		, r0
+      +mul_sat r1.a     , paramA , v0.a
+      //
+      mul 		r0.rgb	, r0		, r0
+      +mul     r1.a     , r1.a   , t1.a
+      mul 		r0.rgb	, r0		, r0
+      //
+      mul      r0       , r0     , r1.a            // specular intensity
+      mul      r0.rgb   , r0     , v0              // specular color
+   $$
+}
+

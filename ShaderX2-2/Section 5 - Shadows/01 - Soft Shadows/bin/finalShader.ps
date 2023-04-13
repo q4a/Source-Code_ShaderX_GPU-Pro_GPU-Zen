@@ -1,0 +1,29 @@
+; Pixel shader version 1.4
+ps_1_4
+
+; ambient color
+def c1, 0.0, 0.0, 0.0, 0.0
+def c2, 0.1, 0.1, 0.1, 0.1
+
+; r0 is the diffuse map;
+; r1 and r2 are respectively the shadow maps for
+; the first and second lights. Notice that we
+; use projected texture coordinates here.
+texld r0, t0
+texld r1, t1_dw.xyw
+texld r2, t2_dw.xyw
+
+; We'll just use this simple lighting equation:
+; r0 = r0 * (c1 + v0 * r1 + v1 * r2)
+;
+; c1 is an ambient color constant.
+; We negate the shadow values, since in our
+; incoming shadow maps, 0 corresponds to lit areas
+; and 1 corresponds to fully shadowed areas.
+mad r1, 1-r1.r, v0, c1
+mad r1, 1-r2.r, v1, r1
+mul r0, r0, r1
+
+
+
+

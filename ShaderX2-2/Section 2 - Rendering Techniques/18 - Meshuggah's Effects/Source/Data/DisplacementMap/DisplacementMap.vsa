@@ -1,0 +1,57 @@
+#include "..\..\Effects\DisplacementMap\DisplacementMapConstants.h"
+
+#define srcP    v0
+#define srcN    v1
+
+#define N       r0
+#define V       r1
+#define Temp    r10
+#define Temp1   r11
+
+
+
+vs.1.1
+
+
+
+// normalize normal
+dp3 N.w, srcN, srcN
+rsq N.w, N.w
+mul N, srcN, N.w
+
+
+
+// vector from vertex to eye
+add V, c[ CV_VIEWERPOS ], -srcP
+dp3 V.w, V, V
+rsq V.w, V.w
+mul V, V, V.w
+
+
+
+// calculate approximated Fresnel term F
+// F = ( 1 - V.N ) ^ 2
+dp3 Temp, V, N
+add Temp, c[ CV_CONSTANTS ].z, -Temp
+mul oD0.xyz, Temp, Temp
+
+
+
+// calculate R = 2 * (V.N) * N - V
+dp3 Temp, N, V
+mul Temp1, Temp, c[ CV_CONSTANTS ].w
+mul Temp1, Temp1, N
+add oT1.xyz, Temp1, -V
+
+
+
+// generate texture uv from vertex position 
+mad oT0.xy, srcP, c[ CV_CONSTANTS ].y, c[ CV_CONSTANTS ].y
+
+
+
+// vertex to screen
+dp4 oPos.x, srcP, c[ CV_WORLDVIEWPROJ_0 ]
+dp4 oPos.y, srcP, c[ CV_WORLDVIEWPROJ_1 ]
+dp4 oPos.z, srcP, c[ CV_WORLDVIEWPROJ_2 ]
+dp4 oPos.w, srcP, c[ CV_WORLDVIEWPROJ_3 ]

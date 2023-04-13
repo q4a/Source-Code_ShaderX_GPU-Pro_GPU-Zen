@@ -1,0 +1,38 @@
+; PSViewMRTPosition.txt
+;
+; Constant
+; c0: 1.0f/XRange, 1.0f/YRange, 1.0f/ZRange, 0.0f
+; c1: 0.5f, 0.0f, 0.5f, 0.0f
+
+ps_2_0
+
+; Samplers
+dcl_2d s0	; XY position
+dcl_2d s1	; Z position
+
+; Texture coordinates
+dcl t0.xy	; Texture coordinates
+
+
+;------------------------------------------------------------------------------
+; Texture sampling
+;------------------------------------------------------------------------------
+texld r0, t0, s0				// Retrieve XY position
+texld r1, t0, s1				// Retrieve Z position
+
+mov r0.z, r1.x					// Move Z into r0
+
+;------------------------------------------------------------------------------
+; Convert position into visible colors
+;------------------------------------------------------------------------------
+mov r1, c1
+mad r0, r0, c0, r1
+
+
+;------------------------------------------------------------------------------
+; Output resulting color
+;------------------------------------------------------------------------------
+mov oC0, r0	
+
+
+

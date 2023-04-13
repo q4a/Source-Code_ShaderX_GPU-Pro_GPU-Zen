@@ -1,0 +1,1 @@
+This movie is just an example - the final movie will be more polished and contains multiple objects

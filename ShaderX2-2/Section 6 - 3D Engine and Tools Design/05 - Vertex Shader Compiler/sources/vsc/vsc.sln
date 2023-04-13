@@ -1,0 +1,43 @@
+Microsoft Visual Studio Solution File, Format Version 7.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xubllite", "..\xubllite\xubllite\xubllite.vcproj", "{FA5003EF-898F-4D87-8815-B5C84C01005F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vscompiler", "..\xubl\vscompiler\vscompilerlight.vcproj", "{17F84769-32F8-4C48-BE41-BE9957315837}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vsc", "vsc.vcproj", "{73F579FA-1332-43D2-A548-8BFD3B4525FC}"
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 1
+		SccProjectUniqueName0 = ..\\xubllite\\xubllite\\xubllite.vcproj
+		SccProjectName0 = \u0022$/xubllite/xubllite\u0022,\u0020KADAAAAA
+		SccLocalPath0 = ..\\xubllite\\xubllite
+		SccProvider0 = MSSCCI:Microsoft\u0020Visual\u0020SourceSafe
+	EndGlobalSection
+	GlobalSection(SolutionConfiguration) = preSolution
+		ConfigName.0 = Debug
+		ConfigName.1 = Release
+	EndGlobalSection
+	GlobalSection(ProjectDependencies) = postSolution
+		{17F84769-32F8-4C48-BE41-BE9957315837}.0 = {FA5003EF-898F-4D87-8815-B5C84C01005F}
+		{73F579FA-1332-43D2-A548-8BFD3B4525FC}.0 = {17F84769-32F8-4C48-BE41-BE9957315837}
+		{73F579FA-1332-43D2-A548-8BFD3B4525FC}.1 = {FA5003EF-898F-4D87-8815-B5C84C01005F}
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{FA5003EF-898F-4D87-8815-B5C84C01005F}.Debug.ActiveCfg = Debug|Win32
+		{FA5003EF-898F-4D87-8815-B5C84C01005F}.Debug.Build.0 = Debug|Win32
+		{FA5003EF-898F-4D87-8815-B5C84C01005F}.Release.ActiveCfg = Release|Win32
+		{FA5003EF-898F-4D87-8815-B5C84C01005F}.Release.Build.0 = Release|Win32
+		{17F84769-32F8-4C48-BE41-BE9957315837}.Debug.ActiveCfg = Debug|Win32
+		{17F84769-32F8-4C48-BE41-BE9957315837}.Debug.Build.0 = Debug|Win32
+		{17F84769-32F8-4C48-BE41-BE9957315837}.Release.ActiveCfg = Release|Win32
+		{17F84769-32F8-4C48-BE41-BE9957315837}.Release.Build.0 = Release|Win32
+		{73F579FA-1332-43D2-A548-8BFD3B4525FC}.Debug.ActiveCfg = Debug|Win32
+		{73F579FA-1332-43D2-A548-8BFD3B4525FC}.Debug.Build.0 = Debug|Win32
+		{73F579FA-1332-43D2-A548-8BFD3B4525FC}.Release.ActiveCfg = Release|Win32
+		{73F579FA-1332-43D2-A548-8BFD3B4525FC}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

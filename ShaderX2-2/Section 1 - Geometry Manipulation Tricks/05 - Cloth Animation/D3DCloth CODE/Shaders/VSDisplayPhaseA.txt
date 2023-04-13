@@ -1,0 +1,21 @@
+vs_3_0
+
+; Input Registers
+dcl_position0    v0
+dcl_texcoord0    v4
+dcl_normal       v7
+
+; Output Registers
+dcl_position0    o0.xyzw   ; Final Vertex Position
+dcl_color0       o1.rgba   ; Difuse color for lighting
+dcl_texcoord0    o2.xy     ; Texture Coordinate
+
+m4x4 r0, v0, c0 ;Transform vertices by view/projection/world matrix
+mov  o0, r0     ;Output Position
+mov  o2.xy, v4     ;Tex Coord
+
+dp3 r1, v7, -c18    ;Lighting
+add r1, r1, c19     ;Ambient
+mov o1, r1          ;Diffuse Color
+
+

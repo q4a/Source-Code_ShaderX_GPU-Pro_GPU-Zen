@@ -1,0 +1,41 @@
+vs_3_0
+; Input Registers
+dcl_position0    v0
+dcl_texcoord0    v4
+
+; Output Registers
+dcl_position0    o0.xyzw   ; Final Vertex Position
+dcl_color0       o1        ; Difuse color for lighting
+dcl_texcoord0    o2.xy     ; Texture Coordinate
+
+; Samplers
+dcl_2d    s0	;    (X ,Y)
+dcl_2d    s1	;    (Z ,Nx)
+dcl_2d    s2	;    (Ny,Nz)
+
+; Sample Vertex Textures
+texldl r1, v4, s0    ; Read Node (X , Y)
+texldl r2, v4, s1    ; Read Node (Z , Nx)
+texldl r3, v4, s2    ; Read Node (Ny, Nz)
+
+; Create XYZ in r4
+mov r4.xy, r1        ; Grab XY
+mov r4.z, r2.x       ; Grab Z
+
+; Create NxNyNz in r5
+mov r5.x, r2.y       ; Grab Nx
+mov r5.yz, r3.xxy    ; Grab Ny, Nx
+
+; Create Final Node/Vertex Position
+mov r6, c21
+mad r6.x, r4.x, c20.y, -c20.x    ; ReScale [0 -> 1] => [-120 -> 120]
+mad r6.y, r4.z, c20.y, c20.z     ; ReScale [0 -> 1] => [0 -> 240]
+mad r6.z, r4.y, -c20.y, c20.x    ; ReScale [0 -> 1] => [-120 -> 120]
+m4x4 r2, r6, c0                  ; Transformation (c0 set in code)
+dp3_sat  r4, r5, c18             ; Simple Lighting Model
+add  r4, r4, c19                 ; Ambient Factor
+
+mov o0, r2                       ; Output Position
+mov o1, r4                       ; Output Diffuse Color
+mov o2.xy, v4                    ; Output Texture Coordinate
+

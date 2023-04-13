@@ -1,0 +1,9 @@
+//vsmain.cvs
+output vertexshader {
+   vector         Pos;
+};
+
+void vsmain(float a, vector b)
+{
+   out.Pos=a*b;
+}

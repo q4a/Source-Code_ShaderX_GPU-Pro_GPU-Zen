@@ -1,0 +1,16 @@
+#include "TransitionShaderConstants.h"
+
+
+
+ps.1.1
+
+
+
+tex t0
+
+
+
+mov r0.rgb, c[ CP_TRANSITION_COLOR ]
++ add_x4 r0.a, t0, c[ CP_TRANSITION_TIME ]_bx2
+
+mov_x4 r0.a, r0.a

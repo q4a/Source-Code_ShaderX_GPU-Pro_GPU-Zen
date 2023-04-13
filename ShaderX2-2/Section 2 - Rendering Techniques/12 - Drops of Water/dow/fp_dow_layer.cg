@@ -1,0 +1,127 @@
+// --------------------------------------------------------------
+// --------------------------------------------------------------
+//
+// fp_dow_layer.h
+//
+//    Drops of Water source code
+//
+//                      ShaderX2 - www.shaderx2.com
+//
+//
+//    Author:   Sylvain Lefebvre - 04/2003
+//    ------
+//
+//    -= Check for updates at http://www.aracknea.net =-
+//
+//    File contents:
+//    -------------
+//
+//      This fragment program renders a layer of drops. It uses
+//      the texture sprites techinque for positionning the drops.
+//      The drops are rendered with a magnification effect and 
+//      Phong model. All fragments corresonding to the background 
+//      are discarded.
+//
+// --------------------------------------------------------------
+// --------------------------------------------------------------
+
+// input from vertex program
+struct DowV2F 
+{
+    half4 HPosition    : POSITION;
+    half3 TCoords0     : TEXCOORD0;
+    half3 TCoords1     : TEXCOORD1;
+    half3 TCoords2     : TEXCOORD2;
+    half3 V            : TEXCOORD3;
+    half3 L            : TEXCOORD4;
+    half3 P            : TEXCOORD5;
+};
+
+struct PixelOut 
+{
+    half4 COL;
+    half DEPR;
+};
+
+half4 transformedLookup(uniform sampler2D tex,half2 uv0,half angle,half scale)
+{
+	half4 c;
+    half4 bkgColor=half4(0.0,0.0,0.0,0.0);
+
+	// texutre coords should be in [0,1]^2
+	uv0=frac(uv0);
+
+	// apply rotation (assume sprite in tile 1,1)
+	half si,cs;
+	sincos(angle*6.28,si,cs);
+ 	uv0=uv0-0.75;
+	half2 uv1=half2( uv0.x*cs + uv0.y*si,
+					  -uv0.x*si + uv0.y*cs);
+	uv1=uv1+0.75;
+
+	// apply scaling (assume sprite in tile 1,1)
+	uv1=uv1-0.75;
+	half2 uv2=uv1/scale;
+	uv2=uv2+0.75;
+
+	// are coordinates still in sprite tile ?
+	if (uv2.x > 1.0 || uv2.x < 0.5 || uv2.y > 1.0 || uv2.y < 0.5)
+		c=bkgColor;	    
+	else
+		c=h4tex2D(tex,uv2);
+	return c;
+}
+
+PixelOut main(
+			  DowV2F IN,
+			  uniform sampler2D OffsetMap   : texunit0,
+			  uniform sampler2D DropNrms    : texunit1,
+			  uniform sampler2D ColorMap    : texunit2,
+			  uniform float MagCoeff,
+			  uniform float ViewCoeff
+			  ) 
+{
+    half3 color;
+	half2 coords;
+	half4 offset;
+	half4 drop;
+
+	// ======================================
+	// texture sprites
+	// -> look in offset map
+	offset=h4tex2D(OffsetMap,IN.TCoords0.xy);
+	offset.xy=(offset.xy-0.5)*2.0;
+	coords=(offset.xy+IN.TCoords1.xy);
+	coords=frac(coords);
+	drop=transformedLookup(DropNrms,coords,offset.z,offset.w);
+	// -> if not in a drop, discard fragment
+	if (drop.w < 0.1)
+		discard;
+
+	// ===================
+	// drop lighting
+	// -> compute per-pixel Light and View vector
+	half3 nL=normalize(IN.L);
+	half3 nV=normalize(IN.V-IN.P); // IN.P always = (0,0,0) - due to Cg compiler (V1.1) bug, "-IN.P" has to be kept ...
+	half3 H=(nV+nL)*0.5;
+	// -> magnification effect
+	half2 decal=-(MagCoeff*(coords-0.75)/drop.w)-nV.xy*ViewCoeff;
+	// -> unpack drop normal
+	half3 nrm=(drop.xyz*2.0-1.0);
+	// -> specular + diffuse
+	half spec=pow(dot(nrm,H),20.0)*0.75;
+	half diff=(0.6+0.5*dot(nrm,nL));
+	// -> color
+	color=h3tex2D(ColorMap,IN.TCoords0.xy+decal.xy)*diff+spec;
+
+	// == uncomment to change drop color (see also cg_dow_floor.cg)
+	// color=h3tex2D(ColorMap,IN.TCoords0.xy+decal.xy)*diff*half3(0.6,0.2,0.2)+spec;
+
+	// -> alpha for antialiasing of drop edges
+	half alpha=min((drop.w-0.1)/0.2,1.0);
+
+    PixelOut OUT;
+    OUT.COL = half4(color,alpha);
+    return OUT;
+
+}

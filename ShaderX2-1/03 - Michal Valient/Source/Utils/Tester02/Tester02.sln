@@ -1,0 +1,29 @@
+Microsoft Visual Studio Solution File, Format Version 7.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tester02", "Tester02.vcproj", "{F6F71331-1AFD-4975-A4BE-9260460B1690}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Dimension3Exporter", "..\MaxExporter\VoidExporter.vcproj", "{7A2E5897-05BF-479E-A7F7-C8BF45AEAAEA}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "decapsor", "..\decapsor\decapsor.vcproj", "{6E1590D7-5B0E-4699-AEC0-90B88F5E0B2B}"
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		ConfigName.0 = Debug
+		ConfigName.1 = Release
+	EndGlobalSection
+	GlobalSection(ProjectDependencies) = postSolution
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{F6F71331-1AFD-4975-A4BE-9260460B1690}.Debug.ActiveCfg = Debug|Win32
+		{F6F71331-1AFD-4975-A4BE-9260460B1690}.Debug.Build.0 = Debug|Win32
+		{F6F71331-1AFD-4975-A4BE-9260460B1690}.Release.ActiveCfg = Release|Win32
+		{F6F71331-1AFD-4975-A4BE-9260460B1690}.Release.Build.0 = Release|Win32
+		{7A2E5897-05BF-479E-A7F7-C8BF45AEAAEA}.Debug.ActiveCfg = Release|Win32
+		{7A2E5897-05BF-479E-A7F7-C8BF45AEAAEA}.Release.ActiveCfg = Release|Win32
+		{6E1590D7-5B0E-4699-AEC0-90B88F5E0B2B}.Debug.ActiveCfg = Debug|Win32
+		{6E1590D7-5B0E-4699-AEC0-90B88F5E0B2B}.Release.ActiveCfg = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,25 @@
+////////////////////////////////////////////////////////////////////////////
+//
+// Lighting attenuation shader
+// Created 24.02.2003
+//
+// Shaders
+//   {shader:attenuation_light}       
+//
+////////////////////////////////////////////////////////////////////////////
+
+[pixelshader] attenuation_light_ps
+{
+   program=$$
+      ps.1.1
+      //
+      tex      t0					         	         // attenuation lookup table
+      tex      t1					                     // attenuation lookup table
+      tex      t2					                     // base map alpha
+      //
+      add_sat  r0       , 1-t0   ,-t1              // attenuation per-pixel calculation
+      mul      r0.rgb   , r0     , v0              // light * light fade
+      +mul     r0.a     , fade   , t2.a
+   $$
+}
+

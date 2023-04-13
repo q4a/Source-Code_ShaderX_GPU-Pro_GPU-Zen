@@ -1,0 +1,14 @@
+ps_3_0
+
+; Input
+dcl_texcoord0	v0.xy    ; Tex Coord
+
+; Output results
+mov r0.rg, v0.xy
+mov oC0, r0        ; Write XY based on interpolated texcoord
+
+mov r0, c12
+mov oC1, r0        ; Write Initial Depth based on constant set in code
+
+mov r0, c12.y
+mov oC2, r0        ; Init to Zero

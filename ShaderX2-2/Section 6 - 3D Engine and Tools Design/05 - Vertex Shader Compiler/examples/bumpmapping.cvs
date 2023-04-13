@@ -1,0 +1,35 @@
+////////////////////////////////////////////////////////////////////////////
+//
+// default light shader
+// Created 24.02.2003
+//
+// Shaders
+//   {shader:bump_light}       
+//
+////////////////////////////////////////////////////////////////////////////
+
+#include <standard.hvs>
+void vsmain()
+{  
+   // position transformation
+   vector pos,nor;
+   vstransform( pos , nor );
+   
+   // std output
+   out.Pos=m4x4( pos , FinalMatrix.x );
+   #ifdef inTex1
+      out.Tex0=in.Tex1;
+   #else
+      out.Tex0=in.Tex0;
+   #endif
+   
+   // normal map
+   vector lightdir=normalize( SelectedLight.Pos - pos );
+   out.Tex1=bumpmapuv( lightdir );
+   
+   // attenuation texture coordinates
+   lightattenuation( pos , nor , SelectedLight.Pos , SelectedLight.Color , SelectedLight.Range , out.Tex2 , out.Tex3 )
+   
+   // light color
+   out.SColor=SelectedLight.Color;
+}

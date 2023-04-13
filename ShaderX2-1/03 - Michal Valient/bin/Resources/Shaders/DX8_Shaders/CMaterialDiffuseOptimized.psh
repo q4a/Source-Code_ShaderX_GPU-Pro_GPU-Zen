@@ -1,0 +1,71 @@
+//*****************************************************************************
+//* This file is part of the Dimension3 renderer library                      *
+//* Copyright (C) 2003  Michal Valient (valient@host.sk)                      *
+//*                                                                           *
+//* Dimension3 renderer can be found at http://www.dimension3.host.sk         *
+//*                                                                           *
+//* This program is free software; you can redistribute it and/or modify      *
+//* it under the terms of the GNU General Public License as published by      *
+//* the Free Software Foundation; either version 2 of the License, or         *
+//* (at your option) any later version.                                       *
+//*                                                                           *
+//* This program is distributed in the hope that it will be useful,           *
+//* but WITHOUT ANY WARRANTY; without even the implied warranty of            *
+//* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the             *
+//* GNU General Public License for more details.                              *
+//*                                                                           *
+//* You should have received a copy of the GNU General Public License         *
+//* along with this program; if not, write to the Free Software               *
+//* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA * 
+//*****************************************************************************
+//hdr_utility_remove_tag
+
+
+//------------------------------
+// Per pixel diffuse - Pixel shader
+//
+// Desc :
+//   Renders diffuse part for one light per pixel
+//
+// Part of Dimension3 Renderer
+// (c)2002 Michal Valient
+// akka em / STV3 akka  R.A.Y / EastW00D
+//------------------------------
+//
+// Constant registers 
+// c0 - light1 color
+// c1 - light2 color
+// c2 - light3 color
+//
+// Used input registers
+// t0 - color / bump coordinates
+// t1 - light vector in tangent space
+// t2 - light2 vector in tangent space
+// t3 - light3 vector in tangent space
+// t4 - attenuation of each lights in RGB (R = L1, G = L2, B = L3)
+//
+// Used input texture stages
+// stage0 - ambient texture
+// stage1 - normal texture
+//
+// Output
+// r0 - output color
+//------------------------------
+
+ps.1.4
+texld r0, t0            //diffuse color (t)
+texld r1, t0            //normal vector (n)
+texcrd r2.rgb, t1.xyz   //Light vector (l1)
+texcrd r3.rgb, t2.xyz   //Light vector (l2)
+texcrd r4.rgb, t3.xyz   //Light vector (l3)
+texcrd r5.rgb, t4.xyz   //attenuation
+
+dp3_sat r2.r, r1_bx2, r2  //r2 = dot(normal, light1)
+dp3_sat r2.g, r1_bx2, r3  //r3 = dot(normal, light2)
+dp3_sat r2.b, r1_bx2, r4  //r4 = dot(normal, light3)
+mul r2.rgb, r2, r5        //attenuation
+
+mul r1.rgb, r2.r, c0
+mad r1.rgb, r2.g, c1, r1
+mad r1.rgb, r2.b, c2, r1
+mul r0, r0, r1

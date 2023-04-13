@@ -1,0 +1,23 @@
+// softbind.cvs
+input vertexshader {
+   vector      JointIndex;
+   vector      JointWeight;
+   //
+   vector      PosOffset0;
+   vector      PosOffset1;
+};
+
+output vertexshader {
+   vector      Pos;
+};
+
+plugin Skeleton( vector mat[78] ); // max 26 bones per one mesh
+
+void vsmain()
+{
+   vector t=in.JointIndex*768; // 256 * 3 (3 vectors for matrix)
+   // 
+   out.Pos=m4x3( in.PosOffset0 , Skeleton.mat[ t.x ] ) * in.JointWeight.x +
+           m4x3( in.PosOffset1 , Skeleton.mat[ t.y ] ) * in.JointWeight.y;
+}
+

@@ -1,0 +1,269 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: pgLib - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0xc07 /fo"../Debug/pgLib/pbLib.res" /d "_DEBUG" "C:\x_deploy\src\pgLib\pbLib.rc"" 
+Creating temporary file "C:\DOCUME~1\DANIEL~1\LOCALS~1\Temp\RSP5E4.tmp" with contents
+[
+/nologo /MLd /W4 /Gm /GX /ZI /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "PGLIB_EXPORTS" /D "PGLIB_PROFILE" /FR"../Debug/pgLib/" /Fo"../Debug/pgLib/" /Fd"../Debug/pgLib/" /FD /GZ /c 
+"C:\x_deploy\src\pgLib\Audio\pgAudioFMOD.cpp"
+"C:\x_deploy\src\pgLib\Audio\pgIAudio.cpp"
+"C:\x_deploy\src\pgLib\Audio\pgSampleFMOD.cpp"
+"C:\x_deploy\src\pgLib\Base\pgIDirectX.cpp"
+"C:\x_deploy\src\pgLib\Base\pgIFileTool.cpp"
+"C:\x_deploy\src\pgLib\Base\pgIImageTool.cpp"
+"C:\x_deploy\src\pgLib\Base\pgImage.cpp"
+"C:\x_deploy\src\pgLib\Base\pgInTextFile.cpp"
+"C:\x_deploy\src\pgLib\Base\pgIResourceManager.cpp"
+"C:\x_deploy\src\pgLib\Base\pgISettings.cpp"
+"C:\x_deploy\src\pgLib\Base\pgIStringTool.cpp"
+"C:\x_deploy\src\pgLib\Base\pgITime.cpp"
+"C:\x_deploy\src\pgLib\Base\pgIXML.cpp"
+"C:\x_deploy\src\pgLib\Base\pgLog.cpp"
+"C:\x_deploy\src\pgLib\Base\pgOutTextFile.cpp"
+"C:\x_deploy\src\pgLib\Base\pgProfiler.cpp"
+"C:\x_deploy\src\pgLib\Base\pgSettingsFile.cpp"
+"C:\x_deploy\src\pgLib\Base\pgString.cpp"
+"C:\x_deploy\src\pgLib\Render\Terrain\pgTerrainPatch.cpp"
+"C:\x_deploy\src\pgLib\FrameWork\d3dapp.cpp"
+"C:\x_deploy\src\pgLib\FrameWork\d3dfont.cpp"
+"C:\x_deploy\src\pgLib\FrameWork\d3dutil.cpp"
+"C:\x_deploy\src\pgLib\FrameWork\dxutil.cpp"
+"C:\x_deploy\src\pgLib\Game\pgCharacter.cpp"
+"C:\x_deploy\src\pgLib\Game\pgIGame.cpp"
+"C:\x_deploy\src\pgLib\Input\pgIInput.cpp"
+"C:\x_deploy\src\pgLib\Input\pgInputDX.cpp"
+"C:\x_deploy\src\pgLib\Input\pgSteering.cpp"
+"C:\x_deploy\src\pgLib\Math\pgIMathTool.cpp"
+"C:\x_deploy\src\pgLib\Math\pgMatrix.cpp"
+"C:\x_deploy\src\pgLib\Math\pgPathLinear.cpp"
+"C:\x_deploy\src\pgLib\Math\pgQuat.cpp"
+"C:\x_deploy\src\pgLib\Math\pgTransform.cpp"
+"C:\x_deploy\src\pgLib\Math\pgVec2.cpp"
+"C:\x_deploy\src\pgLib\Math\pgVec3.cpp"
+"C:\x_deploy\src\pgLib\Math\pgVec3n.cpp"
+"C:\x_deploy\src\pgLib\Math\pgVec4.cpp"
+"C:\x_deploy\src\pgLib\Render\BSP\pgBSPFile.cpp"
+"C:\x_deploy\src\pgLib\Render\BSP\pgBSPMesh.cpp"
+"C:\x_deploy\src\pgLib\Render\BSP\pgBSPReader.cpp"
+"C:\x_deploy\src\pgLib\Render\BSP\pgBSPTools.cpp"
+"C:\x_deploy\src\pgLib\Render\Terrain\pgTerrain.cpp"
+"C:\x_deploy\src\pgLib\Render\Terrain\pgTerrainPatchBase.cpp"
+"C:\x_deploy\src\pgLib\Render\Terrain\pgTerrainPatchMorphHW.cpp"
+"C:\x_deploy\src\pgLib\Render\Terrain\pgTerrainPatchMorphSW.cpp"
+"C:\x_deploy\src\pgLib\Render\Terrain\pgTerrainPVS.cpp"
+"C:\x_deploy\src\pgLib\Render\Tree\pgBlendTree.cpp"
+"C:\x_deploy\src\pgLib\Render\Tree\pgBlendWood.cpp"
+"C:\x_deploy\src\pgLib\Render\Tree\pgComplexTree.cpp"
+"C:\x_deploy\src\pgLib\Render\Tree\pgSimpleTree.cpp"
+"C:\x_deploy\src\pgLib\Render\pgAnimated.cpp"
+"C:\x_deploy\src\pgLib\Render\pgBaseMesh.cpp"
+"C:\x_deploy\src\pgLib\Render\pgD3DObject.cpp"
+"C:\x_deploy\src\pgLib\Render\pgLensflare.cpp"
+"C:\x_deploy\src\pgLib\Render\pgLight.cpp"
+"C:\x_deploy\src\pgLib\Render\pgLighting.cpp"
+"C:\x_deploy\src\pgLib\Render\pgMaterial.cpp"
+"C:\x_deploy\src\pgLib\Render\pgMesh.cpp"
+"C:\x_deploy\src\pgLib\Render\pgMeshUtil.cpp"
+"C:\x_deploy\src\pgLib\Render\pgParticleSystem.cpp"
+"C:\x_deploy\src\pgLib\Render\pgSegment.cpp"
+"C:\x_deploy\src\pgLib\Render\pgSkyBox.cpp"
+"C:\x_deploy\src\pgLib\Render\pgTexture.cpp"
+"C:\x_deploy\src\pgLib\Render\pgTextureStage.cpp"
+"C:\x_deploy\src\pgLib\Render\pgTransformable.cpp"
+"C:\x_deploy\src\pgLib\Render\pgXUtil.cpp"
+"C:\x_deploy\src\pgLib\pgLib.cpp"
+]
+Creating command line "xicl6.exe @C:\DOCUME~1\DANIEL~1\LOCALS~1\Temp\RSP5E4.tmp" 
+Creating temporary file "C:\DOCUME~1\DANIEL~1\LOCALS~1\Temp\RSP5E5.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib winmm.lib d3d8.lib d3dx8d.lib dinput8.lib dxguid.lib /nologo /dll /incremental:yes /pdb:"../Debug/pgLib/pgLibD.pdb" /debug /machine:I386 /out:"../Exec/pgLibD.dll" /implib:"../Debug/pgLib/pgLibD.lib" /pdbtype:sept 
+\x_deploy\src\Debug\pgLib\pgAudioFMOD.obj
+\x_deploy\src\Debug\pgLib\pgIAudio.obj
+\x_deploy\src\Debug\pgLib\pgSampleFMOD.obj
+\x_deploy\src\Debug\pgLib\pgIDirectX.obj
+\x_deploy\src\Debug\pgLib\pgIFileTool.obj
+\x_deploy\src\Debug\pgLib\pgIImageTool.obj
+\x_deploy\src\Debug\pgLib\pgImage.obj
+\x_deploy\src\Debug\pgLib\pgInTextFile.obj
+\x_deploy\src\Debug\pgLib\pgIResourceManager.obj
+\x_deploy\src\Debug\pgLib\pgISettings.obj
+\x_deploy\src\Debug\pgLib\pgIStringTool.obj
+\x_deploy\src\Debug\pgLib\pgITime.obj
+\x_deploy\src\Debug\pgLib\pgIXML.obj
+\x_deploy\src\Debug\pgLib\pgLog.obj
+\x_deploy\src\Debug\pgLib\pgOutTextFile.obj
+\x_deploy\src\Debug\pgLib\pgProfiler.obj
+\x_deploy\src\Debug\pgLib\pgSettingsFile.obj
+\x_deploy\src\Debug\pgLib\pgString.obj
+\x_deploy\src\Debug\pgLib\pgTerrainPatch.obj
+\x_deploy\src\Debug\pgLib\d3dapp.obj
+\x_deploy\src\Debug\pgLib\d3dfont.obj
+\x_deploy\src\Debug\pgLib\d3dutil.obj
+\x_deploy\src\Debug\pgLib\dxutil.obj
+\x_deploy\src\Debug\pgLib\pgCharacter.obj
+\x_deploy\src\Debug\pgLib\pgIGame.obj
+\x_deploy\src\Debug\pgLib\pgIInput.obj
+\x_deploy\src\Debug\pgLib\pgInputDX.obj
+\x_deploy\src\Debug\pgLib\pgSteering.obj
+\x_deploy\src\Debug\pgLib\pgIMathTool.obj
+\x_deploy\src\Debug\pgLib\pgMatrix.obj
+\x_deploy\src\Debug\pgLib\pgPathLinear.obj
+\x_deploy\src\Debug\pgLib\pgQuat.obj
+\x_deploy\src\Debug\pgLib\pgTransform.obj
+\x_deploy\src\Debug\pgLib\pgVec2.obj
+\x_deploy\src\Debug\pgLib\pgVec3.obj
+\x_deploy\src\Debug\pgLib\pgVec3n.obj
+\x_deploy\src\Debug\pgLib\pgVec4.obj
+\x_deploy\src\Debug\pgLib\pgBSPFile.obj
+\x_deploy\src\Debug\pgLib\pgBSPMesh.obj
+\x_deploy\src\Debug\pgLib\pgBSPReader.obj
+\x_deploy\src\Debug\pgLib\pgBSPTools.obj
+\x_deploy\src\Debug\pgLib\pgTerrain.obj
+\x_deploy\src\Debug\pgLib\pgTerrainPatchBase.obj
+\x_deploy\src\Debug\pgLib\pgTerrainPatchMorphHW.obj
+\x_deploy\src\Debug\pgLib\pgTerrainPatchMorphSW.obj
+\x_deploy\src\Debug\pgLib\pgTerrainPVS.obj
+\x_deploy\src\Debug\pgLib\pgBlendTree.obj
+\x_deploy\src\Debug\pgLib\pgBlendWood.obj
+\x_deploy\src\Debug\pgLib\pgComplexTree.obj
+\x_deploy\src\Debug\pgLib\pgSimpleTree.obj
+\x_deploy\src\Debug\pgLib\pgAnimated.obj
+\x_deploy\src\Debug\pgLib\pgBaseMesh.obj
+\x_deploy\src\Debug\pgLib\pgD3DObject.obj
+\x_deploy\src\Debug\pgLib\pgLensflare.obj
+\x_deploy\src\Debug\pgLib\pgLight.obj
+\x_deploy\src\Debug\pgLib\pgLighting.obj
+\x_deploy\src\Debug\pgLib\pgMaterial.obj
+\x_deploy\src\Debug\pgLib\pgMesh.obj
+\x_deploy\src\Debug\pgLib\pgMeshUtil.obj
+\x_deploy\src\Debug\pgLib\pgParticleSystem.obj
+\x_deploy\src\Debug\pgLib\pgSegment.obj
+\x_deploy\src\Debug\pgLib\pgSkyBox.obj
+\x_deploy\src\Debug\pgLib\pgTexture.obj
+\x_deploy\src\Debug\pgLib\pgTextureStage.obj
+\x_deploy\src\Debug\pgLib\pgTransformable.obj
+\x_deploy\src\Debug\pgLib\pgXUtil.obj
+\x_deploy\src\Debug\pgLib\pgLib.obj
+\x_deploy\src\Debug\pgLib\pbLib.res
+..\Libs\FMOD\Lib\fmodvc.lib
+..\Libs\MSXML\lib\msxml2.lib
+]
+Creating command line "xilink6.exe @C:\DOCUME~1\DANIEL~1\LOCALS~1\Temp\RSP5E5.tmp"
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+pgAudioFMOD.cpp
+pgIAudio.cpp
+pgSampleFMOD.cpp
+pgIDirectX.cpp
+pgIFileTool.cpp
+pgIImageTool.cpp
+pgImage.cpp
+pgInTextFile.cpp
+pgIResourceManager.cpp
+pgISettings.cpp
+pgIStringTool.cpp
+pgITime.cpp
+pgIXML.cpp
+pgLog.cpp
+pgOutTextFile.cpp
+pgProfiler.cpp
+pgSettingsFile.cpp
+pgString.cpp
+pgTerrainPatch.cpp
+d3dapp.cpp
+Generating Code...
+Compiling...
+d3dfont.cpp
+d3dutil.cpp
+dxutil.cpp
+pgCharacter.cpp
+pgIGame.cpp
+pgIInput.cpp
+pgInputDX.cpp
+pgSteering.cpp
+pgIMathTool.cpp
+pgMatrix.cpp
+pgPathLinear.cpp
+pgQuat.cpp
+pgTransform.cpp
+pgVec2.cpp
+pgVec3.cpp
+pgVec3n.cpp
+pgVec4.cpp
+pgBSPFile.cpp
+pgBSPMesh.cpp
+pgBSPReader.cpp
+Generating Code...
+Compiling...
+pgBSPTools.cpp
+pgTerrain.cpp
+pgTerrainPatchBase.cpp
+pgTerrainPatchMorphHW.cpp
+pgTerrainPatchMorphSW.cpp
+pgTerrainPVS.cpp
+pgBlendTree.cpp
+pgBlendWood.cpp
+pgComplexTree.cpp
+pgSimpleTree.cpp
+pgAnimated.cpp
+pgBaseMesh.cpp
+pgD3DObject.cpp
+pgLensflare.cpp
+pgLight.cpp
+pgLighting.cpp
+pgMaterial.cpp
+pgMesh.cpp
+pgMeshUtil.cpp
+pgParticleSystem.cpp
+Generating Code...
+Compiling...
+pgSegment.cpp
+pgSkyBox.cpp
+pgTexture.cpp
+pgTextureStage.cpp
+pgTransformable.cpp
+pgXUtil.cpp
+pgLib.cpp
+Generating Code...
+Linking...
+xilink6: executing 'C:\PROGRA~1\MICROS~2\VC98\Bin\link.exe'
+   Creating library ../Debug/pgLib/pgLibD.lib and object ../Debug/pgLib/pgLibD.exp
+<h3>
+--------------------Configuration: TerrainTest - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0xc07 /fo"../../Debug/TerrainTest/winmain.res" /d "_DEBUG" "C:\x_deploy\src\Projects\TerrainTest\winmain.rc"" 
+Creating temporary file "C:\DOCUME~1\DANIEL~1\LOCALS~1\Temp\RSP5ED.tmp" with contents
+[
+/nologo /MLd /W4 /Gm /GX /ZI /Od /I "..\.." /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "PGLIB_PROFILE" /FR"../../Debug/TerrainTest/" /Fp"../../Debug/TerrainTest/TerrainTest.pch" /YX /Fo"../../Debug/TerrainTest/" /Fd"../../Debug/TerrainTest/" /FD /GZ /c 
+"C:\x_deploy\src\Projects\TerrainTest\TerrainTest.cpp"
+]
+Creating command line "xicl6.exe @C:\DOCUME~1\DANIEL~1\LOCALS~1\Temp\RSP5ED.tmp" 
+Creating temporary file "C:\DOCUME~1\DANIEL~1\LOCALS~1\Temp\RSP5EE.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /incremental:yes /pdb:"../../Debug/TerrainTest/TerrainD.pdb" /debug /machine:I386 /out:"../../Exec/TerrainD.exe" /pdbtype:sept 
+\x_deploy\src\Debug\TerrainTest\TerrainTest.obj
+\x_deploy\src\Debug\TerrainTest\winmain.res
+\x_deploy\src\Debug\pgLib\pgLibD.lib
+]
+Creating command line "xilink6.exe @C:\DOCUME~1\DANIEL~1\LOCALS~1\Temp\RSP5EE.tmp"
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+TerrainTest.cpp
+Linking...
+xilink6: executing 'C:\PROGRA~1\MICROS~2\VC98\Bin\link.exe'
+
+
+
+<h3>Results</h3>
+TerrainD.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

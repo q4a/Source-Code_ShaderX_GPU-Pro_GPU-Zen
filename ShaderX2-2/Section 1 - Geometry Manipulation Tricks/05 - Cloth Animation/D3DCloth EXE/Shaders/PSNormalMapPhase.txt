@@ -1,0 +1,57 @@
+ps_3_0
+
+; Samplers
+dcl_2d    s0    ;MRT0 (X ,Y ) 
+dcl_2d    s1    ;MRT1 (Z ,Nx)
+
+; Inputs
+dcl_texcoord0	v0.xy    ; Tex Coord Center Sample
+dcl_texcoord1	v1.xy    ; Tex Coord Right
+dcl_texcoord2	v2.xy    ; Tex Coord Top
+dcl_texcoord3	v3.xy    ; Tex Coord Left
+dcl_texcoord4	v4.xy    ; Tex Coord Bottom
+
+def c19, 0.0, 0.0, 0.0, 0.0
+
+; Main sample = avg of sample pos 0 and 5
+
+texld r0 , v0, s0 ; center sample
+texld r11, v0, s1 ; center sample
+mov oC0, r0	; output (x, y)
+
+texld r0, v1, s0 ; right sample
+texld r1, v1, s1 ; right sample
+mov   r3.xy, r0
+mov   r3.z,  r1.x
+
+texld r0, v2, s0 ; top sample
+texld r1, v2, s1 ; top sample
+mov   r4.xy, r0
+mov   r4.z,  r1.x
+
+texld r9 , v3, s0 ; left sample
+texld r10, v3, s1 ; left sample
+mov   r5.xy, r9
+mov   r5.z,  r10.x
+
+texld r9 , v4, s0 ; bottom sample
+texld r10, v4, s1 ; bottom sample
+mov   r6.xy, r9
+mov   r6.z,  r10.x
+
+; create vectors for cross product
+
+add r0.xyz, r3.xyz, -r5.xyz
+add r1.xyz, r4.xyz, -r6.xyz
+
+; cross product and normalisation
+
+crs r7.xyz, r0, r1
+nrm r0, r7.xyz
+
+mov r11.y, r0.x
+mov r9  , r0.y
+mov r9.g, r0.z
+
+mov oC1, r11	; (Z, Nx)
+mov oC2, r9	; (Ny,Nz)

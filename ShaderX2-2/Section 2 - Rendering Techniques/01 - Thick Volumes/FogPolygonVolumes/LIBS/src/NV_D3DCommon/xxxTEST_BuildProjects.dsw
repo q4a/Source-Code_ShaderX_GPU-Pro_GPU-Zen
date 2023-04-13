@@ -1,0 +1,49 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "TEST_D3DCommon_ForD3D8"=..\..\..\Direct3D8\src\TEST_D3DCommon_ForD3D8\TEST_D3DCommon_ForD3D8.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    TEST_D3DCommon_ForD3D8
+    ..\..\..
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "TEST_D3DCommon_ForD3D9"=..\..\..\Direct3D9\src\TEST_D3DCommon_ForD3D9\TEST_D3DCommon_ForD3D9.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    TEST_D3DCommon_ForD3D9
+    ..\..\..\direct3d9\src\test_d3dcommon_ford3d9
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

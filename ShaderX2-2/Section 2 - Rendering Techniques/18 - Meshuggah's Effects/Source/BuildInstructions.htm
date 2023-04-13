@@ -1,0 +1,24 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Build instructions</title>
+</head>
+
+<body>
+
+<p>In order to successfully build the executable run the following scripts...</p>
+<p>1.&nbsp;makeDll.bat under .\3rdPartyDlls to create an encrypted dll archive
+called dlls.cry</p>
+<p>2. makeData.bat under .\Data to create an encrypted data archive called data.cry</p>
+<p>These two files will be part of the executable's resource. If&nbsp;the content of
+any of these archives changes run the script(s) again and delete
+the .res file under both .\Debug and .\Release of the main app. This enforces recompilation
+of the resource the next time you do a build.</p>
+
+</body>
+
+</html>

@@ -1,0 +1,70 @@
+struct Vert
+{
+    float4 pos  : POSITION;
+    float4 dif  : COLOR0;
+    float4 tex  : TEXCOORD0;
+	float4 tex1  : TEXCOORD1;
+	float3 tex2  : TEXCOORD2;
+};
+
+struct Pix
+{
+    float4 dif : COLOR0;
+};
+half random(float x,float y,float z,sampler1D g)
+{
+
+	half index=(x*6.6)+(y*7.91)+(z*8.21);
+	index=index*0.001953125;
+	index=h1tex1D(g,index);
+	return index;
+
+}
+half3 scurve(half3 v)
+{
+    return v * v * (3 - 2 * v);
+}
+
+half noise(float3 v,sampler1D g)
+{
+	
+	half3 LatticePoint=floor(v);
+	half3 frac1=scurve(frac(v));
+	half4 v1;
+	
+	v1.x = random(LatticePoint.x,LatticePoint.y,LatticePoint.z,g);
+    v1.y = random(LatticePoint.x + 1, LatticePoint.y,LatticePoint.z,g);
+    v1.z = random(LatticePoint.x,     LatticePoint.y + 1,LatticePoint.z,g);
+    v1.w = random(LatticePoint.x + 1, LatticePoint.y + 1,LatticePoint.z,g);
+
+	half2 i1 = lerp(v1.xz , v1.yw , frac1.x);
+  	
+	half a=lerp(i1.x , i1.y , frac1.y);
+
+	v1.x = random(LatticePoint.x,LatticePoint.y,LatticePoint.z+1,g);
+    v1.y = random(LatticePoint.x + 1, LatticePoint.y,LatticePoint.z+1,g);
+    v1.z = random(LatticePoint.x,     LatticePoint.y + 1,LatticePoint.z+1,g);
+    v1.w = random(LatticePoint.x + 1, LatticePoint.y + 1,LatticePoint.z+1,g);
+    i1 = lerp(v1.xz , v1.yw , frac1.x);
+	
+	half b=lerp(i1.x , i1.y , frac1.y);
+	
+	return lerp(a,b,frac1.z);
+	
+}
+
+
+Pix main(const Vert In, const uniform sampler BaseTexture,const uniform float time)
+{
+  Pix Out;
+  float4 color=In.dif;
+  float3 input;
+  input.xyz=(In.tex.xyz+time)*2;
+ 
+  color.w=noise(input,BaseTexture)+noise(input*2,BaseTexture)*.5+noise(input*4,BaseTexture)*.25+noise(input*8,BaseTexture)*.125;
+  color.w=1-color.w;
+
+  Out.dif = (2*color)*dot(normalize(In.tex1.xyz), In.tex2);
+  return Out;
+}
+

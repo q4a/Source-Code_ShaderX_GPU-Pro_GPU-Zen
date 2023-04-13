@@ -1,0 +1,27 @@
+#include "..\..\Effects\DisplacementMap\DisplacementMapConstants.h"
+
+
+
+ps.1.1
+
+
+
+tex t0      // get texel from logo map (decal in rgb, mask in alpha)
+tex t1      // get texel from environment map
+
+
+
+// environment * material
+mul r0, t1, c[ CP_MATERIALCOLOR ]
+
+// blend between material color and environment * material color
+// based on Fresnel term
+lrp r0, v0, c[ CP_MATERIALCOLOR ], r0
+
+// get the same color with half the intensity
+mov_d2 r1, r0
+
+// use logo decal value to blend between light and dark color and
+// mask out parts of the logo that are invisible (co-issuing)
+lrp r0.rgb, 1 - t0, r0, r1
++ mov r0.a, t0.a

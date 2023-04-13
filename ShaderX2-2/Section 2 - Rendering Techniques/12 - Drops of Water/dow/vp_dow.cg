@@ -1,0 +1,84 @@
+// --------------------------------------------------------------
+// --------------------------------------------------------------
+//
+// vp_dow.h
+//
+//    Drops of Water source code
+//
+//                      ShaderX2 - www.shaderx2.com
+//
+//
+//    Author:   Sylvain Lefebvre - 04/2003
+//    ------
+//
+//    -= Check for updates at http://www.aracknea.net =-
+//
+//    File contents:
+//    -------------
+//
+//    Vertex program for the Drops of Water effect. Computes
+//    the texture coordinates of the reference texture from
+//    the texture coordinates of the offset map.
+//
+// --------------------------------------------------------------
+// --------------------------------------------------------------
+
+// input from application
+struct appin
+{
+    float4 Position     : POSITION;
+    float3 T		    : TEXCOORD1;
+    float3 B		    : TEXCOORD2;
+    float3 N			: NORMAL;
+	float3 TCoords0     : TEXCOORD0;
+};
+
+// output
+struct DowV2F 
+{
+    float4 HPosition    : POSITION;
+    float3 TCoords0     : TEXCOORD0;
+    float3 TCoords1     : TEXCOORD1;
+    float3 TCoords2     : TEXCOORD2;
+    float3 V            : TEXCOORD3;
+    float3 L            : TEXCOORD4;
+    float3 P            : TEXCOORD5;
+};
+
+DowV2F main(appin IN,
+            uniform float4x4 Proj : register(c0),
+            uniform float4x4 View     : register(c4),
+            uniform float4x4 ViewI    : register(c8),
+            uniform float4 ViewerPos,
+            uniform float  TexRepeat,
+            uniform float  TScale,
+            uniform float4 LightPos)
+{
+    DowV2F OUT;
+
+	float4 pos = mul(View, IN.Position);
+    OUT.HPosition = mul(Proj, pos);
+
+	float4 view  = mul(ViewI, float4(0.0,0.0,0.0,1.0));
+	float4 light = mul(ViewI, LightPos);
+
+
+    float3 V = view.xyz-IN.Position.xyz;
+	float3 L = light.xyz-IN.Position.xyz;
+
+	// transform by TBN
+	OUT.V.x = dot(IN.T,V);
+	OUT.V.y = dot(IN.B,V);
+	OUT.V.z = dot(IN.N,V);
+	OUT.L.x = dot(IN.T,L);
+	OUT.L.y = dot(IN.B,L);
+	OUT.L.z = dot(IN.N,L);
+	OUT.P   = float3(0.0,0.0,0.0);
+
+	// texture coordinates for offset map
+    OUT.TCoords0 = IN.TCoords0.xyz*TexRepeat;
+	// texture coordinates for reference texture
+    OUT.TCoords1 = IN.TCoords0.xyz*TScale*TexRepeat; // TScale = offsetMapRes / referenceTextureNbTiles
+
+    return OUT;
+}

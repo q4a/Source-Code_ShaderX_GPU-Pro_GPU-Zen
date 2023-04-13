@@ -1,0 +1,26 @@
+#include "..\..\Effects\Beams\RenderSunShaderConstants.h"
+
+
+
+ps.1.1
+
+
+
+// get four samples from sun surface texture map
+// (color in rgb, intensity in alpha)
+tex t0
+tex t1
+tex t2
+tex t3
+
+
+
+// calculate weighted sum of four alpha values
+mul r0.a, t0.a, c[ CP_SURFACE_BLEND_VALUE ].a
+mad r0.a, t1.a, c[ CP_SURFACE_BLEND_VALUE ].a, r0.a
+mad r0.a, t2.a, c[ CP_SURFACE_BLEND_VALUE ].a, r0.a
+mad r0.a, t3.a, c[ CP_SURFACE_BLEND_VALUE ].a, r0.a
+
+// modulate weighted alpha value on 
+// surface color to compute final output
+mul r0, t0, r0.a

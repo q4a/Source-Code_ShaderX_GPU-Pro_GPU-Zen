@@ -1,0 +1,58 @@
+struct Vert
+{
+    float4 pos  : POSITION;
+    float4 dif  : COLOR0;
+    float4 tex  : TEXCOORD0;
+};
+
+struct Pix
+{
+    float4 dif : COLOR0;
+};
+
+
+float random(float2 xy,sampler2D BaseTexture)
+{
+	float color=tex2D(BaseTexture,xy);
+	return color;
+}
+
+
+Pix main(const Vert In, const uniform sampler2D BaseTexture,const uniform float Time)
+{
+  Pix Out;
+  float2 InputTest;
+  float randomtexture=random((In.tex.xy*10)+Time.xx,BaseTexture);
+  float4 center;
+  center.x=.5;
+  center.y=.5;
+  center.z=.0;
+  center.w=.0;
+  float d=distance(center,In.tex);
+  float dense=(1-d*1.8)*pow(randomtexture,d*10);
+ 
+  float angle=atan((In.tex.y-.5)/(In.tex.x-.5));
+ 
+  angle=degrees(angle);
+ 
+	  angle+=360;
+
+ 
+  
+  if(d>.15)
+  {
+		angle=fmod(angle,180*d);
+		dense=(dense)*(angle);
+		dense/=10;
+  }
+  else
+  {
+	  dense=1.4*dense;
+  }
+ 
+  Out.dif.x=dense;
+  Out.dif.y=dense;
+  Out.dif.z=dense;	
+ 
+  return Out;
+}

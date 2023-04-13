@@ -1,0 +1,10 @@
+Source vertices count   : 371
+Final vertices count    : 843
+No. of collapsed edges  : 150
+Preprocessing completed with no errors.
+
+Source vertices count   : 2297
+Final vertices count    : 3059
+No. of collapsed edges  : 1640
+Preprocessing completed with no errors.
+

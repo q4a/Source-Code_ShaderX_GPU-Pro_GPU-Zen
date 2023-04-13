@@ -1,0 +1,538 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Deutsch (Deutschland) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_DEU)
+#ifdef _WIN32
+LANGUAGE LANG_GERMAN, SUBLANG_GERMAN
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#include ""res\\Meshuggah.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""afxres.rc""         // Standard components\r\n"
+    "#include ""afxprint.rc""       // printing/print preview resources\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+#endif    // Deutsch (Deutschland) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Englisch (USA) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_4FOLOGO             BITMAP                  "res\\4fologo.bmp"
+IDB_PLEASEWAIT          BITMAP                  "res\\wait.bmp"
+IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\Meshuggah.ico"
+IDI_INFO                ICON                    "res\\Info.ico"
+IDI_EFFECTSETTINGS      ICON                    "res\\EffectSettings.ico"
+IDI_HELP                ICON                    "res\\Help.ico"
+IDI_EFFECT              ICON                    "res\\Effect.ico"
+IDI_FOLDER              ICON                    "res\\Folder.ico"
+IDI_FOLDER_OPEN         ICON                    "res\\FolderOpen.ico"
+IDI_EFFECT_PLAYING      ICON                    "res\\EffectPlaying.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_SOFT_OBJECTS DIALOGEX 0, 0, 229, 70
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | 
+    WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_TOOLWINDOW
+CAPTION "Soft objects"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    GROUPBOX        "Polygonizer settings",IDC_STATIC,7,7,215,56
+    CONTROL         "",IDC_NUM_SOFTOBJECTS,"msctls_trackbar32",TBS_AUTOTICKS | 
+                    TBS_BOTH | TBS_ENABLESELRANGE | WS_TABSTOP,9,18,111,12
+    EDITTEXT        IDC_NUM_SOFTOBJECTS_EDIT,124,20,26,12,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    LTEXT           "Number of objects",IDC_STATIC,157,22,60,8
+    CONTROL         "",IDC_GRIDSIZE,"msctls_trackbar32",TBS_AUTOTICKS | 
+                    TBS_BOTH | TBS_ENABLESELRANGE | WS_TABSTOP,9,30,111,12
+    EDITTEXT        IDC_GRIDSIZE_EDIT,124,33,26,12,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    LTEXT           "Grid size",IDC_STATIC,157,34,28,8
+    CONTROL         "",IDC_ISOTHRESHOLD,"msctls_trackbar32",TBS_AUTOTICKS | 
+                    TBS_BOTH | TBS_ENABLESELRANGE | WS_TABSTOP,9,43,111,12
+    EDITTEXT        IDC_ISOTHRESHOLD_EDIT,124,46,26,12,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    LTEXT           "Iso threshold",IDC_STATIC,157,47,43,8
+END
+
+IDD_SETUP DIALOGEX 0, 0, 266, 223
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | 
+    WS_CAPTION | WS_SYSMENU
+CAPTION "Meshuggah - Setup"
+FONT 8, "MS Shell Dlg", 400, 0, 0x0
+BEGIN
+    GROUPBOX        "Information",IDC_STATIC,7,7,116,74
+    GROUPBOX        "In association with",IDC_STATIC,7,89,116,104
+    GROUPBOX        "What do you want to start today?",IDC_STATIC,133,7,125,
+                    42
+    GROUPBOX        "Demonstration settings",IDC_DEMOSETTINGS_FRAME,133,58,
+                    125,73,WS_DISABLED
+    GROUPBOX        "32 bit fullscreen mode",IDC_RESOLUTION_FRAME,133,140,
+                    125,53,WS_DISABLED
+    CTEXT           "Meshuggah Version\nDebugRelease",IDC_VERSIONINFO,13,18,
+                    106,17
+    CTEXT           "Latest version is available here.",IDC_LINK_UPDATE,13,
+                    37,106,8
+    CTEXT           "Copyright © 2001 - 2003",IDC_STATIC,13,49,106,10
+    CTEXT           "Carsten Wenzel",IDC_LINK_ONION,13,58,106,8
+    CTEXT           "All rights reserved.",IDC_STATIC,13,67,106,8
+    CONTROL         148,IDC_STATIC,"Static",SS_BITMAP | SS_SUNKEN,17,102,95,
+                    73
+    CTEXT           "www.4FriendsOnly.com",IDC_LINK_4FO,13,179,106,8
+    CONTROL         "&Demonstration",IDC_DEMO,"Button",BS_AUTORADIOBUTTON | 
+                    BS_LEFT | WS_GROUP,140,17,75,15
+    CONTROL         "Interactive &browser",IDC_BROWSER,"Button",
+                    BS_AUTORADIOBUTTON,140,32,79,10
+    CONTROL         "Run in &fullscreen mode",IDC_FULLSCREEN,"Button",
+                    BS_AUTOCHECKBOX | WS_DISABLED | WS_GROUP | WS_TABSTOP,
+                    140,73,88,10
+    CONTROL         "&Triple buffering (+ vsync)",IDC_TRIPLE_BUFFERING,
+                    "Button",BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP,140,
+                    86,98,10
+    CONTROL         "&Music",IDC_MUSIC,"Button",BS_AUTOCHECKBOX | 
+                    WS_DISABLED | WS_TABSTOP,140,99,33,10
+    CONTROL         "&Loop demo",IDC_LOOP,"Button",BS_AUTOCHECKBOX | 
+                    WS_DISABLED | WS_TABSTOP,140,112,51,10
+    CONTROL         "640x480",IDC_640X480,"Button",BS_AUTORADIOBUTTON | 
+                    WS_DISABLED | WS_GROUP,140,154,44,10
+    CONTROL         "800x600",IDC_800X600,"Button",BS_AUTORADIOBUTTON | 
+                    WS_DISABLED,140,165,44,10
+    CONTROL         "1024x786",IDC_1024X768,"Button",BS_AUTORADIOBUTTON | 
+                    WS_DISABLED,140,176,48,10
+    CONTROL         "1152x864",IDC_1152X864,"Button",BS_AUTORADIOBUTTON | 
+                    WS_DISABLED,202,154,48,10
+    CONTROL         "1280x960",IDC_1280X960,"Button",BS_AUTORADIOBUTTON | 
+                    WS_DISABLED,202,165,48,10
+    CONTROL         "1280x1024",IDC_1280X1024,"Button",BS_AUTORADIOBUTTON | 
+                    WS_DISABLED,202,176,52,10
+    DEFPUSHBUTTON   "&Start",IDOK,7,200,49,16,WS_GROUP
+    PUSHBUTTON      "&Cancel",IDCANCEL,74,200,49,16
+    PUSHBUTTON      "&Help",IDC_HTMLHELP,209,200,49,16
+END
+
+IDD_SHADERFORMVIEW DIALOGEX 0, 0, 132, 144
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+EXSTYLE WS_EX_TRANSPARENT
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_SHADERTAB,"SysTabControl32",TCS_HOTTRACK,0,129,
+                    132,15
+END
+
+IDD_INFINITE_ZOOM DIALOGEX 0, 0, 186, 89
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | 
+    WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_TOOLWINDOW
+CAPTION "Infinite Zoom"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    GROUPBOX        "Settings",IDC_STATIC,7,7,172,42
+    CONTROL         "Enable rotation around z axis",IDC_ROTATEZ,"Button",
+                    BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP,14,19,105,10
+    CONTROL         "Animate",IDC_ANIMATE,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,14,33,104,11
+    GROUPBOX        "Zoom position",IDC_STATIC,7,51,172,30
+    CONTROL         "Slider1",IDC_ZOOMPOS,"msctls_trackbar32",TBS_AUTOTICKS | 
+                    TBS_BOTH | TBS_ENABLESELRANGE | WS_TABSTOP,13,62,160,12
+END
+
+IDD_HAIR DIALOGEX 0, 0, 211, 166
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | 
+    WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_TOOLWINDOW
+CAPTION "Hair"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    GROUPBOX        "Anisotropy settings",IDC_STATIC,7,7,197,102
+    CONTROL         "",IDC_AMBIENT,"msctls_trackbar32",TBS_AUTOTICKS | 
+                    TBS_BOTH | TBS_ENABLESELRANGE | WS_TABSTOP,9,18,111,12
+    EDITTEXT        IDC_AMBIENT_EDIT,124,19,26,12,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    LTEXT           "Ambient light",IDC_STATIC,156,20,42,10
+    CONTROL         "",IDC_DIFFUSE,"msctls_trackbar32",TBS_AUTOTICKS | 
+                    TBS_BOTH | TBS_ENABLESELRANGE | WS_TABSTOP,9,33,111,12
+    EDITTEXT        IDC_DIFFUSE_EDIT,124,35,26,12,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    LTEXT           "Diffuse light",IDC_STATIC,156,37,41,8
+    CONTROL         "",IDC_SPECULAR,"msctls_trackbar32",TBS_AUTOTICKS | 
+                    TBS_BOTH | TBS_ENABLESELRANGE | WS_TABSTOP,9,50,111,12
+    EDITTEXT        IDC_SPECULAR_EDIT,124,52,26,12,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    LTEXT           "Specular light",IDC_STATIC,156,52,43,10
+    CONTROL         "",IDC_GLOSS,"msctls_trackbar32",TBS_AUTOTICKS | 
+                    TBS_BOTH | TBS_ENABLESELRANGE | WS_TABSTOP,9,66,111,12
+    EDITTEXT        IDC_GLOSS_EDIT,124,68,26,12,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "Gloss factor",IDC_STATIC,156,70,42,8
+    PUSHBUTTON      "Diffuse color",IDC_DIFFUSE_COLOR,30,87,54,14
+    LTEXT           "",IDC_DIFF_COLOR,88,88,13,13,SS_SUNKEN
+    LTEXT           "",IDC_SPEC_COLOR,111,88,13,13,SS_SUNKEN
+    PUSHBUTTON      "Specular color",IDC_SPECULAR_COLOR,128,87,54,14
+    GROUPBOX        "Hair physics",IDC_STATIC,7,116,197,43
+    CONTROL         "",IDC_GRAVITY,"msctls_trackbar32",TBS_AUTOTICKS | 
+                    TBS_BOTH | TBS_ENABLESELRANGE | WS_TABSTOP,9,124,111,12
+    EDITTEXT        IDC_GRAVITY_EDIT,124,126,38,12,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    LTEXT           "Gravity",IDC_STATIC,167,128,24,8
+    CONTROL         "",IDC_INERTIA,"msctls_trackbar32",TBS_AUTOTICKS | 
+                    TBS_BOTH | TBS_ENABLESELRANGE | WS_TABSTOP,9,140,111,12
+    EDITTEXT        IDC_INERTIA_EDIT,124,142,38,12,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    LTEXT           "Inertia",IDC_STATIC,167,144,22,8
+END
+
+IDD_BEAMS DIALOGEX 0, 0, 129, 46
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | 
+    WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_TOOLWINDOW
+CAPTION "Beams"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    GROUPBOX        "",IDC_STATIC,7,7,115,32
+    LTEXT           "Currently there are no settings for this effect.",
+                    IDC_STATIC,15,16,100,16
+END
+
+IDD_DISPLACEMENTMAP DIALOGEX 0, 0, 209, 46
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | 
+    WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_TOOLWINDOW
+CAPTION "Displacement Map"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    GROUPBOX        "Settings",IDC_STATIC,7,7,195,32
+    CONTROL         "",IDC_HEIGHTSCALE,"msctls_trackbar32",TBS_AUTOTICKS | 
+                    TBS_BOTH | TBS_ENABLESELRANGE | WS_TABSTOP,9,18,111,12
+    EDITTEXT        IDC_HEIGHTSCALE_EDIT,124,20,26,12,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    LTEXT           "Height scale",IDC_STATIC,157,22,40,8
+END
+
+IDD_OCEANSCENE DIALOGEX 0, 0, 251, 177
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | 
+    WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_TOOLWINDOW
+CAPTION "Ocean scene"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    GROUPBOX        "Wave generator settings",IDC_STATIC,7,7,237,128
+    CONTROL         "",IDC_WINDDIR,"msctls_trackbar32",TBS_AUTOTICKS | 
+                    TBS_BOTH | TBS_ENABLESELRANGE | WS_TABSTOP,9,18,111,12
+    EDITTEXT        IDC_WINDDIR_EDIT,123,20,38,12,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    LTEXT           "Wind direction",IDC_STATIC,168,22,46,8
+    CONTROL         "",IDC_WINDSPEED,"msctls_trackbar32",TBS_AUTOTICKS | 
+                    TBS_BOTH | TBS_ENABLESELRANGE | WS_TABSTOP,9,33,111,12
+    EDITTEXT        IDC_WINDSPEED_EDIT,123,36,38,12,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    LTEXT           "Wind speed",IDC_STATIC,168,38,38,8
+    CONTROL         "",IDC_WAVEHEIGHT,"msctls_trackbar32",TBS_AUTOTICKS | 
+                    TBS_BOTH | TBS_ENABLESELRANGE | WS_TABSTOP,9,49,111,12
+    EDITTEXT        IDC_WAVEHEIGHT_EDIT,124,52,38,12,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    LTEXT           "Wave height",IDC_STATIC,168,53,42,8
+    CONTROL         "",IDC_DIRDEPENDENCE,"msctls_trackbar32",TBS_AUTOTICKS | 
+                    TBS_BOTH | TBS_ENABLESELRANGE | WS_TABSTOP,9,64,111,12
+    EDITTEXT        IDC_DIRDEPENDENCE_EDIT,124,67,38,12,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    LTEXT           "Directional\ndependence",IDC_STATIC,168,65,42,17
+    CONTROL         "",IDC_CHOPPYWAVES,"msctls_trackbar32",TBS_AUTOTICKS | 
+                    TBS_BOTH | TBS_ENABLESELRANGE | WS_TABSTOP,9,79,111,12
+    EDITTEXT        IDC_CHOPPYWAVES_EDIT,124,82,38,12,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    LTEXT           "Choppy waves",IDC_STATIC,168,84,48,8
+    CONTROL         "",IDC_SUPPRESS_SMALLWAVES,"msctls_trackbar32",
+                    TBS_AUTOTICKS | TBS_BOTH | TBS_ENABLESELRANGE | 
+                    WS_TABSTOP,9,95,111,12
+    EDITTEXT        IDC_SUPPRESS_SMALLWAVES_EDIT,124,97,38,12,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    LTEXT           "Suppress small waves",IDC_STATIC,168,99,70,8
+    PUSHBUTTON      "Create new height data",IDC_NEWHEIGHTDATA,85,115,81,14
+    GROUPBOX        "Lighting",IDC_STATIC,7,139,237,31
+    CONTROL         "",IDC_DYNAMICRANGE,"msctls_trackbar32",TBS_AUTOTICKS | 
+                    TBS_BOTH | TBS_ENABLESELRANGE | WS_TABSTOP,9,147,111,12
+    EDITTEXT        IDC_DYNAMICRANGE_EDIT,123,150,38,12,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    LTEXT           "Dynamic range of environment map",IDC_STATIC,168,148,61,
+                    16
+END
+
+IDD_VOLUMETRICLIGHT DIALOGEX 0, 0, 127, 46
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | 
+    WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_TOOLWINDOW
+CAPTION "Volumetric light"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    GROUPBOX        "",IDC_STATIC,7,7,113,32
+    LTEXT           "Currently there are no settings for this effect.",
+                    IDC_STATIC,15,16,100,16
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAINFRAME ACCELERATORS 
+BEGIN
+    VK_F1,          ID_DEFAULT_HELP,        VIRTKEY, NOINVERT
+    "S",            ID_VIEW_EFFECTSETTINGSDIALOG, VIRTKEY, CONTROL, NOINVERT
+    VK_F2,          ID_CONTEXT_HELP,        VIRTKEY, NOINVERT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_MAINFRAME TOOLBAR  16, 16
+BEGIN
+    BUTTON      ID_VIEW_EFFECTSETTINGSDIALOG
+    SEPARATOR
+    BUTTON      ID_DEFAULT_HELP
+    BUTTON      ID_APP_ABOUT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINFRAME MENU 
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "E&xit",                       ID_APP_EXIT
+    END
+    POPUP "&View"
+    BEGIN
+        MENUITEM "&Effect settings dialog\tCtrl+S", 
+                                                ID_VIEW_EFFECTSETTINGSDIALOG
+        MENUITEM SEPARATOR
+        MENUITEM "&Toolbar",                    ID_VIEW_TOOLBAR
+        MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "&Help and documentation index\tF1", 57671
+        MENUITEM "&Effect details\tF2",         57669
+        MENUITEM SEPARATOR
+        MENUITEM "&About Meshuggah...",         ID_APP_ABOUT
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,1,0
+ PRODUCTVERSION 1,0,1,0
+ FILEFLAGSMASK 0x17L
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904e4"
+        BEGIN
+            VALUE "FileDescription", "Meshuggah Demo and Effect browser"
+            VALUE "FileVersion", "1.0.1.0"
+            VALUE "InternalName", "Meshuggah.exe"
+            VALUE "LegalCopyright", "Copyright © 2001 - 2003 Carsten Wenzel.  All rights reserved."
+            VALUE "OriginalFilename", "Meshuggah.exe"
+            VALUE "ProductName", "Meshuggah"
+            VALUE "ProductVersion", "1.0.1.0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// RT_MANIFEST
+//
+
+IDR_MANIFEST            RT_MANIFEST             "res\\Meshuggah.manifest"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Data
+//
+
+IDR_3RDPARTY_DLL        Rcdata                  "3rdPartyDlls\\dlls.cry"
+IDR_DATA                Rcdata                  "Data\\data.cry"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDR_MAINFRAME           "Meshuggah - Effect browser"
+    IDR_DEMOMAINFRAME       "Meshuggah - Demo"
+    IDR_CAPTUREMAINFRAME    "Meshuggah - AVI Capture"
+    ID_VIEW_EFFECTSETTINGSDIALOG 
+                            "Show dialog for effect settings\nToggle effect settings dialog"
+END
+
+STRINGTABLE 
+BEGIN
+    AFX_IDS_APP_TITLE       "Meshuggah"
+    AFX_IDS_IDLEMESSAGE     "Ready"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_APP_ABOUT            "Display program information\nAbout"
+    ID_APP_EXIT             "Quit Meshuggah\nExit"
+    ID_CONTEXT_HELP         "Show effect details\nEffect details"
+    ID_DEFAULT_HELP         "Show help and documentation index\nHelp and documentation index"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_VIEW_TOOLBAR         "Show or hide the toolbar\nToggle toolbar"
+    ID_VIEW_STATUS_BAR      "Show or hide the status bar\nToggle status bar"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_LINK_ONION          "mailto:carsten.wenzel@gmx.net?subject=Meshuggah Demo and Effect browser"
+    IDS_LINK_ONION_VISITED  "LinkOnion"
+    IDS_LINK_4FO            "http://www.4FriendsOnly.com"
+    IDS_LINK_4FO_VISITED    "Link4fo"
+    IDS_LINK_UPDATE         "http://meshuggah.4fo.de"
+    IDS_LINK_UPDATE_VISITED "LinkUpdate"
+    ID_FPS_INFO             "Fps"
+    ID_FPS                  "           "
+    ID_REGISTRYKEY          "Onion"
+    IDS_D3D_NODX81          "Failed to create an instance of DirectX 8.1!\nMake sure you have the DirectX 8.1 runtime installed on your system."
+    IDS_D3D_NODISPLAYMODES  "No display mode is available for primary adapter!"
+    IDS_D3D_DISPENUMFAILED  "Failed to obtain display mode!"
+    IDS_D3D_NO_ADAPTER_DISPLAYMODE "Couldn't get adapter display mode!"
+    IDS_D3D_NO_COLORBUFFER  "Couldn't find any 32 bit color buffer format!"
+    IDS_D3D_NO_SUITABLE_ZBUFFER 
+                            "Couldn't find any suitable depth buffer format!"
+    IDS_ERROR_D3D           "Failed to initialize Direct3D!"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_DEMOERROR_EFFECTSYSTEM 
+                            "Failed to load data and initialize effect system!"
+    IDS_BROWSERERROR_DATA   "Failed to load and initialize data archive!"
+    IDS_BROWSERWARNING_NOHWVERTEXSHADER 
+                            "Failed to initialize Direct3D using hardware vertex processing!\nDo you want to start the browser anyway?"
+END
+
+#endif    // Englisch (USA) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE 9, 1
+#pragma code_page(1252)
+#include "res\Meshuggah.rc2"  // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"         // Standard components
+#include "afxprint.rc"       // printing/print preview resources
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

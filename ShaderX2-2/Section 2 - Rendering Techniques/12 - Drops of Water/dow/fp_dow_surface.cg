@@ -1,0 +1,78 @@
+// --------------------------------------------------------------
+// --------------------------------------------------------------
+//
+// fp_dow_surface.h
+//
+//    Drops of Water source code
+//
+//                      ShaderX2 - www.shaderx2.com
+//
+//
+//    Author:   Sylvain Lefebvre - 04/2003
+//    ------
+//
+//    -= Check for updates at http://www.aracknea.net =-
+//
+//    File contents:
+//    -------------
+//
+//      This fragment program renders the surface which is under 
+//      the drops. The surface is rendered using Phong lighting 
+//      model. The specular and diffuse coefficients are modulated
+//      by the WetAreas texture.
+//
+// --------------------------------------------------------------
+// --------------------------------------------------------------
+
+// input from vertex program
+struct DowV2F 
+{
+    half4 HPosition    : POSITION;
+    half3 TCoords0     : TEXCOORD0;
+    half3 TCoords1     : TEXCOORD1;
+    half3 TCoords2     : TEXCOORD2;
+    half3 V            : TEXCOORD3;
+    half3 L            : TEXCOORD4;
+    half3 P            : TEXCOORD5;
+};
+
+struct PixelOut 
+{
+    half4 COL;
+    half DEPR;
+};
+
+PixelOut main(
+			  DowV2F IN,
+			  uniform sampler2D ColorMap    : texunit2,
+			  uniform sampler2D NrmsMap     : texunit3,
+			  uniform sampler2D WetAreas    : texunit4
+			  ) 
+{
+
+    half3 color;
+
+	// ===================
+	// floor lighting
+	// -> compute per-pixel Light and View vector
+	half3 nL=normalize(IN.L);
+	half3 nV=normalize(IN.V);
+	half3 H=(nV+nL)*0.5;
+	// -> wet areas texture is used to control diffuse and specular coefficients
+	half  wetfloor =h1tex2D(WetAreas,IN.TCoords0.xy);
+	half  diffatten=0.45+0.55*(1.0-wetfloor);
+	// -> read surface normal
+	half3 fnrm     =h3tex2D(NrmsMap,IN.TCoords0.xy)*2.0-1.0;
+	// -> compute diffuse and specular terms
+	half  fspec    =pow(dot(fnrm,H),50.0)*wetfloor;
+	half  fdiff    =diffatten*dot(fnrm,nL);
+	// -> final color
+	color=h3tex2D(ColorMap,IN.TCoords0.xy)*fdiff+fspec;
+	
+	// == uncomment to change drop color (see also cg_dow.cg)
+	// color.yz*=(1.0-wetfloor)*0.6+0.4;
+
+    PixelOut OUT;
+    OUT.COL = half4(color,1.0h);
+    return OUT;
+}

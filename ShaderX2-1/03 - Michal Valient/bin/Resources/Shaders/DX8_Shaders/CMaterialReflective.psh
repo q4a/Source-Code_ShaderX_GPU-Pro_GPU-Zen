@@ -1,0 +1,85 @@
+//*****************************************************************************
+//* This file is part of the Dimension3 renderer library                      *
+//* Copyright (C) 2003  Michal Valient (valient@host.sk)                      *
+//*                                                                           *
+//* Dimension3 renderer can be found at http://www.dimension3.host.sk         *
+//*                                                                           *
+//* This program is free software; you can redistribute it and/or modify      *
+//* it under the terms of the GNU General Public License as published by      *
+//* the Free Software Foundation; either version 2 of the License, or         *
+//* (at your option) any later version.                                       *
+//*                                                                           *
+//* This program is distributed in the hope that it will be useful,           *
+//* but WITHOUT ANY WARRANTY; without even the implied warranty of            *
+//* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the             *
+//* GNU General Public License for more details.                              *
+//*                                                                           *
+//* You should have received a copy of the GNU General Public License         *
+//* along with this program; if not, write to the Free Software               *
+//* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA * 
+//*****************************************************************************
+//hdr_utility_remove_tag
+
+
+;------------------------------
+; Per pixel bump map reflection - Pixel shader
+;
+; Desc :
+;   Renders cube map reflection
+;
+; Part of Dimension3 Renderer
+; (c)2003 Michal Valient
+; akka em / STV3 akka  R.A.Y / EastW00D
+;------------------------------
+;
+; Constant registers 
+; c0 - diffuse texture multiplier
+; c1 - additonal diffuse constant
+; c2 - refraction index
+;
+; Used input registers
+; t0 - color / bump coordinates
+; t1 - eye vector in world space
+; t2,t3,t4 - tangent to world matrix
+; t5 - reflection vector shift
+;
+; Used input texture stages
+; stage0 - ambient texture
+; stage1 - normal texture
+;
+; Output
+; r0 - output color
+;------------------------------
+
+ps.1.4
+
+def c3, 1.0f, 1.0f, 1.0f, 1.0f
+def c4, 0.0f, 0.0f, 0.0f, 1.0f
+
+texld  r1, t0                   ;normal vector (n)
+texcrd r2.rgb, t1.xyz           ;eye vector (v)
+texcrd r3.rgb, t2               ;1st row of tangent-to-world matrix
+texcrd r4.rgb, t3               ;2st row of tangent-to-world matrix
+texcrd r5.rgb, t4               ;3rd row of tangent-to-world matrix
+texcrd r0.rgb, t5               ;vector shift
+
+;multiply normal with transform matrix
+dp3 r3.r, r3, r1_bx2            ;1st row of matrix multiply with normal
+dp3 r3.g, r4, r1_bx2            ;2nd row of matrix multiply with normal
+dp3 r3.b, r5, r1_bx2            ;3rd row of matrix multiply with normal
+
+;compute eye reflection vector
+dp3 r1.rgb, r3, r2              ;r4 = dot(normal, eye)
+mad r4.rgb, r1_x2, r3, -r2      ;compute reflectance vector r2 = 2(n.e)n - e
+add r4.rgb, r4, r0              ;Shift it
+
+phase
+texld  r0, t0                   ;diffuse texture(n)
+texld  r2, r4                   ;cube map look-up
+texld  r3, r1                   ;fresnel look-up
+
+mad r0.rgb, r0, c0, c1          ;prepare diffuse color
+mul r0.rgb, r0, r1.r            ;to simulate diffuse lighting
+lrp_sat r4, c2, c0, r3          ;prepare fresnel ratio value (with refraction index)
+mul_sat r4, r4, r0.a            ;modulate with gloss ratio
+lrp r0.rgb, r4.a, r2, r0        ;compute final color

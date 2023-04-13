@@ -1,0 +1,33 @@
+vs_3_0
+
+; Input registers
+dcl_position0 v0    ;Position in NORMALIZED SCREEN COORDINATES (x,y,z)
+dcl_texcoord0 v4    ;Texture coordinates
+
+; Output registers
+dcl_position0 o0.xyzw    ;Vertex position
+dcl_texcoord0 o1.xy      ;Texcoord Center	 
+dcl_texcoord1 o2.xy      ;Texcoord Right
+dcl_texcoord2 o3.xy      ;Texcoord Top
+dcl_texcoord3 o4.xy      ;Texcoord Left
+dcl_texcoord4 o5.xy      ;Texcoord Bottom
+
+mov r0, v0
+mov r0.w, c21.w
+mov o0, r0
+
+; c10-c13 contains the delta for each neighbour position - set in code
+
+mov o1.xy, v4    ;Center
+
+add r0, v4, c10
+mov o2.xy, r0    ;Right
+
+add r0, v4, c11
+mov o3.xy, r0    ;Top
+
+add r0, v4, c12
+mov o4.xy, r0    ;Left
+
+add r0, v4, c13
+mov o5.xy, r0    ;Bottom 

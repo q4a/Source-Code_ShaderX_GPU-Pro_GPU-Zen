@@ -1,0 +1,59 @@
+//*****************************************************************************
+//* This file is part of the Dimension3 renderer library                      *
+//* Copyright (C) 2003  Michal Valient (valient@host.sk)                      *
+//*                                                                           *
+//* Dimension3 renderer can be found at http://www.dimension3.host.sk         *
+//*                                                                           *
+//* This program is free software; you can redistribute it and/or modify      *
+//* it under the terms of the GNU General Public License as published by      *
+//* the Free Software Foundation; either version 2 of the License, or         *
+//* (at your option) any later version.                                       *
+//*                                                                           *
+//* This program is distributed in the hope that it will be useful,           *
+//* but WITHOUT ANY WARRANTY; without even the implied warranty of            *
+//* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the             *
+//* GNU General Public License for more details.                              *
+//*                                                                           *
+//* You should have received a copy of the GNU General Public License         *
+//* along with this program; if not, write to the Free Software               *
+//* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA * 
+//*****************************************************************************
+//hdr_utility_remove_tag
+
+
+;------------------------------
+; Ambient color shader - Pixel shader
+;
+; Desc :
+;   Renders ambient (and emisive) colored output
+;   We pass ambient multiplier as texture coordinate from vertex shader,
+;   because pixel shaders have limited precision for constants and
+;   they are clamped to [-1,1]
+;
+; Part of Dimension3 Renderer
+; (c)2002 Michal Valient
+; akka em / STV3 akka  R.A.Y / EastW00D
+;------------------------------
+;
+; Constant registers 
+; none
+;
+; Used input registers
+; t0 - Texture coordinate
+; t1 - Ambient color multiplier (rgb)
+; t2 - Ambient color multiplier (alpha part in r)
+;
+; Used input texture stages
+; stage0 - ambient texture
+;
+; Output
+; r0 - output color
+;------------------------------
+
+ps.1.4
+texld r0, t0            ;color map
+texcrd r1.rgb, t1.xyz   ;ambient color multiplier
+texcrd r2.rgb, t2.xyz   ;ambient color multiplier (alpha part in r)
+
+mov r1.a, r2.r
+mul r0, r0, r1          ;create ambient part

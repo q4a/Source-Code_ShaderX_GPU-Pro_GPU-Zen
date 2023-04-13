@@ -1,0 +1,86 @@
+
+MAS
+	{
+	profile;
+	###########
+	# 50
+/*
+	randPD { M; d; v; 50; }
+	# matrix assign
+	set  { N; M; }
+
+	# matrix addition
+	add { a; M; N; }
+	
+	# matrix multiply
+	multiply { a; M; N; }
+	
+	# matrix transposed multiply
+	multiply_at { a; M; N; }
+	
+	# conjugate gradients
+	conjugateGradients { c; M; v; }
+	# LCP
+	lcpProjectedJacobi { l; M; d; v; 50; }
+
+	###########
+	# 100
+	randPD { M; d; v; 100; }
+	# matrix assign
+	set  { N; M; }
+
+	# matrix addition
+	add { a; M; N; }
+	
+	# matrix multiply
+	multiply { a; M; N; }
+	
+	# matrix transposed multiply
+	multiply_at { a; M; N; }
+	
+	# conjugate gradients
+	conjugateGradients { c; M; v; }
+	# LCP
+	lcpProjectedJacobi { l; M; d; v; 100; }
+
+	###########
+	# 600
+	randPD { M; d; v; 600; }
+	# matrix assign
+	set  { N; M; }
+
+	# matrix addition
+	add { a; M; N; }
+	
+	# matrix multiply
+	multiply { a; M; N; }
+	
+	# matrix transposed multiply
+	multiply_at { a; M; N; }
+	
+	# conjugate gradients
+	conjugateGradients { c; M; v; }
+	# LCP
+	lcpProjectedJacobi { l; M; d; v; 600; }
+
+*/
+	###########
+	# 1000
+	randPD { M; d; v; 1000; }
+	# matrix assign
+	set  { N; M; }
+
+	# matrix addition
+	add { a; M; N; }
+	
+	# matrix multiply
+	multiply { a; M; N; }
+	
+	# matrix transposed multiply
+	multiply_at { a; M; N; }
+	
+	# conjugate gradients
+	conjugateGradients { c; M; v; }
+	# LCP
+	lcpProjectedJacobi { l; M; d; v; 1000; }
+	}

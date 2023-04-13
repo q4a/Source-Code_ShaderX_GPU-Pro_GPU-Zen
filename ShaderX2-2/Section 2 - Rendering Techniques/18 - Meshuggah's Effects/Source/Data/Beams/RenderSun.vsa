@@ -1,0 +1,27 @@
+#include "..\..\Effects\Beams\RenderSunShaderConstants.h"
+
+#define srcP    v0
+#define srcTex  v1
+
+#define Temp    r0
+
+
+
+vs.1.1
+
+
+
+mul Temp, srcTex, c[ CV_TEXSCALE ]
+
+add oT0.xy, Temp.xy, c[ CV_TEXOFFSET_0 ].xy
+add oT1.xy, Temp.xy, c[ CV_TEXOFFSET_1 ].xy
+add oT2.xy, Temp.xy, c[ CV_TEXOFFSET_2 ].xy
+add oT3.xy, Temp.xy, c[ CV_TEXOFFSET_3 ].xy
+
+
+
+
+dp4 oPos.x, srcP, c[ CV_WORLDVIEWPROJ_0 ]
+dp4 oPos.y, srcP, c[ CV_WORLDVIEWPROJ_1 ]
+dp4 oPos.z, srcP, c[ CV_WORLDVIEWPROJ_2 ]
+dp4 oPos.w, srcP, c[ CV_WORLDVIEWPROJ_3 ]

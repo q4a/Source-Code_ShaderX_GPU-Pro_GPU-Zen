@@ -1,0 +1,26 @@
+ps_3_0
+
+; Samplers
+;dcl_2d s0   ; MRT0 (X ,Y )
+dcl_2d s1   ; MRT1 (Z ,NX)
+dcl_2d s2   ; MRT2 (NY,NZ)
+
+; Inputs
+dcl_texcoord0   v0.xy	; Texture Coordinate
+
+def c19, 0.0, 0.0, 0.0, 0.0
+def c20, 0.5, 0.5, 0.5, 0.5
+
+;texld r0, v0, s0	; Sample MRT0
+texld r1, v0, s1	; Sample MRT1
+texld r2, v0, s2	; Sample MRT2
+
+; normal map view
+mov r4, c19
+mad r4.x, r1.y, c20.x, c20.y
+mad r4.y, r2.x, c20.x, c20.y
+mad r4.z, r2.y, c20.x, c20.y
+
+mov oC0, r4		; Display
+
+

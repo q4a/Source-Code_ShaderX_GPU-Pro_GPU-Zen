@@ -1,0 +1,21 @@
+Microsoft Visual Studio Solution File, Format Version 7.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TurbulentSun", "TurbulentSun.vcproj", "{1C58CE85-08EA-486B-B8C6-68E077F93481}"
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		ConfigName.0 = Debug
+		ConfigName.1 = Release
+	EndGlobalSection
+	GlobalSection(ProjectDependencies) = postSolution
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{1C58CE85-08EA-486B-B8C6-68E077F93481}.Debug.ActiveCfg = Debug|Win32
+		{1C58CE85-08EA-486B-B8C6-68E077F93481}.Debug.Build.0 = Debug|Win32
+		{1C58CE85-08EA-486B-B8C6-68E077F93481}.Release.ActiveCfg = Release|Win32
+		{1C58CE85-08EA-486B-B8C6-68E077F93481}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

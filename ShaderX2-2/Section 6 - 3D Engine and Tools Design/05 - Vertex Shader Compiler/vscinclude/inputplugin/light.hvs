@@ -1,0 +1,23 @@
+////////////////////////////////////////////////////////////////
+//
+// Light plugins
+// Created 21.07.2002
+// Copyright by gp
+//
+////////////////////////////////////////////////////////////////
+
+// return Ambient Light
+plugin AmbientLight( vector Color );
+
+// return light x (in object space)
+plugin Light1( vector Pos , vector Color , vector Dir , vector Range );
+
+// return engine selected light (in object space)
+plugin SelectedLight( vector Pos , vector Color , vector Dir , vector Range );
+plugin SpecularLight( vector Pos , vector Color , vector Dir , vector Range );
+plugin LightmapLight( vector Pos , vector Color , vector Dir , vector Range );
+
+// return belnded light (closest two lights blended)
+plugin BlendLight1( vector Pos , vector Color , vector Dir , vector Range );
+
+plugin PixelShader( vector Fade , vector Param );

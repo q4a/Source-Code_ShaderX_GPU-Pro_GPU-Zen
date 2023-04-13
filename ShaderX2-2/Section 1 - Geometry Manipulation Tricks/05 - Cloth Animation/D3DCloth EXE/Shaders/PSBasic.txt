@@ -1,0 +1,13 @@
+ps_3_0
+
+; Samplers
+dcl_2d s0		; Input Texture
+
+; Inputs
+dcl_texcoord0   v0.xy	; Texture Coordinate
+
+texld r0, v0, s0	; Sample Texture
+
+mov oC0, r0		; Output
+
+

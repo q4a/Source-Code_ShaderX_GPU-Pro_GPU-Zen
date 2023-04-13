@@ -1,0 +1,42 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: LayeredFog - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\GUILLA~1\LOCALS~1\Temp\RSP151.tmp" with contents
+[
+/nologo /MD /W4 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_AFXDLL" /Fp"Release/LayeredFog.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
+"C:\DOCUMENTS AND SETTINGS\GUILLAUME\MY DOCUMENTS\VISUAL STUDIO PROJECTS\LayeredFog\LayeredFog.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\GUILLA~1\LOCALS~1\Temp\RSP151.tmp" 
+Creating temporary file "C:\DOCUME~1\GUILLA~1\LOCALS~1\Temp\RSP152.tmp" with contents
+[
+dsound.lib dinput8.lib dxerr9.lib d3dx9.lib d3d9.lib d3dxof.lib dxguid.lib winmm.lib comctl32.lib /nologo /subsystem:windows /incremental:no /pdb:"Release/LayeredFog.pdb" /machine:I386 /out:"Release/LayeredFog.exe" 
+".\Release\d3dapp.obj"
+".\Release\d3denumeration.obj"
+".\Release\d3dfile.obj"
+".\Release\d3dfont.obj"
+".\Release\d3dsettings.obj"
+".\Release\d3dutil.obj"
+".\Release\dxutil.obj"
+".\Release\LayeredFog.obj"
+".\Release\StdAfx.obj"
+".\Release\LayeredFog.res"
+]
+Creating command line "link.exe @C:\DOCUME~1\GUILLA~1\LOCALS~1\Temp\RSP152.tmp"
+<h3>Output Window</h3>
+Compiling...
+LayeredFog.cpp
+Linking...
+LINK : warning LNK4089: all references to "d3dxof.dll" discarded by /OPT:REF
+
+
+
+<h3>Results</h3>
+LayeredFog.exe - 0 error(s), 1 warning(s)
+</pre>
+</body>
+</html>

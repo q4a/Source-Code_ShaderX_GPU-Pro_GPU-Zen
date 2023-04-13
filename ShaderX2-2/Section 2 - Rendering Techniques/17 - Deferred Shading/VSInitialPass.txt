@@ -1,0 +1,46 @@
+;------------------------------------------------------------------------------
+; Constants specified by the app
+;    c0-c3   = Global transformation matrix (World*View*Projection)
+;	 c4-c7   = World transformation matrix
+;
+; Vertex components (as specified in the vertex DECL)
+;    v0   = Position
+;	 v1, v2, v3 = Inverse of tangent space vectors
+;    v4   = 2D texture coord (model coordinates)
+;------------------------------------------------------------------------------
+vs_2_0
+
+dcl_position  v0 ; Vertex position
+dcl_binormal  v1 ; Vertex binormal  INVERSE
+dcl_tangent   v2 ; Vertex tangent   INVERSE
+dcl_normal    v3 ; Vertex normal	INVERSE
+dcl_texcoord  v4 ; Texture coordinates for diffuse and normal map
+
+def c8, 0, 0, 0, 1.0
+
+;------------------------------------------------------------------------------
+; Vertex transformation
+;------------------------------------------------------------------------------
+m4x4 oPos, v0, c0				// Transform vertices by view/projection/world matrix
+
+
+;------------------------------------------------------------------------------
+; Model texture coordinates
+;------------------------------------------------------------------------------
+mov oT0.xy, v4.xy				// Simply copy texture coordinates 
+
+
+;------------------------------------------------------------------------------
+; World space coordinates
+;------------------------------------------------------------------------------
+dp4  oT1.x, v0, c4
+dp4  oT1.y, v0, c5
+dp4  oT1.z, v0, c6				// Transform vertices by world matrix (no need for w)
+mov  oT1.w, c8.w				// Set w to 1.0
+
+;------------------------------------------------------------------------------
+; Inverse (transpose) of tangent space vectors
+;------------------------------------------------------------------------------
+mov oT2.xyz, v1
+mov oT3.xyz, v2
+mov oT4.xyz, v3					// Pass in inverse tangent space vectors

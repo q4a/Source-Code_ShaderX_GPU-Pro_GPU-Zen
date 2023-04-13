@@ -1,0 +1,531 @@
+
+
+D3DShell documentation, 28/04/03
+
+Current D3DShell version : 9.0.5 (for DirectX 9)
+
+
+**********************
+* What is D3DShell ? *
+**********************
+
+D3DShell is a CPP file (with its header file) which provides a safe Windows
+environment for your D3D application.
+D3DShell allows the user to change various settings including D3D devices, 
+FullScreen/Window mode operation, buffering mode, ZBuffer mode and 
+screen resolution at run-time.
+DirectX 9.0 or above must be installed to use D3DShell.
+
+
+***************************
+* How do I use D3DShell ? *
+***************************
+
+The Project
+-----------
+Using D3DShell is easy. When you build your D3D application, 
+the following files are needed for your project :
+
+D3DShell.cpp	Set of functions used to control the rendering
+D3DShell.h	Header file for D3DShell.c.
+D3DDemo.c	Your demo file. (Must include D3DShell.h)
+D3DDemo.h	Your demo header file (if required).
+D3DDemo.rc
++any resource file (bmp, ico)	Resources files for your application (if required).
+
+Paths set up or explicitely included libraries and include files.
+D3D9.h		D3D9 header file.
+D3D9.LIB	D3D9 library file
+
+The following library is only required if 3D menus are to be used (see below):
+D3DTools.h	Header file for D3DTools.lib
+D3DTools.lib	D3DTools library file
+
+
+IMPORTANT!
+The 3D menus feature of D3DShell requires the D3DTools library to be
+included in the build process. To avoid linking with D3DTools and
+forfeiting the 3D menu feature of D3DShell simply comment out the following
+line in D3DShell.h:
+#define D3DSHELL_USE_3D_MENUS
+
+
+Demo Code Exported Functions
+----------------------------
+In order to interact with D3DShell, your application MUST include six
+functions which are prototyped in D3DShell.h. These functions are called
+by D3DShell at run-time so they must exist. These functions are :
+
+  - void InitApplication(HINSTANCE hInstance, HWND hWindow, char *pszCommandLine);
+
+  This function will be called by D3DShell ONCE at the beginning of the D3DShell 
+  WinMain() function. This function enables the user to perform any initialisation 
+  before any 3D is rendered.
+  Could be used to load meshes and allocate memory for these, loading
+  external libraries, etc...
+  - hInstance is the instance handle for the application.
+  - hWindow is the window handle of the application.
+  - The pszCommandLine parameter is a pointer to a string containing the
+  command line used when the program was called. The user can process
+  it to retrieve user choices.
+  You can use the application instance handle and window handle to initialise 
+  any external process that require these informations.
+
+  Within the InitApplication() function the user can call 
+  D3DShellSetPreferences() to set the application preferences. For 
+  details of this function, see later in this document.
+
+  - void QuitApplication();
+
+  This function is used in conjunction with InitApplication(). Its purpose
+  is to free and close all memory or instances allocated in InitApplication().
+  This function is called when the user exits the application.
+
+				***
+
+  - BOOL InitView(LPDIRECT3D9 lpD3D9, LPDIRECT3DDEVICE9 lpDev9, 
+		  DWORD dwWidth, DWORD dwHeight);
+
+  InitView() is the final function that gets called when rendering 
+  variables are changed.
+  InitView() lets the user create or initialise any new variables 
+  corresponding to the new rendering parameters. 
+  In this function you may load textures, set up matrices, create materials,
+  lights, set renderstates, create vertex buffers, etc...
+  It is very important to perform the above tasks in this function, as the
+  D3D devices can be changed by the user, thus requiring to recreate all the 
+  new variables according to the new selected devices.
+  - lpD3D9 is a pointer to the Direct3D9 interface that was used to create
+  the rendering context.
+  - lpDev9 is a pointer to the Direct3DDevice9 interface that was used to create
+  the rendering context.
+  - dwWidth and dwHeight are the new Width and Height of the render surface.
+  This function should return TRUE(1) to tell D3DShell that the call was
+  successfull. If the function returns FALSE(0), then execution will stop.
+
+
+  - void ReleaseView();
+
+  This function is used in conjunction with InitView(). Its purpose
+  is to free and close all memory or instances allocated in InitView().
+
+				***
+  
+  - void UserWindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+
+  This is the user window procedure. It is used as a normal WindowProc()
+  function. This function is called before the D3DShell window procedure
+  itself. It enables the user to retrieve menu choices, keystrokes or 
+  other messages.
+  D3DShell handles many messages which should not be handled by the user
+  application. A list of these messages is :
+  
+  	WM_ENTERMENULOOP, WM_EXITMENULOOP,
+	WM_ACTIVATEAPP,
+	WM_SYSCOMMAND,
+	WM_SIZE, WM_MOVE, WM_SIZING, WM_MOVING,
+	WM_PAINT,
+	WM_DESTROY, WM_QUIT
+
+  Do NOT return DefWindowProc(...) in this function, as it will prevent
+  D3DShell to handle messages by itself.
+
+				***
+
+  - BOOL RenderScene(LPDIRECT3DDEVICE9 lpDev9);
+
+  This is where rendering is performed each frame.
+  The parameter passed to this function is an interface to the Direct3DDevice9
+  object. The user can use it to perform their rendering.
+  The BeginScene()/EndScene() pair must exist in this function.
+
+  The function should return TRUE(1) to tell D3DShell that the call was
+  successful. If the function returns FALSE(0), then execution will stop.
+
+
+			     ********
+
+
+  These 6 functions must exist, but you don't have to put any code in these. 
+  For instance, if you don't want to deal with any user input, the
+  UserWindowProc(...) function will typically be empty.  
+  You might as well not want to make any use of QuitApplication(), or even 
+  InitApplication(). In that case, just put nothing in these.
+
+
+************
+* 3D menus *
+************
+
+D3DShell supports 3D menus. These menus are made of textured polygons. D3DTools
+functions are used to create and render these 3D menus.
+
+If 3D menus are enabled (by selecting the USE_3D_MENUS flag in D3DShellSetPreferences())  
+then the scene file should use the following functions to control the menus:
+
+
+- BOOL D3DShellDisplay3DMenus();
+Renders 3D menus.
+If 3D menus are to be used, a single call to this function must be made by 
+the user within the BeginScene to EndScene pair (in RenderScene()). It returns 
+true if successful, and false otherwise. 
+
+- BOOL D3DShellTick3DMenus(UINT identifier, BOOL tick);
+When updating menus this function allows you to tick a menu item by passing its
+identifier and a boolean to determine whether to tick or untick this item.
+
+
+- BOOL D3DShellGhost3DMenus(UINT identifier, BOOL tick);
+When updating menus this function allows you to ghost a menu item by passing its
+identifier and a boolean to determine whether to ghost or unghost this item.
+
+
+
+*******************************************
+* How do I use D3DShellSetPreferences() ? *
+*******************************************
+
+D3DShellSetPreferences() is a function that can be called from the
+InitApplication() function. It is used to pass preferences to D3DShell.
+A prototype of the function is :
+
+void D3DShellSetPreferences(const char   *pszApplicationName, 
+			    const HMENU	 hUserMenuID, 
+			    const HACCEL hUserAccel, 
+			    const HICON	 hUserIcon, 
+			    const DWORD	 dwFlags);
+
+pszApplicationName 	is a pointer to a string containing the name of the application name (will 
+			appear in the application window)
+
+
+hUserMenuID 		is the user menu handle (can be NULL if no menu is 
+			to be used).
+
+			A menu can be loaded from a resource file or created
+			manually by the user. If loaded from a resource file,
+			the user should use the LoadMenu(...) function to load
+			the menu. Example :
+
+			HMENU	hMyMenu;
+
+			hMyMenu=LoadMenu(hInstance, MAKEINTRESOURCE(ID_MENU));
+			
+
+hUserAccel		is the user accelerator table handle (can be NULL 
+			if no accelerator table is to be used).
+
+			An accelerator table can be loaded from a resource file
+			or created manually by the user. If loaded from a resource 
+			file, the user should use the LoadAccelerators(...) function 
+			to load the accelerator table. Example :
+
+			HACCEL	hMyAccel;
+
+			hMyAccel=LoadAccelerators(hInstance, MAKEINTRESOURCE(ID_ACCELTABLE));
+
+
+hUserIcon		is the user application icon handle (can be NULL 
+			if no icon is to be used). 
+
+			An Icon can be loaded from a resource file or created manually 
+			by the user. If loaded from a resource file, the user should use 
+			the LoadIcon(...) function to load the icon. Example :
+
+			HICON	hMyIcon;
+
+			hMyIcon=LoadIcon(hInstance, MAKEINTRESOURCE(ID_ICON));
+
+
+dwFlags			is a list of flags that can be passed to control the application behaviour.
+			These flags are :
+	
+			DEFAULT_USE_REF_DRIVER :  Use Reference Device by default (if available).e it.
+			DEFAULT_ZBUFFER_OFF :	  Application will NOT start with a Z-Buffer by default.
+			DEFAULT_TRIPLE_BUFFER :   Start with triple buffer by default (double buffer
+						  is normally the default). 				
+			DEFAULT_CLEAR_ON :	  Viewport clearing is On by default.
+			DEFAULT_FULLSCREEN : 	  Application will start full screen by default.
+			DEFAULT_NO_VSYNC :	  Waiting for Vertical Retrace is disabled by default.
+			DEFAULT_USE_HAL :	  The HAL 3D device will be selected by default, even if a T&L HAL is present	
+			FORCE_ZBUFFER_ON : 	  Z-Buffer will be forced On and will not appear in the menu.
+			FORCE_ZBUFFER_OFF :	  Z-Buffer will be forced Off and will not appear in the menu.
+			FORCE_DOUBLEBUFFER : 	  Double buffer will be forced On and will not appear in the menu.
+			FORCE_TRIPLEBUFFER : 	  Triple buffer will be forced On and will not appear in the menu.
+			FORCE_CLEAR_ON : 	  Force the viewport clear before drawing a new frame. 
+						  Clear will not appear in the menu.
+			FORCE_CLEAR_OFF :	  Disable the viewport clear before each frame.
+						  Clear will not appear in the menu.
+			FORCE_FULLSCREEN :   	  Full screen mode will be used all the time (unable to go to window mode)
+			FORCE_MULTISAMPLING_OFF : Disable all multisampling options
+			FORCE_VSYNC_ON :	  VSync will be turned ON and will not appear in the menu
+			FORCE_VSYNC_OFF :	  VSync will be turned OFF and will not appear in the menu
+			DISABLE_TRIPLEBUFFER : 	  Triple buffer choice will not appear in the menu.
+			DISABLE_VERY_HIGH_RES :   Disable resolution above 1024x768. 
+			DISABLE_RESIZING :	  Prevent the application to be resized.
+			DISABLE_Z_CLEAR : 	  Disable Z-Buffer clear.
+			DISABLE_PURE_DEVICE :	  PURE DEVICE will not appear in the menu, even if it's available
+			USE_INSTANTANEOUS_FPS :   Frame rate will be computed on an instantaneous basis (each frame) 
+						  rather then average (default)
+			USE_STENCIL_BUFFER :	  D3DShell will use a depth buffer containing a stencil if available
+			USE_3D_MENUS :		  3D menus will be used - useful for full screen mode under Dx8
+			USE_LOCKABLE_BACK_BUFFER :Locks on the Back buffer will be enabled
+			START_WINDOW_320X240 :    Starting window resolution will be 320x240 (Cannot be used 
+						  with FULLSCREEN)
+			DISPLAY_PRINT3D_ICONS :   The menu icons for page management will be displayed. 
+			ENABLE_CLEAN_EXIT :	  No error message will be displayed after either Initview() or Renderscene() return FALSE
+			NO_REFRESH_RATES :	  No refresh rates will be available (this is always true if the Windows version is Win98SE or below)
+
+An example of D3DShellSetPreferences(...) usage is :
+
+D3DShellSetPreferences("My D3D Application", hMyMenu, hMyAccel, hMyIcon, 
+			DEFAULT_ZBUFFER_OFF | DISABLE_RESIZING | DEFAULT_CLEAR_ON);
+
+
+************************************
+* What does the D3DShell menu do ? *
+************************************
+
+The menu created in D3DShell handles the following rendering parameters :
+
+SYSTEM MENU :
+
+- Screen capture (F12) : Performs a screen capture of the current back buffer.
+			 The image is saved as a BMP file named ScreenXX.BMP in
+			 the current directory.
+
+- Quit (ALT+F4) :	 Quit the application.
+
+
+DEVICES MENU :
+
+- <Adapters> : 		SHow all graphic adapters available in the system. If a single adapter 
+			is present then only one will be available (will be ticked by default).
+
+- HAL :			Select this option to use the 3D hardware on your current adapter
+- HAL (PURE) :		Select this option to use the 3D hardware on your current adapter in PURE DEVICE mode
+- REF :			select this option to use the Reference device. 
+
+- HW Vertex Processing:		Specifies hardware vertex processing.
+- SW Vertex Processing:		Specifies software vertex processing.
+- MIXED Vertex Processing:	Specifies mixed (both software and hardware) vertex processing.
+
+
+BUFFERING MENU :
+
+- VSync :		 Vertical Retrace waiting On/Off.
+
+- Multisample modes :	 Select how many samples to use for multisampling.
+
+- ZBuffer :		 Z-Buffer On/Off.
+
+- ZBuffer modes :	 Select ZBuffer format. If stencil buffering is enabled, ZBuffer
+			 formats containing stencils will also be enumerated. In this case,
+			 the first number corresponds to the number of bits available for
+			 the actual ZBuffer, while the second corresponds to the number of
+			 bits available for the stencil buffer. e.g 24:4 means 24 bits for
+			 Z, 4 bits for stencil.
+
+- Double buffer :	 Both a back and front buffers will be created. Render will be
+			 performed onto the back buffer and the buffers addresses will
+			 be swapped when the rendering is finished. FullScreen only.
+
+- Triple buffer :	 Two back buffers and a front buffer are created. The 3D device
+			 renders on the first back buffer, then immediately renders
+			 onto the second back buffer when the first is finished. 
+			 At the next vertical blank the first back buffer is 
+ 			 displayed by swapping the rendering addresses of the flipping 
+			 chain. FullScreen only.
+
+- Clear :		 If this option is enabled, the viewport will be cleared before
+			 each new frame. The default clear colour is grey.
+			 If this option is NOT enabled, the viewport will not be cleared.
+			 In that case, your application should overlap the entire contents
+			 of the rendering surface for each frame (or perform viewport 
+			 clearing by itself).
+			 Not clearing the viewport results in a gain of performance.
+
+MODES MENU :
+
+- Fullscreen:		 Toggle FullScreen mode ON/OFF
+
+- <Back buffer formats>: Specify what back buffer format is to be used. A (!) in front of the format
+			 indicates that the bit depth of the format does not match the display mode
+			 bit depth.
+
+- <Refresh rates>:	 Only available in fullscreen mode. Indicates which refresh rate should be 
+			 used.
+
+- <resolutions>:	 Select what window or screen resolution to use
+
+
+
+*****************************
+* D3DShell Helper functions *
+*****************************
+
+Three helper functions are provided in D3D Shell :
+
+void D3DShellGetVariable(D3DShellVariables nVariableName, void *pVariablePointer);
+
+This function should only be used if the user needs to retrieve some rendering variables
+that are not already provided in InitView(). Using flags defined in D3DShell.h, one
+can ask a pointer to a certain type of variable. The list of these variables is:
+
+APPLICATION_INSTANCE_HANDLE	(HINSTANCE type)
+PREVIOUS_INSTANCE_HANDLE	(HINSTANCE type)
+WINDOW_HANDLE			(HWND type)
+FULLSCREEN_MODE			(BOOL type)
+Z_BUFFER			(LPDIRECT3DSURFACE9 type)
+D3DDEVICETYPE			(D3DDEVTYPE type)
+FRAME_BUFFER_BIT_DEPTH		(DWORD type)
+NUM_BACK_BUFFER			(DWORD type)
+FRAME_RATE			(float type)
+SCREEN_SAVER_SETTING		(int TYPE)	
+
+
+For instance if one needs the average frame rate of the current scene :
+
+float fMyFrameRate;
+D3DShellGetVariable(FRAME_RATE, &fMyFrameRate);
+
+
+- BOOL D3DShellReinitialise(int nAdapter, D3DDEVTYPE DeviceType,
+	  		    BOOL bFullScreen, int nBufferMode,
+			    D3DMULTISAMPLE_TYPE MultiSamplingType,
+			    DWORD dwRenderWidth, DWORD dwRenderHeight, D3DFORMAT FrameBufferFormat,
+			    BOOL bUseHWTnL,
+			    BOOL bZBufferEnabled, D3DFORMAT ZBufferFormat);
+
+This function enables the user to reinitialise Direct3D with their selected variables. This
+function is to be used with caution, as the selected configuration might not be supported by
+the video card. For instance, it is a good idea to enumerate video modes before selecting one, 
+although 640x480x16, 800x600x16 and 1024x768x16 are pretty safe and should be supported by any
+hardware. This function will call InitView() itself, so the following is vital :
+
+* THIS FUNCTION SHOULD NOT BE CALLED FROM InitView()!!!! *
+
+The reinitialisation will fail if called from InitView().
+
+nAdapter 		Number of adapter to use. Use 0 for primary adapter.
+
+DeviceType		The type of 3D device to use:
+			D3DDEVTYPE_HAL				HAL Driver (if available)
+			D3DDEVTYPE_REF				Reference software driver (if available)
+			D3DDEVTYPE_SW				Software plug-in device (if available)
+			A value of 0 will force the function to keep the current D3D device.
+
+bFullScreenMode		FullScreen mode selected. If FALSE, window mode is selected.
+
+nBufferMode		Buffering mode selected. Will have no effect in window mode, as window
+			mode is always double buffered :
+			1 1 back buffer (Double buffering)
+			2 2 back buffers (Triple buffering)
+			A value of 0 will force the function to keep the current buffering mode.
+
+MultiSamplingType	Number of samples to set when using multisampling (set D3DMULTISAMPLE_NONE for 
+			no multisampling)
+
+dwRenderWidth,
+dwRenderHeight		These two parameters specify the new size of the render surface. In Fullscreen
+			mode, they must match a supported resolution or the reinitialisation will fail.
+			In window mode they can take any sensible value.
+			A value of 0 will force the function to keep the current render surface dimensions.
+
+FrameBufferFormat	Frame buffer format.
+			A value of 0 will force the function to keep the current surface color depth.
+
+bUseHWTnL		TRUE to enable hardware T&L (if available), FALSE otherwise
+
+bZBufferEnabled		Indicates that a ZBuffer is requested.
+
+ZBufferFormat		ZBuffer format to use. This format must be supported by the 3D device, so making
+			sure the format is supported by the current configuration before setting it is a 
+			good idea
+
+			A value of 0 will force the function to keep the current ZBuffer format.
+
+
+******************
+* Order of event *
+******************
+
+The following lines describe the order of events in which things happen
+within D3DShell.
+
+
+FIRST TIME INITIALISATION
+-------------------------
+
+1) D3DShell creates a normal window.
+2) D3DShell gets the Direct3D configuration : 
+   Enumerates all adapters; for each of these, enumerates all display modes and 3D devices
+   For each 3D device, also enumerate all ZBuffer formats.
+   Default will be D3D HAL driver on the PRIMARY adapter, in Hardware Vertex Processing mode. If HW vertex processing 
+   is not supported then SW vertex processing will be used instead.
+   If there is no D3D HAL driver present, then the REF software 3D device will be selected.
+3) Call InitApplication() in the SCENE FILE and adjust rendering variables (window size, Fullscreen by default, etc...) if needs be. 
+4) All rendering variables are checked to see if they can coexit together (using a "filter" function).
+5) Call Direct3D initialisation function (see next).
+
+
+DIRECT3D INITIALISATION
+-----------------------
+
+Direct3D initialisation : Order in which things happen:
+
+- Create Direct3D object (lpD3D9)
+- Set up presentation parameters and behaviour flags
+- Create 3D device
+- Create depth/stencil surface
+- Set render target to depth/stencil surface
+- Set viewport.
+- If 3D menus are enabled, load text textures and initialise 3D menus
+- Finally call InitView() in the SCENE FILE.
+
+
+RENDER LOOP
+-----------
+
+For each frame :
+
+1) Clear viewport (F6 switches ON or OFF the viewport clear). The viewport will be cleared with grey colour (150, 150, 150).
+   (If the user wants to clear the background with another colour, then they should disable the Clear and do it themselves)
+2) Clear Z-Buffer to 1.0f if there is one (unless DISABLE_Z_CLEAR flag is specified).
+3) Call RenderScene() in the SCENE FILE.
+4) Call Present() to update frame
+5) Process window messages and then next frame : go to 1).
+
+
+
+*************************
+* Command line Options **
+*************************
+
+-AUTOKILL 		Autokill the applications after a certain number of frames (default is 20).
+-AUTOKILL_TIME=X	Specify at which frame number the application should auto-terminate.
+-FULLSCREEN 		Start the application fullscreen by default.
+-REFDEVICE		Start the application using the Reference Rasterizer device by default. If the ReferenceRrasterizer is
+			not enabled, the application will use the RGB device instead.
+-BUFFER=(2|3)		Select double buffer (2) or triple buffer (3)
+-WIDTH=X		Specify a render width of X pixels.
+-HEIGHT=X		Specify a render height of X pixels.
+-BPP=X			Specify a render color depth of X bits-per-pixel (fullscreen mode only).
+-CAPTURE=X		Will save a screenshot of frame number X.
+-CAPTURE_DIR=X
+or
+-CAPTURE_DIR="X"	Specify the directory X in which screenshots should be stored. If directory path contains spaces, use
+			speech marks. E.g -CAPTURE_DIR="C:\WINDOWS\DESKTOP\MY FILES".
+-SETTING=X		Screen saver setting
+-CAPTUREEVERYFRAME	Dumps a screenshot every frame
+
+
+
+-------------------------------------------------------------------------------------------
+
+PowerVR is a registered trademark of Imagination Technologies Ltd. (United Kingdom). All rights reserved.  
+Windows and DirectX are either registered trademarks or trademarks of Microsoft 
+Corporation in the United States and/or other countries. 
+
+END OF FILE.
+

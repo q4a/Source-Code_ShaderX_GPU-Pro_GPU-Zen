@@ -1,0 +1,27 @@
+ps_3_0
+
+dcl_2d	s0	; X ,Y
+dcl_2d	s1	; Z ,Nx
+dcl_2d	s2	; Ny,Nz
+dcl_2d	s3	; Depth Map
+dcl_texcoord0 	v0.rg	; Base Tex Coord
+
+texld r0, v0, s0	; (X,Y)
+texld r1, r0, s3	; Read Depth Map at (X,Y) -> Z Constraint (DEP READ)
+texld r2, v0, s1	; Read (Z , Nx)	-> Cloth Z
+texld r3, v0, s2	; Read (Ny, Nz)
+
+; Subtract Cloth and Constraint Z
+
+add r4.r, r1.r, -r2.r
+
+if_gt r4.r, c13.x
+     mov r1.x, r2.r		; keep cloth (cloth under table)
+else
+     max r4, r1.r, r2.r		; grab largest Z value and keep it (constraint or cloth)
+     mov r1.x, r4.x		; update the output
+endif
+
+mov oC0, r0		; output X , Y
+mov oC1, r1		; output Z , Nx
+mov oC2, r3		; output Ny, Nz

@@ -1,0 +1,124 @@
+//*****************************************************************************
+//* This file is part of the Dimension3 renderer library                      *
+//* Copyright (C) 2003  Michal Valient (valient@host.sk)                      *
+//*                                                                           *
+//* Dimension3 renderer can be found at http://www.dimension3.host.sk         *
+//*                                                                           *
+//* This program is free software; you can redistribute it and/or modify      *
+//* it under the terms of the GNU General Public License as published by      *
+//* the Free Software Foundation; either version 2 of the License, or         *
+//* (at your option) any later version.                                       *
+//*                                                                           *
+//* This program is distributed in the hope that it will be useful,           *
+//* but WITHOUT ANY WARRANTY; without even the implied warranty of            *
+//* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the             *
+//* GNU General Public License for more details.                              *
+//*                                                                           *
+//* You should have received a copy of the GNU General Public License         *
+//* along with this program; if not, write to the Free Software               *
+//* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA * 
+//*****************************************************************************
+//hdr_utility_remove_tag
+
+
+//------------------------------
+// Oren-Nayar lighting - Pixel shader - Optimized
+//
+// Desc :
+//   Oren-Nayar lighting and shading
+//
+// Part of Dimension3 Renderer
+// (c)2003 Michal Valient
+// akka em / STV3 akka  R.A.Y / EastW00D
+//------------------------------
+
+ps_2_0
+
+//------------------------------
+// Constant registers 
+//------------------------------
+//
+//  c0 - roughness (R) (should be redefined in material)
+//  c1 - A component in x, B component in y
+def c31, 1.0f, 2.0f, 0.5f, 0.33f      //useful constants
+def c30, 0.45f, 0.09f, 0.0f, 0.0f     //useful constants
+def c29, 0.0f, 1.0f, 2.0f, 3.0f     //useful constants
+//------------------------------
+// Used input registers
+//------------------------------
+//
+dcl         t0.xy                   //texture coordinates
+dcl         t1.xyz                  //light vector
+dcl         t2.xyz                  //eye vector
+dcl         t3.xyzw                 //projector texture coordinates
+
+//------------------------------
+// Used input texture samplers
+//------------------------------
+//
+dcl_2d      s0                      //diffuse texture (gloss in alpha)
+dcl_2d      s1                      //normal texture
+dcl_2d      s2                      //look-up
+dcl_2d      s3                      //spotlight texture
+
+//------------------------------
+// Output
+//------------------------------
+//
+// oC0 - output color
+
+//#########################################################################
+//##   CODE    ############################################################
+//#########################################################################
+//
+
+//------------------------------
+// Load and normalize input vectors
+//------------------------------
+//
+texld       r0, t0, s1              //load normal
+mad         r1, r0, c31.g, -c31.r   //bias normal to range -1,1
+nrm         r11, r1                 //r11 = normalized normal
+mov         r1.xyz, t1
+nrm         r10, r1                 //r10 = normalized light vector
+mov         r1.xyz, t2
+nrm         r9, r1                  //r9 = normalized eye vector
+
+//------------------------------
+// CX = Max(0, dot(l',v'))
+//------------------------------
+//
+dp3         r8.x, r10, r11          //project light vector to plane defined by T and B
+mad         r1, r11, -r8.x, r10     //equation is : l' = normalize(l - n * (n.l))
+nrm         r0, r1                  //in our case r0 = normalize(r10 + r11 * (-r8.x))
+
+dp3         r8.y, r9, r11           //project eye vector to plane defined by T and B
+mad         r2, r11, -r8.y, r9      //equation is : v' = normalize(v - n * (n.v))
+nrm         r1, r2                  //in our case r1 = normalize(r9 + r11 * (-r8.y))
+
+dp3_sat     r6.x, r0, r1            //max(0, dot(l',v'))
+
+//------------------------------
+// DX = texture lookup for sin(a)*tan(b); a=max(O-r,O-i); b=min(O-r,O-i)
+//------------------------------
+//
+texld       r5, r8, s2              //look up
+
+//------------------------------
+// completize it - A + B*CX*DX
+//------------------------------
+//
+mul         r0.x, r5.x, r6.x        //CX*DX
+mad         r4.x, r0.x, c1.y, c1.x  //A+ B*(CX*DX)
+
+//------------------------------
+// Load texture, compute diffuse part and combine it all to output
+//------------------------------
+//
+mov_sat     r1.x, r8.x              //0 <= (n.l) <= 1
+mul         r1.x, r1.x, r4.x        //modulate (n.l) by (A + B*CX*DX)
+texld       r0, t0, s0              //load texture
+mul         r0, r0, r1.x            //modulate with intensity
+texldp      r4, t3, s3              //load projector texture (perspective correct)
+mul         r0, r0, r4
+mov         oC0, r0

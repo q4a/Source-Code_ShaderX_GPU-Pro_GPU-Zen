@@ -1,0 +1,124 @@
+#include "..\..\Effects\OceanScene\ShaderConstants.h"
+#include "..\..\Effects\OceanScene\OceanShaderConstants.h"
+
+#define srcP    v0
+#define srcN    v1
+#define srcTex  v2
+
+#define P       r0
+#define V       r1
+
+#define S       r2
+#define SxT     r3
+#define T       r4
+
+#define Temp    r10
+#define Temp1   r11
+
+
+
+vs.1.1
+
+
+
+// scale and translate vertex
+mul P, srcP, c[ CV_MESH_XYZ_SCALE ]
+add P, P, c[ CV_MESH_XYZ_OFFSET ]
+
+
+
+// apply curvature
+add Temp, P, -c[ CV_VIEWERPOS ]
+mul Temp, Temp, c[ CV_CONSTANTS ].zxz
+dp3 Temp, Temp, Temp
+mad P.y, -Temp.x, c[ CV_CURVATURE ].x, P.y
+
+
+
+// generate S, T and SxT
+dp3 SxT.w, srcN, srcN
+rsq SxT.w, SxT.w
+mul SxT, srcN, SxT.w
+
+mov S, c[ CV_CONSTANTS ].zxx
+
+mul T, S.zxyw, SxT.yzxw
+mad T, S.yzxw, SxT.zxyw, -T
+
+dp3 T.w, T, T
+rsq T.w, T.w
+mul T, T, T.w
+
+mul S, SxT.zxyw, T.yzxw
+mad S, SxT.yzxw, T.zxyw, -S
+
+
+
+// setup transformation matrix for bump map normals
+mov oT1.x, S.x
+mov oT2.x, S.y
+mov oT3.x, S.z
+
+mov oT1.y, SxT.x
+mov oT2.y, SxT.y
+mov oT3.y, SxT.z
+
+mov oT1.z, T.x
+mov oT2.z, T.y
+mov oT3.z, T.z
+
+
+
+// setup view vector for per-pixel reflections
+// put it into per pixel reflection matrix
+add oT1.w, c[ CV_VIEWERPOS ].x, -P.x
+add oT2.w, c[ CV_VIEWERPOS ].y, -P.y
+add oT3.w, c[ CV_VIEWERPOS ].z, -P.z
+
+
+
+// setup texture uv for bump map
+mul oT0.xy, srcTex.xy, c[ CV_BUMP_UV_SCALE ].xy
+
+
+
+// calculate normalized view vector
+add V, c[ CV_VIEWERPOS ], -P
+dp3 V.w, V, V
+rsq V.w, V.w
+mul V, V, V.w
+
+
+
+// setup lerp factor for ocean color
+dp3 oD0.xyz, V, SxT
+
+
+
+// calculate approximated Fresnel term F
+//                      1
+// F = -------------------------------------
+//     ( 1 + V.N ) ^ FresnelApprox_PowFactor
+dp3 Temp, V, SxT
+add Temp, c[ CV_CONSTANTS ].z, Temp
+mov Temp.y, c[ CV_FRESNELAPPROX_POWFACTOR ].x
+lit Temp.z, Temp.xxyy
+rcp Temp.z, Temp.z
+mul Temp.z, Temp.z, c[ CV_DYNAMIC_RANGE ].x
+
+
+
+// setup high dynamic range Fresnel term
+expp Temp1.y, Temp.z
+mov oD0.w, Temp1.y
+
+add Temp.z, Temp.z, -Temp1.y
+mul oD1.w, Temp.z, c[ CV_DYNAMIC_RANGE ].y
+
+
+
+// transform vertex to clip space
+dp4 oPos.x, P, c[ CV_WORLDVIEWPROJ_0 ]
+dp4 oPos.y, P, c[ CV_WORLDVIEWPROJ_1 ]
+dp4 oPos.z, P, c[ CV_WORLDVIEWPROJ_2 ]
+dp4 oPos.w, P, c[ CV_WORLDVIEWPROJ_3 ]

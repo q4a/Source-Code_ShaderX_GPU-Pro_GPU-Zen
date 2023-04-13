@@ -1,0 +1,13 @@
+//first.cvs
+
+#include <standard.hvs>
+
+float sqr(float a)
+{
+   return a*a;
+}
+
+void vsmain(float param)
+{
+   out.Pos=m4x4( in.Pos * sqr( param ) + 10 , FinalMatrix.x );
+}

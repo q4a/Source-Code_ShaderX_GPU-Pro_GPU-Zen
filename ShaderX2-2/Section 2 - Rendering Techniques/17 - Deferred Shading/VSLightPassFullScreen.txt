@@ -1,0 +1,32 @@
+;------------------------------------------------------------------------------
+; Constants specified by the app
+;    None
+;
+; Vertex components (as specified in the vertex DECL)
+;    v0   = Position
+;    v4   = 2D texture coord (model coordinates)
+;------------------------------------------------------------------------------
+vs_1_1
+
+dcl_position0 v0	; Position in NORMALIZED SCREEN COORDINATES (x,y,z)
+dcl_texcoord0 v4	; Model screen-space texture coordinates
+
+def c0, 0, 0, 0, 1.0
+
+;------------------------------------------------------------------------------
+; Vertex transformation
+;------------------------------------------------------------------------------
+;mov oPos.xyz, v0
+;mov oPos.w, c0.w
+mov r0.xyz, v0
+mov r0, c0.w
+mov oPos, r0
+
+
+
+;------------------------------------------------------------------------------
+; Pass in quad texture coordinates
+;------------------------------------------------------------------------------
+mov oT0, r0					// Send 4D position into texture coordinates 0
+;mov oT0.xy, v4
+

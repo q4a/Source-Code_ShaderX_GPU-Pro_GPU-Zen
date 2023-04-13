@@ -1,0 +1,111 @@
+//*****************************************************************************
+//* This file is part of the Dimension3 renderer library                      *
+//* Copyright (C) 2003  Michal Valient (valient@host.sk)                      *
+//*                                                                           *
+//* Dimension3 renderer can be found at http://www.dimension3.host.sk         *
+//*                                                                           *
+//* This program is free software; you can redistribute it and/or modify      *
+//* it under the terms of the GNU General Public License as published by      *
+//* the Free Software Foundation; either version 2 of the License, or         *
+//* (at your option) any later version.                                       *
+//*                                                                           *
+//* This program is distributed in the hope that it will be useful,           *
+//* but WITHOUT ANY WARRANTY; without even the implied warranty of            *
+//* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the             *
+//* GNU General Public License for more details.                              *
+//*                                                                           *
+//* You should have received a copy of the GNU General Public License         *
+//* along with this program; if not, write to the Free Software               *
+//* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA * 
+//*****************************************************************************
+//hdr_utility_remove_tag
+
+
+//------------------------------
+// Per pixel bump map reflection - Pixel shader
+//
+// Desc :
+//   Renders cube map reflection
+//
+// Part of Dimension3 Renderer
+// (c)2003 Michal Valient
+// akka em / STV3 akka  R.A.Y / EastW00D
+//------------------------------
+
+ps_2_0
+
+//------------------------------
+// Constant registers 
+//------------------------------
+//
+// c0 - refraction index
+def c1, 2.0f, 1.0f, 5.0f, 0.0f
+
+//------------------------------
+// Used input registers
+//------------------------------
+//
+dcl         t0.xy                   //texture coordinates
+dcl         t1.xyz                  //eye vector
+dcl         t2.xyz                  //1st row of tangent-to-world matrix
+dcl         t3.xyz                  //2nd row of tangent-to-world matrix
+dcl         t4.xyz                  //3rd row of tangent-to-world matrix
+dcl         t5.xyz                  //reflection vector shift
+
+//------------------------------
+// Used input texture samplers
+//------------------------------
+//
+dcl_2d      s0                      //diffuse texture (gloss in alpha)
+dcl_2d      s1                      //normal texture
+dcl_cube    s2                      //cube map texture
+
+//------------------------------
+// Output
+//------------------------------
+// oC0 - output color
+//
+
+//#########################################################################
+//##   CODE    ############################################################
+//#########################################################################
+//
+
+//------------------------------
+// Setup needed vectors - load and normalize
+//------------------------------
+//
+texld       r0, t0, s1              //load normal
+mad         r1, r0, c1.r, -c1.g     //bias normal to range -1,1
+m3x3        r0.xyz, r1, t2          //transform to world space
+nrm         r11, r0                 //r11 = normalized normal in cube space
+mov         r1.xyz, t1
+nrm         r10, r1                 //r10 = normalized eye vector
+
+//------------------------------
+// Compute eye reflection vector
+//------------------------------
+//
+dp3         r9.r, r11, r10          //r9 = dot(normal, eye)
+mul         r8.r, r9.r, c1.r        //r1 = 2*(n.v)
+mad         r8.rgb, r8.r, r11, -r10 //compute reflectance vector - r1 = 2(n.v)n - v
+add         r8.rgb, r8, t5          //Shift it
+
+//------------------------------
+// Compute Fresnel term (Schlick's approximation) F = IR + (1-IR)*(1 - (n.l))^5
+//------------------------------
+//
+sub         r1.r, c1.g, r9.r        //r1 = 1 - n.v
+pow         r0.r, r1.r, c1.b        //r0 = (1 - n.v)^5
+lrp         r7.rgb, c0.r, c0.g, r0.r//final F = IR*1 + (1 - IR)*r0
+
+//------------------------------
+// Texture lookups and final modulations
+//------------------------------
+//
+texld       r0, t0, s0              //diffuse texture
+texld       r1, r8, s2              //cube map look-up
+mul         r0.rgb, r0, r9.r        //to simulate diffuse lighting (n.v)
+mul         r7.rgb, r7, r0.a        //modulate fresnel term with gloss ratio
+lrp         r1.rgb, r7.r, r1, r0    //compute final color
+mov         oC0, r1                 //output the color

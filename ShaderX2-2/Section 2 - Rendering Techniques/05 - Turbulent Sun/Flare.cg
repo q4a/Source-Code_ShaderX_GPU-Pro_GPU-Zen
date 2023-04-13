@@ -1,0 +1,30 @@
+struct Vert 
+{ 
+   float4 pos  : POSITION;
+   float4 dif  : COLOR0;
+   float4 tex  : TEXCOORD0;
+   
+}; 
+
+
+
+Vert main(const Vert In, const uniform float4x4 ModelViewProj,const uniform float AmountOfVertexes) 
+{ 
+	Vert Out;
+	float4 temppos=In.pos; 
+    float step=In.pos.x*(6.283185307179586476925286766559)/AmountOfVertexes;
+	sincos(step, temppos.x, temppos.z); 
+	temppos.x = (temppos.x * In.pos.y); 
+	temppos.y = 0; 
+    temppos.z = (temppos.z * In.pos.y);  
+
+    Out.dif.x=1;
+	Out.dif.y=.7125;
+	Out.dif.z=0;
+	Out.dif.w=1-(In.pos.y-1)*2;
+    Out.tex = In.tex;
+    Out.pos =mul( temppos, ModelViewProj);
+    return Out;
+    
+  
+}

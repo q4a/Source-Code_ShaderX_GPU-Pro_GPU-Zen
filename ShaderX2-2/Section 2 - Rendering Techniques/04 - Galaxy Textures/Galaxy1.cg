@@ -1,0 +1,39 @@
+struct Vert
+{
+    float4 pos  : POSITION;
+    float4 dif  : COLOR0;
+    float4 tex  : TEXCOORD0;
+};
+
+struct Pix
+{
+    float4 dif : COLOR0;
+};
+
+
+float random(float2 xy,sampler2D BaseTexture)
+{
+	float color=tex2D(BaseTexture,xy);
+	return color;
+}
+
+
+Pix main(const Vert In, const uniform sampler2D BaseTexture,const uniform float Time)
+{
+  Pix Out;
+  float2 InputTest;
+  float4 center;
+  center.x=.5;
+  center.y=.5;
+  center.z=.0;
+  center.w=.0;
+  float d=distance(center,In.tex);
+  float randomtexture=random((In.tex.xy*10)+Time.xx,BaseTexture);
+  d=(1-d*2)*pow(randomtexture,d*10);
+  Out.dif.x=d;
+  Out.dif.y=d;
+  Out.dif.z=d;	
+ 
+  return Out;
+}
+

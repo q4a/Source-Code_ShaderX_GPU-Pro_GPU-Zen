@@ -1,0 +1,77 @@
+#include "..\..\Effects\Hair\HairShaderConstants.h"
+
+#define srcP    v0
+#define srcT    v1
+#define srcTex0 v2
+
+#define V       r2
+#define T       r0
+#define L       r3
+
+#define PWorld  r1
+
+#define Temp    r10
+#define Temp1   r11
+
+
+
+vs.1.1
+
+
+
+// compute world space position
+dp4 PWorld.x, srcP, c[ CV_WORLD_0 ]
+dp4 PWorld.y, srcP, c[ CV_WORLD_1 ]
+dp4 PWorld.z, srcP, c[ CV_WORLD_2 ]
+dp4 PWorld.w, srcP, c[ CV_WORLD_3 ]
+
+
+
+// vector from vertex position to eye
+add V, c[ CV_VIEWERPOS ], -PWorld
+dp3 V.w, V, V
+rsq V.w, V.w
+mul V, V, V.w
+
+
+
+// transform tangent into world space
+dp3 T.x, srcT, c[ CV_WORLDIT_0 ]
+dp3 T.y, srcT, c[ CV_WORLDIT_1 ]
+dp3 T.zw, srcT, c[ CV_WORLDIT_2 ]
+
+
+
+// normalize tangent
+dp3 T.w, T, T
+rsq T.w, T.w
+mul T, T, T.w
+
+
+
+// vector from vertex position to light
+add L, c[ CV_LIGHTPOS ], -PWorld
+dp3 L.w, L, L
+rsq L.w, L.w
+mul L, L, L.w
+
+
+
+// generate texture coordinates for anisotropic lighting
+// and map from [-1, 1] to [0, 1]
+dp3 Temp.x, V, T
+dp3 Temp.y, L, T
+mad oT0.xy, Temp.xy, c[ CV_CONSTANTS ].y, c[ CV_CONSTANTS ].y
+
+
+
+// copy texture coordinate for 1D hair streaks texture
+mov oT1.x, srcTex0.x
+
+
+
+// transform vertex into clip space
+dp4 oPos.x, srcP, c[ CV_WORLDVIEWPROJ_0 ]
+dp4 oPos.y, srcP, c[ CV_WORLDVIEWPROJ_1 ]
+dp4 oPos.z, srcP, c[ CV_WORLDVIEWPROJ_2 ]
+dp4 oPos.w, srcP, c[ CV_WORLDVIEWPROJ_3 ]

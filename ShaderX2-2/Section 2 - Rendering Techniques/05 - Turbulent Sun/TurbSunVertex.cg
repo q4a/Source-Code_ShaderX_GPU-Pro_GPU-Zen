@@ -1,0 +1,16 @@
+struct Vert
+{
+    float4 pos  : POSITION;
+    float4 dif  : COLOR0;
+    float4 tex  : TEXCOORD0;
+};
+
+Vert main(const Vert In, const uniform float4x4 ModelViewProj)
+{
+    Vert Out;
+    Out.pos = mul(In.pos, ModelViewProj);
+    Out.dif.x=1;
+	Out.dif.y=1;
+    Out.tex = In.tex;
+    return Out;
+}

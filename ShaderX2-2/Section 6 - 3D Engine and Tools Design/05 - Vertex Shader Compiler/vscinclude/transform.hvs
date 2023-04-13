@@ -1,0 +1,166 @@
+////////////////////////////////////////////////////////////////
+//
+// Vertex Shader system library
+// Created 21.07.2002
+// Copyright by gp
+//
+// Transformations
+//
+////////////////////////////////////////////////////////////////
+
+
+void vs_debug()
+{
+   //#define VS_DEBUG
+   //
+   #ifdef VS_DEBUG
+      out.DColor=(1,1,1,1);
+      out.SColor=(1,1,1,1);
+      out.Tex0=(1,1,1,1);
+      out.Tex1=(1,1,1,1);
+      out.Tex2=(1,1,1,1);
+      out.Tex3=(1,1,1,1);
+   #endif
+}
+
+
+////////////////////////////////////////////////////////////////
+// normal
+// normal transformation
+////////////////////////////////////////////////////////////////
+
+void vstransform_normal(vector pos,vector nor)
+{
+   pos=in.Pos;
+   nor=in.Normal;
+   //
+   vs_debug();
+}
+
+////////////////////////////////////////////////////////////////
+// Skeleton plugin
+////////////////////////////////////////////////////////////////
+
+plugin Skeleton( vector mat[78] ); // max 26 bones per one mesh
+
+////////////////////////////////////////////////////////////////
+// softbind1
+// soft bind 1 weights transformation
+////////////////////////////////////////////////////////////////
+
+void vstransform_softbind1(vector pos,vector nor)
+{
+   vector t=in.JointIndex*768; // 256 * 3 (3 vectors for matrix)
+   //
+   pos=m4x3( in.PosOffset0    , Skeleton.mat[ t.x ] ) * in.JointWeight.x;
+   pos.w=1;
+   //
+   //vector n= m3x3( in.NormalOffset0 , Skeleton.mat[ t.x ] ) * in.JointWeight.x;
+   vector n= m3x3( in.Normal , Skeleton.mat[ t.x ] ) * in.JointWeight.x;
+   //
+   nor=normalize( n );
+   //
+   vs_debug();
+}
+
+////////////////////////////////////////////////////////////////
+// softbind2
+// soft bind 2 weights transformation
+////////////////////////////////////////////////////////////////
+
+void vstransform_softbind2(vector pos,vector nor)
+{
+   vector t=in.JointIndex*768; // 256 * 3 (3 vectors for matrix)
+   //
+   pos=m4x3( in.PosOffset0    , Skeleton.mat[ t.x ] ) * in.JointWeight.x +
+       m4x3( in.PosOffset1    , Skeleton.mat[ t.y ] ) * in.JointWeight.y;
+   pos.w=1;
+   //
+   /*
+   vector n= m3x3( in.NormalOffset0 , Skeleton.mat[ t.x ] ) * in.JointWeight.x +
+             m3x3( in.NormalOffset1 , Skeleton.mat[ t.y ] ) * in.JointWeight.y;
+   /**/
+   vector n= m3x3( in.Normal , Skeleton.mat[ t.x ] ) * in.JointWeight.x +
+             m3x3( in.Normal , Skeleton.mat[ t.y ] ) * in.JointWeight.y;
+   /**/
+   nor=normalize( n );
+   //
+   vs_debug();
+}
+
+////////////////////////////////////////////////////////////////
+// softbind3
+// soft bind 3 weights transformation
+////////////////////////////////////////////////////////////////
+
+void vstransform_softbind3(vector pos,vector nor)
+{
+   vector t=in.JointIndex*768; // 256 * 3 (3 vectors for matrix)
+   //
+   pos=m4x3( in.PosOffset0    , Skeleton.mat[ t.x ] ) * in.JointWeight.x +
+       m4x3( in.PosOffset1    , Skeleton.mat[ t.y ] ) * in.JointWeight.y +
+       m4x3( in.PosOffset2    , Skeleton.mat[ t.z ] ) * in.JointWeight.z;
+   pos.w=1;
+   //
+   /*
+   vector n= m3x3( in.NormalOffset0 , Skeleton.mat[ t.x ] ) * in.JointWeight.x +
+             m3x3( in.NormalOffset1 , Skeleton.mat[ t.y ] ) * in.JointWeight.y +
+             m3x3( in.NormalOffset2 , Skeleton.mat[ t.z ] ) * in.JointWeight.z;
+   //
+   //nor=normalize( n );
+   nor=normalize( n-pos );
+   /**/
+   vector n= m3x3( in.Normal , Skeleton.mat[ t.x ] ) * in.JointWeight.x +
+             m3x3( in.Normal , Skeleton.mat[ t.y ] ) * in.JointWeight.y +
+             m3x3( in.Normal , Skeleton.mat[ t.z ] ) * in.JointWeight.z;
+   //
+   nor=normalize( n );
+   //nor=n;
+   /**/
+   //nor=in.Normal;
+   //
+   vs_debug();
+}
+
+////////////////////////////////////////////////////////////////
+// softbind4
+// soft bind 4 weights transformation
+////////////////////////////////////////////////////////////////
+
+void vstransform_softbind4(vector pos,vector nor)
+{
+   vector t=in.JointIndex*768; // 256 * 3 (3 vectors for matrix)
+   //
+   pos=m4x3( in.PosOffset0    , Skeleton.mat[ t.x ] ) * in.JointWeight.x +
+       m4x3( in.PosOffset1    , Skeleton.mat[ t.y ] ) * in.JointWeight.y +
+       m4x3( in.PosOffset2    , Skeleton.mat[ t.z ] ) * in.JointWeight.z +
+       m4x3( in.PosOffset3    , Skeleton.mat[ t.w ] ) * in.JointWeight.w;
+   pos.w=1;
+   //
+   /*
+   vector n= m3x3( in.NormalOffset0 , Skeleton.mat[ t.x ] ) * in.JointWeight.x +
+             m3x3( in.NormalOffset1 , Skeleton.mat[ t.y ] ) * in.JointWeight.y +
+             m3x3( in.NormalOffset2 , Skeleton.mat[ t.z ] ) * in.JointWeight.z +
+             m3x3( in.NormalOffset3 , Skeleton.mat[ t.w ] ) * in.JointWeight.w;
+   //
+   //nor=normalize( n );
+   nor=normalize( n-pos );
+   /**/
+   vector n= m3x3( in.Normal , Skeleton.mat[ t.x ] ) * in.JointWeight.x +
+             m3x3( in.Normal , Skeleton.mat[ t.y ] ) * in.JointWeight.y +
+             m3x3( in.Normal , Skeleton.mat[ t.z ] ) * in.JointWeight.z +
+             m3x3( in.Normal , Skeleton.mat[ t.w ] ) * in.JointWeight.w;
+   //
+   nor=normalize( n );
+   //nor=n;
+   /**/
+   //nor=in.Normal;
+   //
+   vs_debug();
+}
+
+////////////////////////////////////////////////////////////////
+//
+//
+//
+////////////////////////////////////////////////////////////////

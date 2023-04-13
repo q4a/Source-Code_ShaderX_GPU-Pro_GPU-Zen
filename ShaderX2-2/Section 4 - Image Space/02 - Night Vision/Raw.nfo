@@ -1,0 +1,52 @@
+-----------------------------------------------------------------------
+
+                            RAW CONFESSIONS                           
+
+                            (c) Cocoon 2002
+
+------------------------------[ Credits ]------------------------------
+
+Code   : Guille, Atc
+Gfx    : Tenshu, Nytrik, Zaac, Azo, Mr Whore, Skorp
+Music  : Syl East (featuring the voice of Simon Robinson as the Zombie)
+Lyrics : Syl East, Tenshu, Simon Robinson
+
+
+	mail: guille@free.fr
+	web : http://cocoon.planet-d.net
+
+--------------------------------[ Awards ]------------------------------
+
+- 1st place at the State Of The Art demo party in december 2002
+
+- Winners of the Scene.org Awards 2002 in the Best Graphics category
+http://www.awards.scene.org/winners.php
+
+	
+	
+
+------------------------------[ Hardware ]-----------------------------
+
+Hardware requirements:
+
+Cpu    800Mhz
+Ram    256MB
+Gpu    Pixel & Vertex Shader 1.1 compatible (GeForce 3+) 
+
+W2k, WinXP, DirectX 8.1
+
+
+--------------------------[ Programming notes ]------------------------
+
+The following libs have been used during the development of this demo:
+	- fmod    3.6
+	- stlport 4.5.3
+	- nvsdk   5.2
+	- dxsdk   8.1b
+
+
+Again, special thanks to the "State Of The Art 2k2" Organisation Team !
+
+
+
+

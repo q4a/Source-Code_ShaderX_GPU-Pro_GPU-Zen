@@ -1,0 +1,1 @@
+.\D3DCloth.exe -width=512 -height=512  -refdevice -VP=HW -Object=SphereObj.txt

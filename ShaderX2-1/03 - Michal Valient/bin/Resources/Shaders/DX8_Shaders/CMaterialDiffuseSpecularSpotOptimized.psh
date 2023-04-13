@@ -1,0 +1,99 @@
+//*****************************************************************************
+//* This file is part of the Dimension3 renderer library                      *
+//* Copyright (C) 2003  Michal Valient (valient@host.sk)                      *
+//*                                                                           *
+//* Dimension3 renderer can be found at http://www.dimension3.host.sk         *
+//*                                                                           *
+//* This program is free software; you can redistribute it and/or modify      *
+//* it under the terms of the GNU General Public License as published by      *
+//* the Free Software Foundation; either version 2 of the License, or         *
+//* (at your option) any later version.                                       *
+//*                                                                           *
+//* This program is distributed in the hope that it will be useful,           *
+//* but WITHOUT ANY WARRANTY; without even the implied warranty of            *
+//* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the             *
+//* GNU General Public License for more details.                              *
+//*                                                                           *
+//* You should have received a copy of the GNU General Public License         *
+//* along with this program; if not, write to the Free Software               *
+//* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA * 
+//*****************************************************************************
+//hdr_utility_remove_tag
+
+
+//------------------------------
+// Per pixel diffuse and specular - Pixel shader
+//
+// Desc :
+//   Renders diffuse and specular part for one light per pixel using Phong's equation
+//
+// Part of Dimension3 Renderer
+// (c)2002 Michal Valient
+// akka em / STV3 akka  R.A.Y / EastW00D
+//------------------------------
+//
+// Constant registers 
+// c0 - shininess (in all components)
+// c1 - enable / disable light 2
+//
+// Used input registers
+// t0 - color / bump coordinates
+// t1 - light1 vector in tangent space
+// t2 - eye vector in tangent space
+// t3 - projector1 coordinates
+// t4 - light2 vector in tangent space
+// t5 - projector2 coordinates
+//
+// Used input texture stages
+// stage0 - ambient texture
+// stage1 - normal texture
+// stage2 - specular light map 1
+// stage3 - projector1 texture
+// stage4 - specular light map 2
+// stage5 - projector2 texture
+//
+// Output
+// r0 - output color
+//------------------------------
+
+ps.1.4
+
+texld r1, t0                    //normal vector (n)
+texcrd r2.rgb, t1.xyz           //Light1 vector (l1)
+texcrd r3.rgb, t2.xyz           //eye vector (v)
+texcrd r4.rgb, t4.xyz           //Light2 vector (l2)
+
+//Light 1
+// r2.b - diffuse dotproduct
+// r2 - specular lightmap coordinates
+    dp3 r0, r1_bx2, r2                  //r0 = dot(normal, light)
+    mad r2.rgb, r0_x2, r1_bx2, -r2      //compute reflectance vector r2 = 2(n.l)n - l
+    dp3 r2.r, r2, r3                    //r2.xyz = dot(reflect, eye)
+    mov r2.g, r0
+
+
+//Light 2
+// r4.g - diffuse dotproduct
+// r4 - specular lightmap coordinates
+    dp3 r0, r1_bx2, r4                  //r0 = dot(normal, light)
+    mad r4.rgb, r0_x2, r1_bx2, -r4      //compute reflectance vector r4 = 2(n.l)n - l
+    dp3 r4, r4, r3                      //r2.x = dot(reflect, eye)
+    mov r4.g, r0
+
+phase
+texld r0, t0                    //load specular texture (gloss map is in alpha channel)
+texld r2, r2                    //specular light map 1
+texld r3, t3_dw.xyw             //projector1 map
+texld r4, r4                    //specular light map 2
+texld r5, t5_dw.xyw             //projector1 map
+
+mul r2.rgb, r0, r2.g            //diffuse 1
+  +mul r2.a, r0.a, r2.a         //specular 1
+mul r4.rgb, r0, r4.g            //diffuse 2
+  +mul r4.a, r0.a, r4.a         //specular 2
+mul r4.rgba, r4, c1             //disable / enable specular2
+
+mul r0.rgba, r3, r2.a            //specular1 * spotlight1
+mad r0.rgba, r3, r2, r0          //diffuse1 * spotlight1 + prev
+mad r0.rgba, r5, r4.a, r0        //specular2 * spotlight2 + prev
+mad r0.rgba, r5, r4, r0          //diffuse * spotlight2 +prev

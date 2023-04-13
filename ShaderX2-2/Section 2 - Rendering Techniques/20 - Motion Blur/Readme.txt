@@ -1,0 +1,1 @@
+This is a RenderMonkey example. Please open in RenderMonkey the <Motion Blur.rfx>.

@@ -1,0 +1,44 @@
+# Microsoft Developer Studio Generated Dependency File, included by D3DCloth.mak
+
+.\D3DCloth.cpp : \
+	".\D3DShell.h"\
+	".\D3DTools.h"\
+	".\Scene.H"\
+	{$(INCLUDE)}"d3d9.h"\
+	{$(INCLUDE)}"d3d9caps.h"\
+	{$(INCLUDE)}"d3d9types.h"\
+	{$(INCLUDE)}"d3dx9.h"\
+	{$(INCLUDE)}"d3dx9anim.h"\
+	{$(INCLUDE)}"d3dx9core.h"\
+	{$(INCLUDE)}"d3dx9effect.h"\
+	{$(INCLUDE)}"d3dx9math.h"\
+	{$(INCLUDE)}"d3dx9math.inl"\
+	{$(INCLUDE)}"d3dx9mesh.h"\
+	{$(INCLUDE)}"d3dx9shader.h"\
+	{$(INCLUDE)}"d3dx9shape.h"\
+	{$(INCLUDE)}"d3dx9tex.h"\
+	{$(INCLUDE)}"dxfile.h"\
+	
+
+.\D3DCloth.rc : \
+	".\PowerVR.ico"\
+	
+
+.\D3DShell.cpp : \
+	".\D3DShell.h"\
+	".\D3DTools.h"\
+	{$(INCLUDE)}"d3d9.h"\
+	{$(INCLUDE)}"d3d9caps.h"\
+	{$(INCLUDE)}"d3d9types.h"\
+	{$(INCLUDE)}"d3dx9.h"\
+	{$(INCLUDE)}"d3dx9anim.h"\
+	{$(INCLUDE)}"d3dx9core.h"\
+	{$(INCLUDE)}"d3dx9effect.h"\
+	{$(INCLUDE)}"d3dx9math.h"\
+	{$(INCLUDE)}"d3dx9math.inl"\
+	{$(INCLUDE)}"d3dx9mesh.h"\
+	{$(INCLUDE)}"d3dx9shader.h"\
+	{$(INCLUDE)}"d3dx9shape.h"\
+	{$(INCLUDE)}"d3dx9tex.h"\
+	{$(INCLUDE)}"dxfile.h"\
+	
