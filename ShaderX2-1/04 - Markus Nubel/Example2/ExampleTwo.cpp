@@ -90,7 +90,7 @@ HRESULT CMyD3DApplication::CreateShaders()
 	if(FAILED(DXUtil_FindMediaFileCb(szShaderPath, sizeof(szShaderPath), _T("ExpFog.psh"))))
 		return S_FALSE;
 
-	hr = D3DXCompileShaderFromFile(szShaderPath, NULL, NULL, _T("main"), _T("ps_1_1"), 0, &pCode, &pErrorMsgs , NULL);
+	hr = D3DXCompileShaderFromFile(szShaderPath, NULL, NULL, _T("main"), _T("ps_2_0"), 0, &pCode, &pErrorMsgs , NULL);
 	if(FAILED(hr))
 	{
 		char* szMsg	= (char*)pErrorMsgs->GetBufferPointer();
