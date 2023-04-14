@@ -50,7 +50,7 @@ public:
 
     // Creation/destruction
     HRESULT Create( LPDIRECT3DDEVICE9 pd3dDevice, TCHAR* strFilename );
-    HRESULT Create( LPDIRECT3DDEVICE9 pd3dDevice, LPDIRECTXFILEDATA pFileData );
+    HRESULT Create( LPDIRECT3DDEVICE9 pd3dDevice, LPD3DXFILEDATA pFileData );
     HRESULT Destroy();
 
     CD3DMesh( TCHAR* strName = _T("CD3DFile_Mesh") );
@@ -105,9 +105,9 @@ public:
 //-----------------------------------------------------------------------------
 class CD3DFile : public CD3DFrame
 {
-    HRESULT LoadMesh( LPDIRECT3DDEVICE9 pd3dDevice, LPDIRECTXFILEDATA pFileData, 
+    HRESULT LoadMesh( LPDIRECT3DDEVICE9 pd3dDevice, LPD3DXFILEDATA pFileData,
                       CD3DFrame* pParentFrame );
-    HRESULT LoadFrame( LPDIRECT3DDEVICE9 pd3dDevice, LPDIRECTXFILEDATA pFileData, 
+    HRESULT LoadFrame( LPDIRECT3DDEVICE9 pd3dDevice, LPD3DXFILEDATA pFileData,
                        CD3DFrame* pParentFrame );
 public:
     HRESULT Create( LPDIRECT3DDEVICE9 pd3dDevice, TCHAR* strFilename );

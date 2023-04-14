@@ -137,7 +137,7 @@ LEnd:
 // Desc:
 //-----------------------------------------------------------------------------
 HRESULT CD3DMesh::Create( LPDIRECT3DDEVICE9 pd3dDevice,
-                          LPDIRECTXFILEDATA pFileData )
+                          LPD3DXFILEDATA pFileData )
 {
     LPD3DXBUFFER pMtrlBuffer = NULL;
     LPD3DXBUFFER pAdjacencyBuffer = NULL;
@@ -555,18 +555,18 @@ HRESULT CD3DFrame::Render( LPDIRECT3DDEVICE9 pd3dDevice, bool bDrawOpaqueSubsets
 // Desc:
 //-----------------------------------------------------------------------------
 HRESULT CD3DFile::LoadFrame( LPDIRECT3DDEVICE9 pd3dDevice,
-                             LPDIRECTXFILEDATA pFileData,
+                             LPD3DXFILEDATA pFileData,
                              CD3DFrame* pParentFrame )
 {
-    LPDIRECTXFILEDATA   pChildData = NULL;
-    LPDIRECTXFILEOBJECT pChildObj = NULL;
-    const GUID* pGUID;
+    LPD3DXFILEDATA pChildData = NULL;
+    LPD3DXFILEDATA pChildObj = NULL;
+    GUID*       pGUID;
     DWORD       cbSize;
     CD3DFrame*  pCurrentFrame;
     HRESULT     hr;
 
     // Get the type of the object
-    if( FAILED( hr = pFileData->GetType( &pGUID ) ) )
+    if( FAILED( hr = pFileData->GetType( pGUID ) ) )
         return hr;
 
     if( *pGUID == TID_D3DRMMesh )
@@ -578,12 +578,13 @@ HRESULT CD3DFile::LoadFrame( LPDIRECT3DDEVICE9 pd3dDevice,
     if( *pGUID == TID_D3DRMFrameTransformMatrix )
     {
         D3DXMATRIX* pmatMatrix;
-        hr = pFileData->GetData( NULL, &cbSize, (void**)&pmatMatrix );
+        hr = pFileData->Lock((SIZE_T*)&cbSize, (LPCVOID*)&pmatMatrix);
         if( FAILED(hr) )
             return hr;
 
         // Update the parent's matrix with the new one
         pParentFrame->SetMatrix( pmatMatrix );
+        pFileData->Unlock();
     }
     if( *pGUID == TID_D3DRMFrame )
     {
@@ -591,7 +592,7 @@ HRESULT CD3DFile::LoadFrame( LPDIRECT3DDEVICE9 pd3dDevice,
         CHAR  strAnsiName[512] = "";
         TCHAR strName[512];
         DWORD dwNameLength = 512;
-        if( FAILED( hr = pFileData->GetName( strAnsiName, &dwNameLength ) ) )
+        if( FAILED( hr = pFileData->GetName( strAnsiName, (SIZE_T*)&dwNameLength ) ) )
             return hr;
         DXUtil_ConvertAnsiStringToGenericCb( strName, strAnsiName, sizeof(strName) );
 
@@ -604,8 +605,12 @@ HRESULT CD3DFile::LoadFrame( LPDIRECT3DDEVICE9 pd3dDevice,
         pParentFrame->m_pChild = pCurrentFrame;
 
         // Enumerate child objects
-        while( SUCCEEDED( pFileData->GetNextObject( &pChildObj ) ) )
+        SIZE_T uChildren;
+        pFileData->GetChildren(&uChildren);
+        for (SIZE_T i = 0; i < uChildren; i++)
         {
+            if (FAILED(pFileData->GetChild(i, &pChildObj)))
+                continue;
             // Query the child for its FileData
             hr = pChildObj->QueryInterface( IID_IDirectXFileData,
                                             (void**)&pChildData );
@@ -633,7 +638,7 @@ HRESULT CD3DFile::LoadFrame( LPDIRECT3DDEVICE9 pd3dDevice,
 // Desc:
 //-----------------------------------------------------------------------------
 HRESULT CD3DFile::LoadMesh( LPDIRECT3DDEVICE9 pd3dDevice,
-                            LPDIRECTXFILEDATA pFileData,
+                            LPD3DXFILEDATA pFileData,
                             CD3DFrame* pParentFrame )
 {
     // Currently only allowing one mesh per frame
@@ -645,7 +650,7 @@ HRESULT CD3DFile::LoadMesh( LPDIRECT3DDEVICE9 pd3dDevice,
     TCHAR strName[512];
     DWORD dwNameLength = 512;
     HRESULT hr;
-    if( FAILED( hr = pFileData->GetName( strAnsiName, &dwNameLength ) ) )
+    if( FAILED( hr = pFileData->GetName( strAnsiName, (SIZE_T*)&dwNameLength ) ) )
         return hr;
     DXUtil_ConvertAnsiStringToGenericCb( strName, strAnsiName, sizeof(strName) );
 
@@ -667,13 +672,14 @@ HRESULT CD3DFile::LoadMesh( LPDIRECT3DDEVICE9 pd3dDevice,
 //-----------------------------------------------------------------------------
 HRESULT CD3DFile::CreateFromResource( LPDIRECT3DDEVICE9 pd3dDevice, TCHAR* strResource, TCHAR* strType )
 {
-    LPDIRECTXFILE           pDXFile   = NULL;
-    LPDIRECTXFILEENUMOBJECT pEnumObj  = NULL;
-    LPDIRECTXFILEDATA       pFileData = NULL;
+    LPD3DXFILE           pDXFile   = NULL;
+    LPD3DXFILEENUMOBJECT pEnumObj  = NULL;
+    LPD3DXFILEDATA       pFileData = NULL;
     HRESULT hr;
+    SIZE_T cChildren;
 
     // Create a x file object
-    if( FAILED( hr = DirectXFileCreate( &pDXFile ) ) )
+    if( FAILED( hr = D3DXFileCreate( &pDXFile ) ) )
         return E_FAIL;
 
     // Register templates for d3drm and patch extensions.
@@ -693,23 +699,28 @@ HRESULT CD3DFile::CreateFromResource( LPDIRECT3DDEVICE9 pd3dDevice, TCHAR* strRe
     dxlr.lpType = (TCHAR*) strTypeAnsi;
 
     // Create enum object
-    hr = pDXFile->CreateEnumObject( (void*)&dxlr, DXFILELOAD_FROMRESOURCE, 
+    hr = pDXFile->CreateEnumObject( (void*)&dxlr, D3DXF_FILELOAD_FROMRESOURCE,
                                     &pEnumObj );
     if( FAILED(hr) )
     {
-        pDXFile->Release();
+        SAFE_RELEASE( pDXFile );
         return hr;
     }
 
     // Enumerate top level objects (which are always frames)
-    while( SUCCEEDED( pEnumObj->GetNextDataObject( &pFileData ) ) )
+    pEnumObj->GetChildren(&cChildren);
+    for (UINT iChild = 0; iChild < cChildren; iChild++)
     {
+        hr = pEnumObj->GetChild(iChild, &pFileData);
+        if (FAILED(hr))
+            return hr;
+
         hr = LoadFrame( pd3dDevice, pFileData, this );
-        pFileData->Release();
+        SAFE_RELEASE( pFileData );
         if( FAILED(hr) )
         {
-            pEnumObj->Release();
-            pDXFile->Release();
+            SAFE_RELEASE( pEnumObj );
+            SAFE_RELEASE( pDXFile );
             return E_FAIL;
         }
     }
@@ -730,20 +741,21 @@ HRESULT CD3DFile::CreateFromResource( LPDIRECT3DDEVICE9 pd3dDevice, TCHAR* strRe
 //-----------------------------------------------------------------------------
 HRESULT CD3DFile::Create( LPDIRECT3DDEVICE9 pd3dDevice, TCHAR* strFilename )
 {
-    LPDIRECTXFILE           pDXFile   = NULL;
-    LPDIRECTXFILEENUMOBJECT pEnumObj  = NULL;
-    LPDIRECTXFILEDATA       pFileData = NULL;
+    LPD3DXFILE           pDXFile   = NULL;
+    LPD3DXFILEENUMOBJECT pEnumObj  = NULL;
+    LPD3DXFILEDATA       pFileData = NULL;
     HRESULT hr;
+    SIZE_T cChildren;
 
     // Create a x file object
-    if( FAILED( hr = DirectXFileCreate( &pDXFile ) ) )
+    if( FAILED( hr = D3DXFileCreate( &pDXFile ) ) )
         return E_FAIL;
 
     // Register templates for d3drm and patch extensions.
     if( FAILED( hr = pDXFile->RegisterTemplates( (void*)D3DRM_XTEMPLATES,
                                                  D3DRM_XTEMPLATE_BYTES ) ) )
     {
-        pDXFile->Release();
+        SAFE_RELEASE( pDXFile );
         return E_FAIL;
     }
 
@@ -754,7 +766,7 @@ HRESULT CD3DFile::Create( LPDIRECT3DDEVICE9 pd3dDevice, TCHAR* strFilename )
     DXUtil_ConvertGenericStringToAnsiCb( strPathANSI, strPath, sizeof(strPathANSI) );
     
     // Create enum object
-    hr = pDXFile->CreateEnumObject( (void*)strPathANSI, DXFILELOAD_FROMFILE, 
+    hr = pDXFile->CreateEnumObject( (void*)strPathANSI, D3DXF_FILELOAD_FROMFILE,
                                     &pEnumObj );
     if( FAILED(hr) )
     {
@@ -763,14 +775,19 @@ HRESULT CD3DFile::Create( LPDIRECT3DDEVICE9 pd3dDevice, TCHAR* strFilename )
     }
 
     // Enumerate top level objects (which are always frames)
-    while( SUCCEEDED( pEnumObj->GetNextDataObject( &pFileData ) ) )
+    pEnumObj->GetChildren(&cChildren);
+    for (UINT iChild = 0; iChild < cChildren; iChild++)
     {
+        hr = pEnumObj->GetChild(iChild, &pFileData);
+        if (FAILED(hr))
+            return hr;
+
         hr = LoadFrame( pd3dDevice, pFileData, this );
-        pFileData->Release();
+        SAFE_RELEASE( pFileData );
         if( FAILED(hr) )
         {
-            pEnumObj->Release();
-            pDXFile->Release();
+            SAFE_RELEASE( pEnumObj );
+            SAFE_RELEASE( pDXFile );
             return E_FAIL;
         }
     }

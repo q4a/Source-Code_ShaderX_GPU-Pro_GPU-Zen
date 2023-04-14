@@ -12,7 +12,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <d3dx9.h>
-#include <dxerr9.h>
+#include <dxerr.h>
 #include <tchar.h>
 #include "DXUtil.h"
 #include "D3DEnumeration.h"

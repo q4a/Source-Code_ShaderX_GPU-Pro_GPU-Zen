@@ -590,13 +590,13 @@ HRESULT CBaseD3DApplication::PostRender()
 HRESULT CBaseD3DApplication::Render()
 {
 	// Clear the viewport
-    m_pd3dDevice->Clear( 0L, NULL, D3DCLEAR_TARGET|D3DCLEAR_ZBUFFER,
-                         m_colFog, 1.0f, 0L );
+	m_pd3dDevice->Clear( 0L, NULL, D3DCLEAR_TARGET|D3DCLEAR_ZBUFFER,
+						 m_colFog, 1.0f, 0L );
 
-    // Begin the scene
-    if( SUCCEEDED( m_pd3dDevice->BeginScene() ) )
-    {
-        // TODO: render world
+	// Begin the scene
+	if( SUCCEEDED( m_pd3dDevice->BeginScene() ) )
+	{
+		// TODO: render world
 
 		PreRender();
 
@@ -608,20 +608,20 @@ HRESULT CBaseD3DApplication::Render()
 		// Terrain rendering
 		m_pd3dDevice->SetTexture(0, m_texTerrain);
 		m_pd3dDevice->SetVertexDeclaration(m_pVertexDeclaration);
-        m_pd3dDevice->SetStreamSource(0, m_pVBTerrain, 0, sizeof(TERRAINVERTEX));
-        m_pd3dDevice->DrawPrimitive( D3DPT_TRIANGLELIST, 0, m_nPolyCount);
+		m_pd3dDevice->SetStreamSource(0, m_pVBTerrain, 0, sizeof(TERRAINVERTEX));
+		m_pd3dDevice->DrawPrimitive( D3DPT_TRIANGLELIST, 0, m_nPolyCount);
 		m_pd3dDevice->SetTexture(0, NULL);
 
 		PostRender();
 
-        // Render stats and help text  
-//        RenderText();
+		// Render stats and help text  
+		//RenderText();
 
-        // End the scene.
-        m_pd3dDevice->EndScene();
-    }
+		// End the scene.
+		m_pd3dDevice->EndScene();
+	}
 
-    return S_OK;
+	return S_OK;
 }
 
 
